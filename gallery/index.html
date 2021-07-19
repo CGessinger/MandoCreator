@@ -28,11 +28,11 @@
 		<style>
 			@font-face {
 				font-family: 'icomoon';
-				src: url('/fonts/icomoon.eot');
-				src: url('/fonts/icomoon.eot#iefix') format('embedded-opentype'),
-				     url('/fonts/icomoon.ttf') format('truetype'),
-				     url('/fonts/icomoon.woff') format('woff'),
-				     url('/fonts/icomoon.svg#icomoon') format('svg');
+				src: url('../fonts/icomoon.eot');
+				src: url('../fonts/icomoon.eot#iefix') format('embedded-opentype'),
+				     url('../fonts/icomoon.ttf') format('truetype'),
+				     url('../fonts/icomoon.woff') format('woff'),
+				     url('../fonts/icomoon.svg#icomoon') format('svg');
 				font-weight: normal;
 				font-style: normal;
 				font-display: block;
@@ -40,7 +40,7 @@
 			@font-face {
 				font-family: 'Raleway';
 				src:	local("Raleway"),
-					url('/fonts/Raleway.ttf') format('truetype');
+					url('../fonts/Raleway.ttf') format('truetype');
 				font-weight: normal;
 				font-style: normal;
 				font-display: block;
@@ -79,6 +79,7 @@
 			}
 			main {
 				height: 100%;
+				font-size: 0;
 				overflow: auto hidden;
 				white-space: nowrap;
 				-ms-overflow-style: none;
@@ -292,11 +293,11 @@
 			fromScroll = true;
 			GallerySkeleton.shift = index;
 			fromScroll = false;
-		});
+		}, {passive: true});
 		window.addEventListener("resize", function () {
 			width = svgs[0].clientWidth;
 			var pos = (index + 1/2)*width;
-			gallery.scroll({left: pos, behavior: "smooth"});
+			gallery.scrollLeft = pos;
 		});
 		return GallerySkeleton;
 	}
