@@ -80,8 +80,6 @@ function Builder () {
 
 	function redirectClickTo (target) {
 		return function (event) {
-			if (event.defaultPrecented)
-				return;
 			target.click();
 		}
 	}
@@ -327,7 +325,7 @@ function Builder () {
 			var sublist = DOMNode("div", {id: o.id+"SubColors"}, parent);
 			BuildManager(o, sublist);
 
-			/* Step 2.3: Attach and event handler to the checkbox */
+			/* Step 2.3: Attach an event handler to the checkbox */
 			var handler = CheckboxChangeHandler(id, sublist, o);
 			input.addEventListener("change", handler);
 			input.checked = variants.getItem(id);
@@ -426,12 +424,6 @@ function Builder () {
 			var category = findCategory(nodes[i].id);
 			if (!category)
 				continue;
-			var radio = find(category + "Radio");
-			nodes[i].addEventListener("click", redirectClickTo(radio));
-			if (radio.checked) {
-				radio.checked = false;
-				radio.click();
-			}
 			BuildManager(nodes[i]);
 			if (nodes[i].getAttribute("class") == "swappable") {
 				setupSwapHandler(nodes[i], category);
@@ -545,7 +537,6 @@ function VariantsVault (asString) {
 var variants = new VariantsVault(localStorage.getItem("variants"));
 
 function setupControlMenu () {
-	/* Step 1: Settings and Controls */
 	var controls = find("settings");
 	if (window.innerWidth > 786) {
 		controls.classList.remove("settings_collapsed");
@@ -558,7 +549,7 @@ function setupControlMenu () {
 
 	var slides = controls.getElementsByClassName("slide");
 	for (var i = 0; i < slides.length; i++) {
-		slides[i].addEventListener("click", toggleArmorSlide(slides[i]));
+		slides[i].addEventListener("click", toggleSlide(slides[i]));
 	}
 
 	window.addEventListener("keydown", function (event) {
@@ -642,26 +633,39 @@ function onload () {
 	nsw.register("sw.js");
 }
 
-function openArmorFolder (category) {
-	var now = find(category + "Options");
-	var components = document.getElementsByClassName("folder");
-	for (var i = 0; i < components.length; i++)
-		components[i].classList.remove("selected");
-	now.classList.add("selected");
+function openFolder (folder) {
+	if (typeof folder == "string") {
+		folder = find(folder + "Options");
+	} else {
+		var radioName = folder.id.replace("Options", "Radio");
+		var radio = find(radioName);
+		if (radio.checked) {
+			find("picker").focus();
+			return;
+		}
+		radio.checked = true;
+	}
+	var folders = document.getElementsByClassName("folder");
+	for (var i = 0; i < folders.length; i++)
+		folders[i].classList.remove("selected");
+	folder.classList.add("selected");
+	find("picker").click();
 }
 
-function toggleArmorSlide (slide) {
+function toggleSlide (slide) {
 	var button = slide.firstElementChild;
-	var folder = slide.parentNode.parentNode;
 	button.addEventListener("click", function(event) {
 		event.preventDefault();
 	});
+	var folder = slide.parentNode.parentNode;
 	var allSlides = folder.getElementsByClassName("slide");
 	return function (event) {
 		if (event.defaultPrevented) {
 			slide.classList.toggle("selected");
 			folder.classList.toggle("overview");
 		} else {
+			if (slide.classList.contains("selected"))
+				return;
 			for (var i = 0; i < allSlides.length; i++)
 				allSlides[i].classList.remove("selected");
 			slide.classList.add("selected");
@@ -727,8 +731,8 @@ function playKote () {
 }
 
 function reset (skipBuild, skipPrompt) {
-	var conf = skipPrompt || confirm("This will erase all settings, such as colors and armor pieces. Do you want to proceed? This cannot be undone.\n\nSave or save not. There is no undo.")
-		if (!conf) return;
+	var conf = skipPrompt || confirm("This will erase all settings, such as colors and armor pieces. Do you want to proceed? This cannot be undone.\n\nSave or save not. There is no undo.");
+	if (!conf) return;
 	variants = new VariantsVault;
 	settings = resetSettings(false);
 	Vault = new SVGVault();
