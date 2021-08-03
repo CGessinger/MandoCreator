@@ -308,7 +308,7 @@ function PickerFactory (history) {
 	}
 }
 
-function ChangeHistory () {
+function HistoryTracker () {
 	var changes = [];
 	var redos = [];
 	var self = this;

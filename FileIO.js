@@ -1,24 +1,10 @@
 "use strict";
 
-var settings;
-function resetSettings (cached) {
-	var cache = localStorage.getItem("settings");
-	if (cached && cache)
-		return JSON.parse(cache);
-	return {
-		undefined: "#FFFFFF",
-		"Bucket_Budget-BucketColor":	"#F74416",
-		"Visor_Budget-BucketColor":	"#000000",
-		"Rage_Gauntlet_RightColor":	"#08CB33",
-		"Rage_Gauntlet_LeftColor":	"#08CB33"
-	};
-}
-
 function Uploader (queryString, D) {
 	var readerBck = new FileReader;
 	var file;
 	readerBck.onload = function() {
-		D.Background = {type: file.type, data: this.result};
+		D.Background = {type: file.type, data: this.result, custom: true};
 		file = null;
 	}
 	find("background_upload").addEventListener("change", function() {
@@ -29,9 +15,6 @@ function Uploader (queryString, D) {
 			readerBck.readAsText(file);
 		else
 			readerBck.readAsDataURL(file);
-
-		var reset = find("reset_wrapper");
-		reset.style.display = "";
 		this.value = "";
 	});
 
@@ -111,7 +94,7 @@ function Uploader (queryString, D) {
 		var logo = (svg.getElementById("titleDark") != null);
 		Settings.DarkMode(logo, true);
 		if (img.tagName.toLowerCase() === "svg") {
-			D.Background = { type: "image/svg+xml", data: img.outerHTML };
+			D.Background = { type: "image/svg+xml", data: img.outerHTML, custom: true };
 		} else {
 			var href = img.getAttribute("href");
 			var mime = href.match(/^data:image\/[\w+-.]+/);
@@ -184,6 +167,7 @@ function Uploader (queryString, D) {
 function Downloader () {
 	var xml = new XMLSerializer();
 	var img = new Image();
+	var reset = find("reset_wrapper");
 	var canvas = find("canvas");
 	var canvasCtx = canvas.getContext('2d');
 	var logoSVG, bckImgURI, bckSVG;
@@ -301,6 +285,10 @@ function Downloader () {
 			}
 			prepareCanvas(href);
 			document.body.style.backgroundImage = "url(\"" + href + "\")";
+
+			if (bck.custom) {
+				reset.style.display = "";
+			}
 		},
 		get Background () {
 			var svgMain = SVGNode("svg", {

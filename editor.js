@@ -1,6 +1,7 @@
 /* MandoCreator */
 "use strict";
-var Download, Change;
+var Download, History, Vault, Builder, Settings;
+var settings, variants;
 
 function find (st) {
 	return document.getElementById(st);
@@ -40,10 +41,9 @@ function SVGVault () {
 		});
 	}
 }
-var Vault = new SVGVault();
 
-function Builder () {
-	var Picker = new PickerFactory(Change);
+function BuildManager () {
+	var Picker = new PickerFactory(History);
 	var swapLists = [];
 	var icons = {
 		"Range Finder":	"\uE919",
@@ -111,7 +111,7 @@ function Builder () {
 		b.addEventListener("click", function () {
 			var changes = [];
 			walker.currentNode = parent;
-			showPicker = Change.track = false;
+			showPicker = History.track = false;
 			while (node = walker.nextNode()) {
 				var c, newValue;
 				var mirrorImageName = node.id.replace(thisSide, otherSide);
@@ -119,18 +119,18 @@ function Builder () {
 				switch (node.getAttribute("class")) {
 					case "color_picker":
 						newValue = node.style.backgroundColor;
-						c = Change.format("color", mirrorImage.style.backgroundColor, newValue, mirrorImageName)
+						c = History.format("color", mirrorImage.style.backgroundColor, newValue, mirrorImageName)
 						mirrorImage.style.backgroundColor = newValue;
 						mirrorImage.click();
 						break;
 					case "component_select":
 						newValue = node.value.replace(thisSide, otherSide);
-						c = Change.format("select", mirrorImage.value, newValue, mirrorImageName);
+						c = History.format("select", mirrorImage.value, newValue, mirrorImageName);
 						mirrorImage.value = newValue;
 						mirrorImage.dispatchEvent(new Event("change"));
 						break;
 					case "armor_toggle":
-						c = Change.format("toggle", mirrorImage.checked, node.checked, mirrorImageName);
+						c = History.format("toggle", mirrorImage.checked, node.checked, mirrorImageName);
 						if (node.checked ^ mirrorImage.checked)
 							mirrorImage.click();
 						break;
@@ -139,9 +139,9 @@ function Builder () {
 				}
 				if ("target" in c) changes.push(c);
 			}
-			showPicker = Change.track = true;
+			showPicker = History.track = true;
 			if (changes.length > 0)
-				Change.push(changes);
+				History.push(changes);
 		});
 	}
 	function DOMParent (node) {
@@ -239,7 +239,7 @@ function Builder () {
 		return BuildManager(toggle, subslide);
 	}
 
-	function SelectChangeHandler (pairs, id) {
+	function SelectHistoryHandler (pairs, id) {
 		return function (event) {
 			if (!event.defaultPrevented)
 				variants.setItem(id, this.value, "select");
@@ -257,7 +257,7 @@ function Builder () {
 	}
 
 	function BuildDropDown (options, name, parent) {
-		/* Step 1: Find or Build a <select>.
+		/* Step 1: Find or build a <select>.
 		 * It might already exist, such as in the case of Back and Front Capes */
 		var id = name + "Select";
 		var select = find(id);
@@ -289,12 +289,12 @@ function Builder () {
 		}
 
 		/* Step 3: Simulate a change event, to trigger all the right handlers */
-		var handler = SelectChangeHandler(pairs, id, def);
+		var handler = SelectHistoryHandler(pairs, id, def);
 		select.addEventListener("change", handler);
 		handler.bind(select)({defaultPrevented: true});
 	}
 
-	function CheckboxChangeHandler (id, sublist, node) {
+	function CheckboxHistoryHandler (id, sublist, node) {
 		return function () {
 			if (this.checked) {
 				sublist.style.display = "";
@@ -326,7 +326,7 @@ function Builder () {
 			BuildManager(o, sublist);
 
 			/* Step 2.3: Attach an event handler to the checkbox */
-			var handler = CheckboxChangeHandler(id, sublist, o);
+			var handler = CheckboxHistoryHandler(id, sublist, o);
 			input.addEventListener("change", handler);
 			input.checked = variants.getItem(id);
 			handler.bind(input)();
@@ -435,65 +435,58 @@ function Builder () {
 		}
 	}
 }
-var Change = new ChangeHistory;
-var Build = new Builder;
 
-var Settings = {
-	Sex: async function (female, upload) {
-		var body;
-		var settings = find("settings");
-		if (female) {
-			body = "Female_Master";
-			settings.classList.remove("male");
-			settings.classList.add("female");
-		} else {
-			body = "Male_Master";
-			settings.classList.remove("female");
-			settings.classList.add("male");
-		}
-		var slides = settings.getElementsByClassName("slide_content");
-		for (var i = 0; i < slides.length; i++) {
-			slides[i].innerHTML = "";
-		}
+function SettingsManager (History, Vault, Builder) {
+	var slides = find("settings").getElementsByClassName("slide_content");
+	var main = find("main");
+	var title = find("title");
+	var reset = find("reset_wrapper");
 
-		Change.track = false; /* Do not track any settings during setup  */
-		var SVG = find("main").firstElementChild;
-		var helmet;
-		var body = Vault.load(body, function (body) {
-			Build.setup(body.children);
-			var h = body.getElementById("Helmets");
-			helmet = Vault.load("Helmets", function (helmets) {
-				helmets.setAttribute("class", "swappable");
-				Build.setup([helmets], upload);
-			}, h);
-		}, SVG);
-
-		localStorage.setItem("female_sex", female.toString());
-		await body;
-		zoom();
-		SVG.scrollIntoView({inline: "center"});
-		await helmet;
-		Change.track = true;
-	},
-	DarkMode: function (darkMode, keepBck) {
-		var className = "light_mode";
-		var bckName = "LogoLight";
-		var href = "assets/fog-reversed.jpg";
-		if (darkMode) {
-			className = "dark_mode";
-			bckName = "LogoDark";
-			href = "assets/fog-small.jpg";
-		}
-		Vault.load(bckName, function(logo) {
-			Download.Logo = logo.cloneNode(true);
-			if (!keepBck) {
-				Download.Background = {type: "image/jpg", data: href};
-				var reset = find("reset_wrapper");
-				reset.style.display = "none";
+	return {
+		Sex: async function (female, upload) {
+			var body = female ? "Female_Master" : "Male_Master";
+			for (var i = 0; i < slides.length; i++) {
+				slides[i].innerHTML = "";
 			}
-		}, find("title"));
-		document.body.className = className;
-		localStorage.setItem("dark_mode", darkMode.toString());
+
+			History.track = false; /* Do not track any changes during setup  */
+			var SVG = main.firstElementChild;
+			var helmet;
+			var body = Vault.load(body, function (body) {
+				Builder.setup(body.children);
+				var h = body.getElementById("Helmets");
+				helmet = Vault.load("Helmets", function (helmets) {
+					helmets.setAttribute("class", "swappable");
+					Builder.setup([helmets], upload);
+				}, h);
+			}, SVG);
+
+			localStorage.setItem("female_sex", female.toString());
+			await body;
+			zoom();
+			SVG.scrollIntoView({inline: "center"});
+			await helmet;
+			History.track = true;
+		},
+		DarkMode: function (darkMode, keepBck) {
+			var className = "light_mode";
+			var bckName = "LogoLight";
+			var href = "assets/fog-reversed.jpg";
+			if (darkMode) {
+				className = "dark_mode";
+				bckName = "LogoDark";
+				href = "assets/fog-small.jpg";
+			}
+			Vault.load(bckName, function(logo) {
+				Download.Logo = logo.cloneNode(true);
+				if (!keepBck) {
+					Download.Background = {type: "image/jpg", data: href};
+					reset.style.display = "none";
+				}
+			}, title);
+			document.body.className = className;
+			localStorage.setItem("dark_mode", darkMode.toString());
+		}
 	}
 }
 
@@ -512,10 +505,10 @@ function VariantsVault (asString) {
 	this.setItem = function (key, value, type) {
 		if (value == __vars[key])
 			return;
-		var c = Change.format(type, __vars[key], value, key);
+		var c = History.format(type, __vars[key], value, key);
 		if (!c)
 			return;
-		Change.push(c);
+		History.push(c);
 		__vars[key] = value;
 	}
 	this.getItem = function (key) {
@@ -524,17 +517,16 @@ function VariantsVault (asString) {
 	this.removeItem = function (key, type) {
 		if (!(key in __vars))
 			return;
-		var c = Change.format(type, __vars[key], undefined, key);
+		var c = History.format(type, __vars[key], undefined, key);
 		if (!c)
 			return;
-		Change.push(c);
+		History.push(c);
 		delete __vars[key];
 	}
 	this.toString = function () {
 		return JSON.stringify(__vars);
 	}
 }
-var variants = new VariantsVault(localStorage.getItem("variants"));
 
 function setupControlMenu () {
 	var controls = find("settings");
@@ -556,9 +548,9 @@ function setupControlMenu () {
 		if (!event.ctrlKey)
 			return;
 		if (event.key == "z")
-			Change.undo();
+			History.undo();
 		else if (event.key == "y")
-			Change.undo(1)
+			History.undo(1)
 	});
 }
 
@@ -604,6 +596,29 @@ function setupDragAndDrop () {
 }
 
 function onload () {
+	var nsw = navigator.serviceWorker;
+	if (nsw) {
+		nsw.onmessage = function (event) {
+			localStorage.clear();
+			var form = find("reload");
+			form.style.display = "";
+		};
+		nsw.register("sw.js");
+	}
+
+	Vault = new SVGVault;
+	History = new HistoryTracker;
+	Builder = new BuildManager;
+	Settings = new SettingsManager(History, Vault, Builder);
+	variants = new VariantsVault(localStorage.getItem("variants"));
+	settings = resetSettings(true);
+
+	Download = new Downloader;
+	Download.attach(find("download_svg"), "image/svg+xml");
+	Download.attach(find("download_jpeg"), "image/jpeg");
+
+	var Upload = new Uploader(window.location.search, Download);
+
 	var useDarkMode = localStorage.getItem("dark_mode");
 	if (useDarkMode !== null)
 		useDarkMode = (useDarkMode == "true");
@@ -613,43 +628,26 @@ function onload () {
 	find("color_scheme_picker").checked = useDarkMode;
 	find("kote").volume = 0.15;
 
-	settings = resetSettings(true);
-
-	Download = new Downloader;
-	Download.attach(find("download_svg"), "image/svg+xml");
-	Download.attach(find("download_jpeg"), "image/jpeg");
-
-	var Upload = new Uploader(window.location.search, Download);
 	setupControlMenu();
 	setupDragAndDrop();
 	setupCaching();
-	var nsw = navigator.serviceWorker;
-	if (!nsw) return;
-	nsw.onmessage = function (event) {
-		localStorage.clear();
-		var form = find("reload");
-		form.style.display = "";
-	};
-	nsw.register("sw.js");
 }
 
 function openFolder (folder) {
+	find("picker").click();
 	if (typeof folder == "string") {
 		folder = find(folder + "Options");
 	} else {
 		var radioName = folder.id.replace("Options", "Radio");
 		var radio = find(radioName);
-		if (radio.checked) {
-			find("picker").focus();
+		if (radio.checked)
 			return;
-		}
 		radio.checked = true;
 	}
 	var folders = document.getElementsByClassName("folder");
 	for (var i = 0; i < folders.length; i++)
 		folders[i].classList.remove("selected");
 	folder.classList.add("selected");
-	find("picker").click();
 }
 
 function toggleSlide (slide) {
@@ -703,6 +701,19 @@ function UpdateSponsor (category) {
 		delete closer.dataset.show;
 	else
 		closer.style.display = "none";
+}
+
+function resetSettings (cached) {
+	var cache = localStorage.getItem("settings");
+	if (cached && cache)
+		return JSON.parse(cache);
+	return {
+		undefined: "#FFFFFF",
+		"Bucket_Budget-BucketColor":	"#F74416",
+		"Visor_Budget-BucketColor":	"#000000",
+		"Rage_Gauntlet_RightColor":	"#08CB33",
+		"Rage_Gauntlet_LeftColor":	"#08CB33"
+	};
 }
 
 function zoom (scale) {
