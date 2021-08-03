@@ -270,8 +270,8 @@ function PickerFactory (history) {
 	}
 
 	function getDefaultColor (SVGNode, id) {
-		if (id in settings)
-			return settings[id];
+		if (id in colors)
+			return colors[id];
 		return "#FFF";
 	}
 
@@ -284,9 +284,9 @@ function PickerFactory (history) {
 			SVGNode.style.fill = hex;
 			colorText.innerText = hex;
 			if (hex === "#FFFFFF")
-				delete settings[button.id];
+				delete colors[button.id];
 			else
-				settings[button.id] = hex;
+				colors[button.id] = hex;
 		}
 		on(button, "click", function(event) {
 			if (event.defaultPrevented)

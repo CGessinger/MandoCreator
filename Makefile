@@ -1,8 +1,7 @@
 release: gallery pictures
 
-
 serve: release
-	php -S 0.0.0.0:8000
+	python -m http.server --bind 0.0.0.0
 
 clean:
 	@rm -rf images;
@@ -11,9 +10,8 @@ clean:
 .PHONY: clean
 
 #=========================IMAGES==========================
-LOGOS=images/LogoDark.svg images/LogoLight.svg
 
-pictures: images/Helmets.svg images/Male_Master.svg $(LOGOS)
+pictures: images/Helmets.svg images/Male_Master.svg images/Logo.svg
 	@touch pictures
 
 images:
@@ -62,6 +60,7 @@ wrapper_%.svg: $(RAW)
 	@echo "</svg>" >> $@;
 
 gallery/raw/%: gallery/male/% gallery/female/% | gallery/raw
+	@touch $@
 
 gallery/raw:
 	@mkdir -p $@;

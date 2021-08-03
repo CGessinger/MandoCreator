@@ -35,7 +35,7 @@ function Uploader (queryString, D) {
 			var id = node.id.replace(/_Toggle(Off|On)?|_Option/, "");
 			if (node.style.fill) {
 				var bn = id + "Color";
-				settings[bn] = node.style.fill;
+				colors[bn] = node.style.fill;
 			}
 			switch (node.getAttribute("class")) {
 				case null:
@@ -68,7 +68,7 @@ function Uploader (queryString, D) {
 			}
 		}
 		localStorage.setItem("variants", variants.toString());
-		localStorage.setItem("settings", JSON.stringify(settings));
+		localStorage.setItem("colors", JSON.stringify(colors));
 	}
 
 	var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -91,15 +91,13 @@ function Uploader (queryString, D) {
 			Settings.Sex(false, true);
 		}
 
-		var logo = (svg.getElementById("titleDark") != null);
-		Settings.DarkMode(logo, true);
 		if (img.tagName.toLowerCase() === "svg") {
 			D.Background = { type: "image/svg+xml", data: img.outerHTML, custom: true };
 		} else {
 			var href = img.getAttribute("href");
-			var mime = href.match(/^data:image\/[\w+-.]+/);
+			var mime = href.match(/^data:image\/([\w+-.]+)/);
 			if (!mime) return;
-			D.Background = { type: mime[0], data: href };
+			D.Background = { type: mime[1], data: href };
 		}
 	}
 
@@ -111,13 +109,13 @@ function Uploader (queryString, D) {
 	});
 
 	function readQueryString (st) {
-		var settings = {};
+		var options = {};
 		var regex = /(\w+)=([^&]*)&?/g;
 		var matches;
 		while (matches = regex.exec(st)) {
-			settings[matches[1]] = unescape(matches[2]);
+			options[matches[1]] = unescape(matches[2]);
 		}
-		return settings;
+		return options;
 	}
 
 	function loadPreset (preset, female) {
@@ -286,12 +284,10 @@ function Downloader () {
 			prepareCanvas(href);
 			document.body.style.backgroundImage = "url(\"" + href + "\")";
 
-			if (bck.custom) {
-				reset.style.display = "";
-			}
+			reset.style.display = bck.custom ? "" : "none";
 		},
 		get Background () {
-			var svgMain = SVGNode("svg", {
+			var svgMain = new SVGNode("svg", {
 				"version": "1.1",
 				"width": canvas.width,
 				"height": canvas.height,
@@ -300,7 +296,7 @@ function Downloader () {
 			if (bckSVG) {
 				svgMain.innerHTML = bckSVG;
 			} else {
-				SVGNode("image", {
+				var img = new SVGNode("image", {
 					"width": "100%",
 					"height": "100%",
 					"href": bckImgURI

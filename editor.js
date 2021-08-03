@@ -1,7 +1,7 @@
 /* MandoCreator */
 "use strict";
 var Download, History, Vault, Builder, Settings;
-var settings, variants;
+var colors, variants;
 
 function find (st) {
 	return document.getElementById(st);
@@ -437,56 +437,32 @@ function BuildManager () {
 }
 
 function SettingsManager (History, Vault, Builder) {
-	var slides = find("settings").getElementsByClassName("slide_content");
+	var slides = find("controls").getElementsByClassName("slide_content");
 	var main = find("main");
-	var title = find("title");
-	var reset = find("reset_wrapper");
 
-	return {
-		Sex: async function (female, upload) {
-			var body = female ? "Female_Master" : "Male_Master";
-			for (var i = 0; i < slides.length; i++) {
-				slides[i].innerHTML = "";
-			}
+	this.Sex = async function (female, upload) {
+		for (var i = 0; i < slides.length; i++)
+			slides[i].innerHTML = "";
 
-			History.track = false; /* Do not track any changes during setup  */
-			var SVG = main.firstElementChild;
-			var helmet;
-			var body = Vault.load(body, function (body) {
-				Builder.setup(body.children);
-				var h = body.getElementById("Helmets");
-				helmet = Vault.load("Helmets", function (helmets) {
-					helmets.setAttribute("class", "swappable");
-					Builder.setup([helmets], upload);
-				}, h);
-			}, SVG);
+		History.track = false; /* Do not track any changes during setup  */
+		var SVG = main.firstElementChild;
+		var helmet;
+		var master_file = female ? "Female_Master" : "Male_Master";
+		var body = Vault.load(master_file, function (Body) {
+			Builder.setup(Body.children);
+			var h = Body.getElementById("Helmets");
+			helmet = Vault.load("Helmets", function (helmets) {
+				helmets.setAttribute("class", "swappable");
+				Builder.setup([helmets], upload);
+			}, h);
+		}, SVG);
 
-			localStorage.setItem("female_sex", female.toString());
-			await body;
-			zoom();
-			SVG.scrollIntoView({inline: "center"});
-			await helmet;
-			History.track = true;
-		},
-		DarkMode: function (darkMode, keepBck) {
-			var className = "light_mode";
-			var bckName = "LogoLight";
-			var href = "assets/fog-reversed.jpg";
-			if (darkMode) {
-				className = "dark_mode";
-				bckName = "LogoDark";
-				href = "assets/fog-small.jpg";
-			}
-			Vault.load(bckName, function(logo) {
-				Download.Logo = logo.cloneNode(true);
-				if (!keepBck) {
-					Download.Background = {type: "image/jpg", data: href};
-					reset.style.display = "none";
-				}
-			}, title);
-			document.body.className = className;
-			localStorage.setItem("dark_mode", darkMode.toString());
-		}
+		localStorage.setItem("female_sex", female.toString());
+		await body;
+		zoom();
+		SVG.scrollIntoView({inline: "center"});
+		await helmet;
+		History.track = true;
 	}
 }
 
@@ -529,14 +505,14 @@ function VariantsVault (asString) {
 }
 
 function setupControlMenu () {
-	var controls = find("settings");
+	var controls = find("controls");
 	if (window.innerWidth > 786) {
-		controls.classList.remove("settings_collapsed");
+		controls.classList.remove("controls_collapsed");
 	}
 
 	var button = controls.firstElementChild;
 	button.addEventListener("click", function () {
-		controls.classList.toggle("settings_collapsed");
+		controls.classList.toggle("controls_collapsed");
 	});
 
 	var slides = controls.getElementsByClassName("slide");
@@ -556,12 +532,12 @@ function setupControlMenu () {
 
 function setupCaching () {
 	function cache () {
-		localStorage.setItem("settings", JSON.stringify(settings));
+		localStorage.setItem("colors", JSON.stringify(colors));
 		localStorage.setItem("variants", variants.toString());
 	}
 	function uncache () {
 		variants = new VariantsVault(localStorage.getItem("variants"));
-		settings = resetSettings(true);
+		colors = resetColorCache(true);
 	}
 
 	window.addEventListener("pagehide", cache);
@@ -611,21 +587,17 @@ function onload () {
 	Builder = new BuildManager;
 	Settings = new SettingsManager(History, Vault, Builder);
 	variants = new VariantsVault(localStorage.getItem("variants"));
-	settings = resetSettings(true);
+	colors = resetColorCache(true);
 
 	Download = new Downloader;
 	Download.attach(find("download_svg"), "image/svg+xml");
 	Download.attach(find("download_jpeg"), "image/jpeg");
 
 	var Upload = new Uploader(window.location.search, Download);
-
-	var useDarkMode = localStorage.getItem("dark_mode");
-	if (useDarkMode !== null)
-		useDarkMode = (useDarkMode == "true");
-	else
-		useDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-	Settings.DarkMode(useDarkMode);
-	find("color_scheme_picker").checked = useDarkMode;
+	Vault.load("Logo", function (logo) {
+		Download.Logo = logo.cloneNode(true);
+		setDefaultBackground();
+	}, find("title"));
 	find("kote").volume = 0.15;
 
 	setupControlMenu();
@@ -634,20 +606,22 @@ function onload () {
 }
 
 function openFolder (folder) {
-	find("picker").click();
 	if (typeof folder == "string") {
 		folder = find(folder + "Options");
 	} else {
 		var radioName = folder.id.replace("Options", "Radio");
 		var radio = find(radioName);
-		if (radio.checked)
+		if (radio.checked) {
+			find("picker").click();
 			return;
+		}
 		radio.checked = true;
 	}
 	var folders = document.getElementsByClassName("folder");
 	for (var i = 0; i < folders.length; i++)
 		folders[i].classList.remove("selected");
 	folder.classList.add("selected");
+	find("picker").click();
 }
 
 function toggleSlide (slide) {
@@ -703,8 +677,8 @@ function UpdateSponsor (category) {
 		closer.style.display = "none";
 }
 
-function resetSettings (cached) {
-	var cache = localStorage.getItem("settings");
+function resetColorCache (cached) {
+	var cache = localStorage.getItem("colors");
 	if (cached && cache)
 		return JSON.parse(cache);
 	return {
@@ -745,10 +719,14 @@ function reset (skipBuild, skipPrompt) {
 	var conf = skipPrompt || confirm("This will erase all settings, such as colors and armor pieces. Do you want to proceed? This cannot be undone.\n\nSave or save not. There is no undo.");
 	if (!conf) return;
 	variants = new VariantsVault;
-	settings = resetSettings(false);
+	colors = resetColorCache(false);
 	Vault = new SVGVault();
 	if (skipBuild)
 		return;
 	var female = find("female").checked;
 	Settings.Sex(female);
+}
+
+function setDefaultBackground () {
+	Download.Background = {type: "image/jpg", data: "assets/background.jpg"};
 }

@@ -64,7 +64,7 @@
 	<body class="light_mode" onload="onload()">
 		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WDVDR2H" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<nav>
-			<svg class="title" viewBox="0 0 420 70"><g id="title"></g></svg>
+			<svg id="title"></svg>
 			<div id="left_nav">
 				<span class="nav_icon">&#xE905;</span>
 				<div id="parts_list" class="sub_nav">
@@ -80,20 +80,18 @@
 					<label for="BackRadio" class="nav_label"><span class="nav_icon">&#xE904;</span>Back (Norac)</label>
 				</div>
 				<span class="nav_icon">&#xE921;</span>
-				<div id="settings_list" class="sub_nav">
+				<div class="sub_nav">
 					<input type="radio" name="sex" class="toggle_sex" id="male" checked onchange="Settings.Sex(false)"
 					><label for="male" class="label_sex"><span class="nav_icon">&#xe901;</span></label
 					><input type="radio" name="sex" class="toggle_sex" id="female" onchange="Settings.Sex(true)"
 					><label for="female" class="label_sex"><span class="nav_icon">&#xe902;</span></label>
 					<input id="background_upload" type="file" accept="image/*" hidden/>
 					<label for="background_upload" class="nav_label"><span class="nav_icon">&#xF03E;</span>Upload Background</label>
-					<button id="reset_wrapper" class="nav_label" onclick="Settings.DarkMode(find('color_scheme_picker').checked)"><span class="nav_icon">&#xF021;</span>Reset Background</button>
+					<button id="reset_wrapper" class="nav_label" onclick="setDefaultBackground()"><span class="nav_icon">&#xF021;</span>Reset Background</button>
 					<input id="reupload" type="file" accept="image/svg+xml" hidden/>
 					<label for="reupload" class="nav_label"><span class="nav_icon">&#xE910;</span>Continue Editing</label>
 					<a id="download_svg" class="nav_label" download="MandoCreator.svg" href="/"><span class="nav_icon">&#xE903;</span>Download as SVG</a>
 					<a id="download_jpeg" class="nav_label" download="MandoCreator.jpeg" href="/"><span class="nav_icon">&#xE903;</span>Download as JPEG</a>
-					<label id="color_scheme_label" for="color_scheme_picker" class="nav_label"><span class="nav_icon">&#xE90F;</span>Toggle Dark/Light</label>
-					<input type="checkbox" id="color_scheme_picker" style="opacity:0;" onchange="Settings.DarkMode(this.checked)"/>
 				</div>
 				<span class="nav_icon">&#xE90E;</span>
 				<div class="sub_nav">
@@ -109,8 +107,8 @@
 				</div>
 			</div>
 		</nav>
-		<div id="settings" class="settings_column settings_collapsed">
-			<button id="settings_toggle" title="Toggle Controls Menu">&#xE900;</button>
+		<div id="controls" class="controls_column controls_collapsed">
+			<button id="controls_toggle" title="Toggle Controls Menu">&#xE900;</button>
 			<div id="HelmetOptions" onclick="openFolder(this)" class="folder selected">
 				<div class="hidden">
 					<h2 class="slide_title">Helmet (Buy'ce)</h2>
