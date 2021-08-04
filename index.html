@@ -44,14 +44,13 @@
 			"@context": "https://schema.org",
 			"@type": "WebApplication",
 			"name": "MandoCreator",
-			"applicationCategory": "DesignApplicatioN",
+			"applicationCategory": "DesignApplication",
 			"browserRequirements": "requires HTML5 support",
 			"operatingSystem": "Any",
-			"softwareVersion": "3.1",
+			"softwareVersion": "3.3",
 			"offers": {
 				"@type": "Offer",
-				"price": "0",
-				"priceCurrency": "USD"
+				"price": "0"
 			},
 			"aggregateRating": {
 				"@type": "AggregateRating",
@@ -533,9 +532,9 @@
 
 		<footer>
 			<span>
-				<button class="undo_redo" onclick="Change.undo(0)">&#xe91f;</button>
+				<button class="undo_redo" onclick="History.undo(0)">&#xe91f;</button>
 				<button class="reset" onclick="reset()">Reset</button>
-				<button class="undo_redo" style="transform:scale(-1,1);" onclick="Change.undo(1)">&#xe91f;</button>
+				<button class="undo_redo" style="transform:scale(-1,1);" onclick="History.undo(1)">&#xe91f;</button>
 			</span>
 			<div class="zoom_wrapper">
 					<span class="zoom_icon" onclick="zoomInOut(-10)">&#xe916;</span
@@ -545,7 +544,8 @@
 		</footer>
 		<div style="display:none">
 			<canvas id="canvas" height="720" width="1280"></canvas>
-			<video id="kote" autoplay></video>
+			<audio id="kote" autoplay></audio>
+			<span id="vault"></span>
 		</div>
 		<script src="color.js"></script>
 		<script src="FileIO.js"></script>
