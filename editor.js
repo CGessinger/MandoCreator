@@ -276,10 +276,8 @@ function BuildManager () {
 			var label = prettify(o.id);
 
 			/* Step 2.1: Build an <option> and attach it to the <select> */
-			var opt = DOMNode("option", {value: o.id, label: label}, select);
-			opt.innerText = label;
-			if (o.id == def)
-				opt.selected = true;
+			var opt = new Option(label, o.id, false, (o.id == def));
+			select.add(opt);
 
 			/* Step 2.2: Build Controls */
 			var subParent = DOMNode("div", {id: o.id + "SubColors"});

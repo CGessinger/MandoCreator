@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<base href="httos://www.mandocreator.com" />
 		<meta charset="utf-8" />
 		<!-- Google Tag Manager -->
 		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-WDVDR2H');</script>
@@ -41,17 +42,20 @@
 		<title>MandoCreator</title>
 		<script type="application/ld+json">
 		{
-			"@context": "https://schema.org",
-			"@type": "WebApplication",
-			"name": "MandoCreator",
+			"@context":"https://schema.org",
+			"@type":"WebApplication",
+			"name":"MandoCreator",
+			"url":"https://www.mandocreator.com/",
+			"description":"Design your custom set of mandalorian Armor, also known as Beskar'gam. Choose from dozens of options, and bring your vision to life! Whether it's for Cosplay or an RPG character, the perfect design is only a few clicks away.",
 			"applicationCategory": "DesignApplication",
-			"browserRequirements": "requires HTML5 support",
 			"operatingSystem": "Any",
 			"softwareVersion": "3.3",
-			"offers": {
-				"@type": "Offer",
-				"price": "0"
-			},
+			"offers": [ {
+				"@type":"Offer",
+				"price":"0",
+				"priceCurrency":"USD",
+				"availability":"https://schema.org/InStock"
+			} ],
 			"aggregateRating": {
 				"@type": "AggregateRating",
 				"ratingValue": "4.5",
