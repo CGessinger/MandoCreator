@@ -229,16 +229,13 @@ legend {
 
 .image_column {
 	height: 100%;
-	padding: 3em;
+	margin: 0 3em;
+	padding: 3em 0;
 	overflow: auto;
 	text-align: center;
 	box-sizing: border-box;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
-}
-
-.image_column > svg {
-	padding-bottom: 3em;
 }
 
 .swappable {

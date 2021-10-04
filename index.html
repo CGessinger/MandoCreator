@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<base href="httos://www.mandocreator.com" />
 		<meta charset="utf-8" />
 		<!-- Google Tag Manager -->
 		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-WDVDR2H');</script>
@@ -79,8 +78,8 @@
 					<label for="UpperArmorRadio" class="nav_label"><span class="nav_icon">&#xE908;</span>Upper Body</label>
 					<input type="radio" name="parts_list" id="LowerArmorRadio" value="Lower Body" onchange="openFolder('LowerArmor')" hidden/>
 					<label for="LowerArmorRadio" class="nav_label"><span class="nav_icon">&#xE906;</span>Lower Body</label>
-					<input type="radio" name="parts_list" id="BackRadio" value="Back" onchange="openFolder('Back')" hidden/>
-					<label for="BackRadio" class="nav_label"><span class="nav_icon">&#xE904;</span>Back (Norac)</label>
+					<input type="radio" name="parts_list" id="ExtrasRadio" value="Extras" onchange="openFolder('Extras')" hidden/>
+					<label for="ExtrasRadio" class="nav_label"><span class="nav_icon">&#xE904;</span>Extras (Majyce)</label>
 				</div>
 				<span class="nav_icon">&#xE921;</span>
 				<div class="sub_nav">
@@ -164,6 +163,26 @@
 								onclick="setSponsor('AlterEgo','https://etsy.me/35mnHvm');">
 								<svg viewBox="0 0 80 80" class="preview_icon"><use href="#Helmet_Guardian"/></svg>
 								Guardian
+							</label><label class="type_button">
+								<input type="radio" name="helmet" id="Helmet_VanguardRadio"
+								onclick="setSponsor('AlterEgo','https://etsy.me/3d85DZy');">
+								<svg viewBox="0 0 80 80" class="preview_icon"><use href="#Helmet_Vanguard"/></svg>
+								Vanguard
+							</label><label class="type_button">
+								<input type="radio" name="helmet" id="Helmet_ForemanRadio"
+								onclick="setSponsor('AlterEgo','https://etsy.me/2T26gwO');">
+								<svg viewBox="0 0 80 80" class="preview_icon"><use href="#Helmet_Foreman"/></svg>
+								Foreman
+							</label><label class="type_button">
+								<input type="radio" name="helmet" id="Helmet_MountaineerRadio"
+								onclick="setSponsor('AlterEgo','https://etsy.me/2UDX6XX');">
+								<svg viewBox="0 0 80 80" class="preview_icon"><use href="#Helmet_Mountaineer"/></svg>
+								Mountaineer
+							</label><label class="type_button">
+								<input type="radio" name="helmet" id="Helmet_RookRadio"
+								onclick="setSponsor('AlterEgo','https://etsy.me/3xPfdsa');">
+								<svg viewBox="0 0 80 80" class="preview_icon"><use href="#Helmet_Rook"/></svg>
+								Rook
 							</label>
 						</details>
 						<details open>
@@ -298,27 +317,27 @@
 						<div id="ChestTypes" class="armor_types">
 							<label class="type_button current_variant">
 								<input type="radio" name="chest" id="Chest_ClassicRadio">
-								<svg viewBox="42 60 85 85" class="preview_icon"><use href="#Chest_Classic"/></svg>
+								<svg viewBox="42 5 85 85" class="preview_icon"><use href="#Chest_Classic"/></svg>
 								Classic
 							</label><label class="type_button">
 								<input type="radio" name="chest" id="Chest_LegacyRadio">
-								<svg viewBox="42 60 85 85" class="preview_icon"><use href="#Chest_Legacy"/></svg>
+								<svg viewBox="42 5 85 85" class="preview_icon"><use href="#Chest_Legacy"/></svg>
 								Legacy
 							</label><label class="type_button">
 								<input type="radio" name="chest" id="Chest_HeavyRadio">
-								<svg viewBox="42 60 85 85" class="preview_icon"><use href="#Chest_Heavy"/></svg>
+								<svg viewBox="42 5 85 85" class="preview_icon"><use href="#Chest_Heavy"/></svg>
 								Heavy
 							</label><label class="type_button">
 								<input type="radio" name="chest" id="Chest_Gunslinger-MK1Radio">
-								<svg viewBox="42 60 85 85" class="preview_icon"><use href="#Chest_Gunslinger-MK1"></use></svg>
+								<svg viewBox="42 5 85 85" class="preview_icon"><use href="#Chest_Gunslinger-MK1"></use></svg>
 								Gunslinger v1
 							</label><label class="type_button">
 								<input type="radio" name="chest" id="Chest_GunslingerRadio">
-								<svg viewBox="42 60 85 85" class="preview_icon"><use href="#Chest_Gunslinger"/></svg>
+								<svg viewBox="42 5 85 85" class="preview_icon"><use href="#Chest_Gunslinger"/></svg>
 								Gunslinger v2
 							</label><label class="type_button">
 								<input type="radio" name="chest" id="Chest_GalaxyRadio">
-								<svg viewBox="42 60 85 85" class="preview_icon"><use href="#Chest_Galaxy"/></svg>
+								<svg viewBox="42 5 85 85" class="preview_icon"><use href="#Chest_Galaxy"/></svg>
 								Galaxy
 							</label>
 						</div>
@@ -487,12 +506,13 @@
 					</div>
 				</div>
 			</div>
-			<div id="BackOptions" onclick="openFolder(this)" class="folder">
+			<div id="ExtrasOptions" onclick="openFolder(this)" class="folder">
 				<div class="hidden">
-					<h2 class="slide_title">Back (Norac)</h2>
+					<h2 class="slide_title">Extras (Majyce)</h2>
 				</div>
 				<div class="folder_content">
-					<div class="slide_content" id="CapeColors"></div>
+					<div class="slide_content" id="BackColors"></div>
+					<div class="slide_content" id="FrontColors"></div>
 				</div>
 			</div>
 		</div>

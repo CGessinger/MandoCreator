@@ -10,6 +10,7 @@ function find (st) {
 function SVGVault () {
 	var vault = {};
 	function finishUp (svg, onload, replace) {
+		svg = svg.cloneNode(true);
 		if (onload)
 			onload(svg);
 		if (replace && (replace != svg)) {
@@ -56,10 +57,10 @@ function BuildManager () {
 	}
 	var categories = {
 		"Helmet":	["Helmet"],
-		"UpperArmor":	["Biceps", "Chest", "ChestAttachments", "Collar", "Shoulders", "Gauntlets"],
+		"UpperArmor":	["Biceps", "Chest", "Chest-Attachments", "Collar", "Shoulders", "Gauntlets"],
 		"LowerArmor":	["Shins", "Foot", "Knees", "Thighs", "Groin", "Waist"],
 		"SoftParts":	["Boots", "Suit", "Sleeves", "Gloves", "Vest"],
-		"Back":		["Back", "Front"],
+		"Extras":	["Cape_Front", "Cape_Back"],
 		"Helmet":	["Helmets"]
 	}
 	function findCategory (id) {
@@ -445,7 +446,7 @@ function SettingsManager (History, Vault, Builder) {
 		History.track = false; /* Do not track any changes during setup  */
 		var SVG = main.firstElementChild;
 		var helmet;
-		var master_file = female ? "Female_Master" : "Male_Master";
+		var master_file = female ? "Female" : "Male";
 		var body = Vault.load(master_file, function (Body) {
 			Builder.setup(Body.children);
 			var h = Body.getElementById("Helmets");
