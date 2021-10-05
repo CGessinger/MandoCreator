@@ -11,14 +11,14 @@ function SVGVault () {
 	var vault = {};
 	function finishUp (svg, onload, replace) {
 		svg = svg.cloneNode(true);
-		if (onload)
-			onload(svg);
 		if (replace && (replace != svg)) {
 			var par = replace.parentNode;
 			par.replaceChild(svg, replace);
 		}
+		if (onload)
+			onload(svg);
 	}
-	this.load = function (name, onload, replace) {
+	this.getItem = function (name, onload, replace) {
 		if (name in vault)
 			return finishUp(vault[name], onload, replace);
 
@@ -261,11 +261,8 @@ function BuildManager () {
 		/* Step 1: Find or build a <select>.
 		 * It might already exist, such as in the case of Back and Front Capes */
 		var id = name + "Select";
-		var select = find(id);
-		if (!select) {
-			var wrapper = DOMNode("div", {class: "select_wrapper hidden"}, parent); /* For arrow placement */
-			select = DOMNode("select", {id: id, class: "component_select"}, wrapper);
-		}
+		var wrapper = DOMNode("div", {class: "select_wrapper hidden"}, parent); /* For arrow placement */
+		var select = DOMNode("select", {id: id, class: "component_select"}, wrapper);
 
 		/* Step 2: Iterate over the options, creating an <option> and Controls for each one */
 		var def = options[options.length-1].id;
@@ -435,7 +432,7 @@ function BuildManager () {
 	}
 }
 
-function SettingsManager (History, Vault, Builder) {
+function SettingsManager () {
 	var slides = find("controls").getElementsByClassName("slide_content");
 	var main = find("main");
 
@@ -447,10 +444,10 @@ function SettingsManager (History, Vault, Builder) {
 		var SVG = main.firstElementChild;
 		var helmet;
 		var master_file = female ? "Female" : "Male";
-		var body = Vault.load(master_file, function (Body) {
+		var body = Vault.getItem(master_file, function (Body) {
 			Builder.setup(Body.children);
 			var h = Body.getElementById("Helmets");
-			helmet = Vault.load("Helmets", function (helmets) {
+			helmet = Vault.getItem("Helmets", function (helmets) {
 				helmets.setAttribute("class", "swappable");
 				Builder.setup([helmets], upload);
 			}, h);
@@ -578,13 +575,13 @@ function onload () {
 			var form = find("reload");
 			form.style.display = "";
 		};
-		nsw.register("sw.js");
+		//nsw.register("sw.js");
 	}
 
 	Vault = new SVGVault;
 	History = new HistoryTracker;
 	Builder = new BuildManager;
-	Settings = new SettingsManager(History, Vault, Builder);
+	Settings = new SettingsManager;
 	variants = new VariantsVault(localStorage.getItem("variants"));
 	colors = resetColorCache(true);
 
@@ -593,7 +590,7 @@ function onload () {
 	Download.attach(find("download_jpeg"), "image/jpeg");
 
 	var Upload = new Uploader(window.location.search, Download);
-	Vault.load("Logo", function (logo) {
+	Vault.getItem("Logo", function (logo) {
 		Download.Logo = logo.cloneNode(true);
 		setDefaultBackground();
 	}, find("title"));
