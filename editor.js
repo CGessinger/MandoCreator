@@ -212,32 +212,39 @@ function BuildManager () {
 			BuildMirrorButton(label, parent, "Left");
 
 		/* Step 2: Find the default value and attach an event handler */
-		var defaultOn = (toggle.style.display !== "none");
-		var handler = function () {
-			if (this.checked) {
-				subslide.style.display = "";
-				toggle.style.display = "";
-			} else {
-				subslide.style.display = "none";
-				toggle.style.display = "none";
+		if (id.startsWith("Mask"))
+		{
+			input.onchange = function (event) {
+				this.checked = false;
+				showRoll('Neo');
 			}
-			if (this.checked != defaultOn)
-				variants.setItem(id, this.checked, "toggle");
-			else
-				variants.removeItem(id, "toggle");
+		} else {
+			var defaultOn = (toggle.style.display !== "none");
+			var handler = function () {
+				if (this.checked) {
+					subslide.style.display = "";
+					toggle.style.display = "";
+				} else {
+					subslide.style.display = "none";
+					toggle.style.display = "none";
+				}
+				if (this.checked != defaultOn)
+					variants.setItem(id, this.checked, "toggle");
+				else
+					variants.removeItem(id, "toggle");
+			}
+			input.addEventListener("change", handler);
+			input.checked = defaultOn;
+			if (variants.hasItem(id))
+				input.checked = variants.getItem(id);
+			handler.bind(input)();
 		}
-		input.addEventListener("change", handler);
-		input.checked = defaultOn;
-		if (variants.hasItem(id))
-			input.checked = variants.getItem(id);
-		handler.bind(input)();
 		return BuildManager(toggle, subslide);
 	}
 
 	function SelectHistoryHandler (pairs, id) {
 		return function (event) {
-			if (!event.defaultPrevented)
-				variants.setItem(id, this.value, "select");
+			variants.setItem(id, this.value, "select");
 			for (var i in pairs) {
 				var p = pairs[i];
 				if (p[0].id == this.value) {
@@ -280,7 +287,7 @@ function BuildManager () {
 		/* Step 3: Simulate a change event, to trigger all the right handlers */
 		var handler = SelectHistoryHandler(pairs, id, def);
 		select.addEventListener("change", handler);
-		handler.bind(select)({defaultPrevented: true});
+		handler.bind(select)();
 	}
 
 	function CheckboxHistoryHandler (id, sublist, node) {

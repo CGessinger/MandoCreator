@@ -180,13 +180,12 @@ function Downloader () {
 		);
 		var node, rem;
 		function advance () {
-			node = iter.nextNode();
 			if (rem) {
 				var parent = rem.parentNode;
 				parent.removeChild(rem);
 			}
 			rem = null;
-			return node;
+			return (node = iter.nextNode());
 		}
 		while (advance()) {
 			var display = node.style.display;
@@ -305,7 +304,7 @@ function Downloader () {
 			var logo = logoSVG.cloneNode(true);
 			svgMain.appendChild(logo);
 			var meta = SVGNode("metadata", {}, svgMain);
-			meta.innerHTML = " <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#' xmlns:dc='http://purl.org/dc/elements/1.1/'> <rdf:Description> <dc:creator>MandoCreator</dc:creator> <dc:publisher>https://www.mandocreator.com</dc:publisher> <dc:description>Your Beskar'gam design - created by MandoCreator</dc:description> <dc:format>image/svg+xml</dc:format> <dc:type>Image</dc:type> <dc:title>MandoCreator - Ner Berskar'gam</dc:title> <dc:date>" + (new Date).toISOString() + "</dc:date> </rdf:Description> </rdf:RDF>";
+			meta.innerHTML = "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#' xmlns:dc='http://purl.org/dc/elements/1.1/'> <rdf:Description> <dc:creator>MandoCreator</dc:creator> <dc:publisher>https://www.mandocreator.com</dc:publisher> <dc:description>Your Beskar'gam - created by MandoCreator</dc:description> <dc:format>image/svg+xml</dc:format> <dc:type>Image</dc:type> <dc:title>MandoCreator - Ner Berskar'gam</dc:title> <dc:date>" + (new Date).toISOString() + "</dc:date> </rdf:Description> </rdf:RDF>";
 			return svgMain;
 		},
 		attach: function (a, type) {
