@@ -60,7 +60,7 @@ function BuildManager () {
 		"UpperArmor":	["Biceps", "Chest", "Chest-Attachments", "Collar", "Shoulders", "Gauntlets"],
 		"LowerArmor":	["Shins", "Foot", "Knees", "Thighs", "Groin", "Waist"],
 		"SoftParts":	["Boots", "Suit", "Sleeves", "Gloves", "Vest"],
-		"Extras":	["Cape_Front", "Cape_Back"],
+		"Extras":	["Extras_Front", "Extras_Back"],
 		"Helmet":	["Helmets"]
 	}
 	function findCategory (id) {
@@ -77,12 +77,6 @@ function BuildManager () {
 		if (parent)
 			parent.appendChild(n);
 		return n;
-	}
-
-	function redirectClickTo (target) {
-		return function (event) {
-			target.click();
-		}
 	}
 
 	var hax = { /* Store the location for all those parts, where it isn't apparent from the name */
@@ -189,7 +183,7 @@ function BuildManager () {
 		var c = DOMNode("p", {class: "detail"}, label);
 
 		Picker.attach(b, c, target);
-		target.addEventListener("click", redirectClickTo(b));
+		target.addEventListener("click", function(event) { b.click(); } );
 		return b;
 	}
 
@@ -258,8 +252,7 @@ function BuildManager () {
 	}
 
 	function BuildDropDown (options, name, parent) {
-		/* Step 1: Find or build a <select>.
-		 * It might already exist, such as in the case of Back and Front Capes */
+		/* Step 1: Build a <select> */
 		var id = name + "Select";
 		var wrapper = DOMNode("div", {class: "select_wrapper hidden"}, parent); /* For arrow placement */
 		var select = DOMNode("select", {id: id, class: "component_select"}, wrapper);
@@ -608,8 +601,7 @@ function openFolder (folder) {
 		var radioName = folder.id.replace("Options", "Radio");
 		var radio = find(radioName);
 		if (radio.checked) {
-			find("picker").click();
-			return;
+			return find("picker").click();
 		}
 		radio.checked = true;
 	}
@@ -653,7 +645,7 @@ function setSponsor (sponsor, href) {
 		img.setAttribute("src", "assets/" + sponsor + ".png");
 	var parent = link.parentNode;
 	var closer = parent.getElementsByClassName("close_sponsors")[0];
-	closer.style.removeProperty("display");
+	closer.style.display = "";
 	closer.dataset.show = "true";
 }
 
@@ -703,7 +695,10 @@ function zoomInOut (step) {
 function showRoll (type) {
 	var rickRoll = find("rickroll");
 	rickRoll.setAttribute("src", "assets/" + type + "Roll.mp4");
-	rickRoll.style.removeProperty("display");
+	rickRoll.style.display = "";
+	setTimeout(function () {
+		rickRoll.style.display = "none";
+	}, 10000);
 }
 
 function playKote () {
