@@ -575,7 +575,7 @@ function onload () {
 			var form = find("reload");
 			form.style.display = "";
 		};
-		//nsw.register("sw.js");
+		nsw.register("sw.js");
 	}
 
 	Vault = new SVGVault;
