@@ -25,7 +25,6 @@ images/%.svg: pictures/%.svg | images
 		}; \
 		s|^\s*||; \
 		s|\s\{2,\}| |g; \
-		/<svg/ ! s/\s\(class\|style\)=.[^\"\']\+[\"\']//g; \
 		/Toggle/ { \
 			s|_Toggle|\" class=\"toggle|; \
 			s|Off|\" style=\"display:none|; \
