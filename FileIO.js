@@ -141,7 +141,7 @@ function Uploader (queryString, D) {
 	var female;
 	var options = readQueryString(queryString);
 	if ("sex" in options)
-		female = +options["sex"];
+		female = options["sex"] == "1";
 	else
 		female = (localStorage.getItem("female_sex") == "true");
 

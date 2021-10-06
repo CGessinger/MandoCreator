@@ -43,7 +43,7 @@ function SVGVault () {
 	}
 }
 
-function BuildManager () {
+function BuildManager (History) {
 	var Picker = new PickerFactory(History);
 	var swapLists = [];
 	var icons = {
@@ -432,7 +432,7 @@ function BuildManager () {
 	}
 }
 
-function SettingsManager () {
+function SettingsManager (Builder, History, Vault) {
 	var slides = find("controls").getElementsByClassName("slide_content");
 	var main = find("main");
 
@@ -453,7 +453,7 @@ function SettingsManager () {
 			}, h);
 		}, SVG);
 
-		localStorage.setItem("female_sex", female.toString());
+		localStorage.setItem("female_sex", (!!female).toString());
 		await body;
 		zoom();
 		SVG.scrollIntoView({inline: "center"});
@@ -469,7 +469,10 @@ function VariantsVault (asString) {
 	};
 	if (asString)
 		__vars = JSON.parse(asString);
-	localStorage.setItem("variants", JSON.stringify(__vars));
+	function cache () {
+		localStorage.setItem("variants", JSON.stringify(__vars));
+	}
+	cache();
 
 	this.hasItem = function (key) {
 		return key in __vars;
@@ -482,6 +485,7 @@ function VariantsVault (asString) {
 			return;
 		History.push(c);
 		__vars[key] = value;
+		cache();
 	}
 	this.getItem = function (key) {
 		return __vars[key];
@@ -494,6 +498,7 @@ function VariantsVault (asString) {
 			return;
 		History.push(c);
 		delete __vars[key];
+		cache();
 	}
 	this.toString = function () {
 		return JSON.stringify(__vars);
@@ -524,26 +529,6 @@ function setupControlMenu () {
 		else if (event.key == "y")
 			History.undo(1)
 	});
-}
-
-function setupCaching () {
-	function cache () {
-		localStorage.setItem("colors", JSON.stringify(colors));
-		localStorage.setItem("variants", variants.toString());
-	}
-	function uncache () {
-		variants = new VariantsVault(localStorage.getItem("variants"));
-		colors = resetColorCache(true);
-	}
-
-	window.addEventListener("pagehide", cache);
-	window.addEventListener("pageshow", uncache);
-	document.addEventListener("visibilitychange", function() {
-		if (document.visibilityState == "hidden")
-			cache();
-		else
-			uncache();
-	})
 }
 
 function setupDragAndDrop () {
@@ -580,8 +565,8 @@ function onload () {
 
 	Vault = new SVGVault;
 	History = new HistoryTracker;
-	Builder = new BuildManager;
-	Settings = new SettingsManager;
+	Builder = new BuildManager(History);
+	Settings = new SettingsManager(Builder, History, Vault);
 	variants = new VariantsVault(localStorage.getItem("variants"));
 	colors = resetColorCache(true);
 
@@ -598,7 +583,6 @@ function onload () {
 
 	setupControlMenu();
 	setupDragAndDrop();
-	setupCaching();
 }
 
 function openFolder (folder) {

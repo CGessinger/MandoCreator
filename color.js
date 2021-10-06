@@ -4,6 +4,12 @@ var showPicker = true;
 function PickerFactory (history) {
 	var latestChange = {};
 
+	function cache() {
+		if (!colors)
+			return;
+		localStorage.setItem("colors", JSON.stringify(colors));
+	}
+
 	function on(elem, event, func) {
 		elem.addEventListener(event, func, {passive: false});
 	}
@@ -250,6 +256,7 @@ function PickerFactory (history) {
 					document.body.appendChild(wrapper); /* Move it somewhere else! */
 					history.push(latestChange);
 					latestChange = {};
+					cache();
 				} else {
 					p.appendChild(wrapper);
 				}
