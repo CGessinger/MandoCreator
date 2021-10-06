@@ -20,6 +20,23 @@
 	font-display: block;
 }
 
+@keyframes drive_off {
+	0%	{ right:10%; }
+	15%	{ right:25%; }
+	25%	{ right:20%; }
+	50%	{ right:100%; }
+	50.1%	{ right:-10em; }
+	80%	{ right:-10em; }
+	100%	{ right:10%; }
+}
+
+#Mouse_Droid {
+	position: absolute;
+	bottom: 17%;
+	right: 10%;
+	animation: none 3s ease-in-out 1;
+}
+
 body {
 	margin: 0;
 	color: var(--mainFont);
@@ -235,6 +252,10 @@ legend {
 	box-sizing: border-box;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
+}
+
+.image_column g {
+	pointer-events: visiblefill;
 }
 
 .swappable {

@@ -11,7 +11,7 @@ clean:
 
 #=========================IMAGES==========================
 
-pictures: images/Helmets.svg images/Female.svg images/Male.svg images/Logo.svg images/Background.svg
+pictures: images/Helmets.svg images/Female.svg images/Male.svg images/Logo.svg images/Background.svg images/Mouse-Droid.svg
 	@touch pictures
 
 images:

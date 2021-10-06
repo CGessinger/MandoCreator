@@ -445,6 +445,7 @@ function SettingsManager (Builder, History, Vault) {
 		var helmet;
 		var master_file = female ? "Female" : "Male";
 		var body = Vault.getItem(master_file, function (Body) {
+			Body.style.position = "relative";
 			Builder.setup(Body.children);
 			var h = Body.getElementById("Helmets");
 			helmet = Vault.getItem("Helmets", function (helmets) {
@@ -716,4 +717,11 @@ function setDefaultBackground () {
 			data: bck.outerHTML
 		};
 	});
+}
+
+function startAnim(o) {
+	o.style.animationName = "drive_off";
+}
+function removeAnim(o) {
+	o.style.animationName = "none";
 }

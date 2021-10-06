@@ -277,12 +277,12 @@ function Downloader () {
 			switch (bck.type) {
 				case "image/svg+xml":
 					href = "data:image/svg+xml," + encodeSVG(bck.data);
-					bckSVG = bck.data;
-					var viewBox = bck.data.match(/viewBox="-?\d+ -?\d (\d+) (\d+)"/)
-					if (viewBox) {
-						width = viewBox[1];
-						height = viewBox[2];
-					}
+					var svg = new SVGNode("svg");
+					svg.innerHTML = bck.data;
+					bckSVG = svg.firstElementChild;
+					var viewBox = bckSVG.viewBox.baseVal;
+					width = viewBox.width;
+					height = viewBox.height;
 					break;
 				default:
 					href = bck.data;
@@ -291,7 +291,18 @@ function Downloader () {
 			prepareCanvas(href, width, height);
 			document.body.style.backgroundImage = "url(\"" + href + "\")";
 
-			reset.style.display = bck.custom ? "" : "none";
+			if (bck.custom) {
+				reset.style.display = "";
+				var mouse = find("Mouse_Droid");
+				if (mouse)
+					mouse.remove();
+			} else {
+				reset.style.display = "none";
+				Vault.getItem("Mouse-Droid", function (mouse) {
+					bckSVG.appendChild(mouse.cloneNode(true));
+					document.body.insertBefore(mouse, document.body.firstElementChild);
+				});
+			}
 		},
 		get Background () {
 			var svgMain = new SVGNode("svg", {
@@ -301,7 +312,7 @@ function Downloader () {
 				"viewBox": [0, 0, canvas.width, canvas.height].join(" ")
 			});
 			if (bckSVG) {
-				svgMain.innerHTML = bckSVG;
+				svgMain.appendChild(bckSVG);
 			} else {
 				var img = new SVGNode("image", {
 					"width": "100%",
