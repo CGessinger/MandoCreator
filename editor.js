@@ -710,5 +710,10 @@ function reset (skipBuild, skipPrompt) {
 }
 
 function setDefaultBackground () {
-	Download.Background = {type: "image/jpg", data: "assets/background.jpg"};
+	Vault.getItem("Background", function (bck) {
+		Download.Background = {
+			type: "image/svg+xml",
+			data: bck.outerHTML
+		};
+	});
 }

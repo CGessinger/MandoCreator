@@ -24,8 +24,7 @@ body {
 	margin: 0;
 	color: var(--mainFont);
 	font-family: 'icomoon', 'Raleway', Verdana, sans-serif;
-	background: var(--mainColor) no-repeat center;
-	background-size: cover;
+	background: var(--mainColor) center / cover no-repeat;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;

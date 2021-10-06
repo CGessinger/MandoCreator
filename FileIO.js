@@ -232,16 +232,16 @@ function Downloader () {
 		return image64;
 	}
 
-	function prepareCanvas (href) {
+	function prepareCanvas (href, width, height) {
 		canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 		img.onload = function () {
 			/* Background Image */
-			if (this.width > 1920) {
+			if (this.width > 1280) {
 				canvas.width = this.width;
 				canvas.height = this.height;
 			} else {
-				canvas.width = 1920;
-				canvas.height = this.height/this.width*1920;
+				canvas.width = 1280;
+				canvas.height = Math.round(this.height / this.width * 1280);
 			}
 			canvasCtx.drawImage(this, 0, 0, canvas.width, canvas.height);
 			if (!href.startsWith("data"))
@@ -252,8 +252,10 @@ function Downloader () {
 			img.onload = function () {
 				canvasCtx.drawImage(this, 0, 0);
 			};
-			img.src = svg2img(logoSVG, canvas.width, Math.round(canvas.height*0.07));
+			img.src = svg2img(logoSVG, canvas.width, Math.round(canvas.height / 12) );
 		};
+		if (width) img.width = width;
+		if (height) img.height = height;
 		img.src = href;
 	}
 
@@ -267,20 +269,26 @@ function Downloader () {
 
 	return {
 		set Logo (svg) {
-			logoSVG = svg;
+			logoSVG = svg.cloneNode(true);
 		},
 		set Background (bck) {
 			var href;
+			var width = 0, height = 0;
 			switch (bck.type) {
 				case "image/svg+xml":
 					href = "data:image/svg+xml," + encodeSVG(bck.data);
 					bckSVG = bck.data;
+					var viewBox = bck.data.match(/viewBox="-?\d+ -?\d (\d+) (\d+)"/)
+					if (viewBox) {
+						width = viewBox[1];
+						height = viewBox[2];
+					}
 					break;
 				default:
 					href = bck.data;
 					bckSVG = null;
 			}
-			prepareCanvas(href);
+			prepareCanvas(href, width, height);
 			document.body.style.backgroundImage = "url(\"" + href + "\")";
 
 			reset.style.display = bck.custom ? "" : "none";
