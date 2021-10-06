@@ -236,12 +236,14 @@ function Downloader () {
 		canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 		img.onload = function () {
 			/* Background Image */
-			if (this.width > 1280) {
-				canvas.width = this.width;
-				canvas.height = this.height;
+			var w = this.width ? this.width : width;
+			var h = this.height ? this.height : height;
+			if (w > 1280) {
+				canvas.width = w;
+				canvas.height = h;
 			} else {
 				canvas.width = 1280;
-				canvas.height = Math.round(this.height / this.width * 1280);
+				canvas.height = Math.round(h / w * 1280);
 			}
 			canvasCtx.drawImage(this, 0, 0, canvas.width, canvas.height);
 			if (!href.startsWith("data"))
@@ -254,8 +256,6 @@ function Downloader () {
 			};
 			img.src = svg2img(logoSVG, canvas.width, Math.round(canvas.height / 12) );
 		};
-		if (width) img.width = width;
-		if (height) img.height = height;
 		img.src = href;
 	}
 
