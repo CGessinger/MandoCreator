@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 25.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" style="stroke:black;stroke-width:1px;">
+<svg version="2.0" id="Background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" style="stroke:black;stroke-width:1px;">
 <style type="text/css">
-	#Mouse_Droid {
-		animation: none 3s ease-in-out 1;
-		transform: translate(40%, 70%);
-	}
-
-	@keyframes drive_off {
-		0%	{ transform: translate(40%, 70%); }
-		15%	{ transform: translate(25%, 70%); }
-		25%	{ transform: translate(30%, 70%); }
-		50%	{ transform: translate(-60%, 70%); }
-		50.1%	{ transform: translate(100%, 70%); }
-		80%	{ transform: translate(60%, 70%); }
-		100%	{ transform: translate(40%, 70%); }
-	}
-
 	.st0{fill:#0F0F0F;}
 	.st1{fill:#363636;}
 	.st2{fill:#2A2A2A;}
@@ -37,14 +22,6 @@
 	.st17{fill:#919191;}
 	.st18{fill:#FFFFFF;}
 </style>
-<script>
-function startAnim(o) {
-	o.style.animationName = 'drive_off';
-}
-function removeAnim(o) {
-	o.style.animationName = 'none';
-}
-</script>
 <rect y="806.8" class="st0" width="1920" height="273.2"/>
 <rect y="978" class="st1" width="423.6" height="102"/>
 <rect x="1496.4" y="978" class="st1" width="423.6" height="102"/>

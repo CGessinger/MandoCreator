@@ -714,14 +714,7 @@ function setDefaultBackground () {
 	Vault.getItem("Background", function (bck) {
 		Download.Background = {
 			type: "image/svg+xml",
-			data: bck.outerHTML
+			data: bck
 		};
 	});
-}
-
-function startAnim(o) {
-	o.style.animationName = "drive_off";
-}
-function removeAnim(o) {
-	o.style.animationName = "none";
 }

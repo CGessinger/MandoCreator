@@ -1,10 +1,17 @@
 "use strict";
 
 function Uploader (queryString, D) {
+	var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 	var readerBck = new FileReader;
 	var file;
 	readerBck.onload = function() {
-		D.Background = {type: file.type, data: this.result, custom: true};
+		var data = this.result;
+		if (file.type == "image/svg+xml") {
+			svg.innerHTML = data;
+			data = svg.firstElementChild;
+			svg.innerHTML = "";
+		}
+		D.Background = {type: file.type, data: data, custom: true};
 		file = null;
 	}
 	find("background_upload").addEventListener("change", function() {
@@ -71,7 +78,6 @@ function Uploader (queryString, D) {
 		localStorage.setItem("colors", JSON.stringify(colors));
 	}
 
-	var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 	function dissectSVG () {
 		svg.innerHTML = this.result;
 		svg = svg.firstElementChild;
@@ -92,7 +98,7 @@ function Uploader (queryString, D) {
 		}
 
 		if (img.tagName.toLowerCase() === "svg") {
-			D.Background = { type: "image/svg+xml", data: img.outerHTML, custom: true };
+			D.Background = { type: "image/svg+xml", data: img, custom: true };
 		} else {
 			var href = img.getAttribute("href");
 			var mime = href.match(/^data:image\/([\w+-.]+)/);
@@ -232,24 +238,18 @@ function Downloader () {
 		return image64;
 	}
 
-	function prepareCanvas (href, width, height) {
+	function prepareCanvas (href) {
 		canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 		img.onload = function () {
 			/* Background Image */
-			var w = this.width ? this.width : width;
-			var h = this.height ? this.height : height;
-			if (w > 1280) {
-				canvas.width = w;
-				canvas.height = h;
+			if (this.width > 1280) {
+				canvas.width = this.width;
+				canvas.height = this.height;
 			} else {
 				canvas.width = 1280;
-				canvas.height = Math.round(h / w * 1280);
+				canvas.height = Math.round(this.height / this.width * 1280);
 			}
 			canvasCtx.drawImage(this, 0, 0, canvas.width, canvas.height);
-			if (!href.startsWith("data"))
-				bckImgURI = canvas.toDataURL('image/jpeg');
-			else
-				bckImgURI = href
 			/* Logo */
 			img.onload = function () {
 				canvasCtx.drawImage(this, 0, 0);
@@ -272,24 +272,21 @@ function Downloader () {
 			logoSVG = svg.cloneNode(true);
 		},
 		set Background (bck) {
-			var href;
 			var width = 0, height = 0;
 			switch (bck.type) {
 				case "image/svg+xml":
-					href = "data:image/svg+xml," + encodeSVG(bck.data);
-					var svg = new SVGNode("svg");
-					svg.innerHTML = bck.data;
-					bckSVG = svg.firstElementChild;
+					bckSVG = bck.data;
 					var viewBox = bckSVG.viewBox.baseVal;
-					width = viewBox.width;
-					height = viewBox.height;
+					bckSVG.setAttribute("width", viewBox.width);
+					bckSVG.setAttribute("height", viewBox.height);
+					bckImgURI = "data:image/svg+xml," + encodeSVG(bckSVG.outerHTML);
 					break;
 				default:
-					href = bck.data;
+					bckImgURI = bck.data;
 					bckSVG = null;
 			}
-			prepareCanvas(href, width, height);
-			document.body.style.backgroundImage = "url(\"" + href + "\")";
+			prepareCanvas(bckImgURI);
+			document.body.style.backgroundImage = "url(\"" + bckImgURI + "\")";
 
 			if (bck.custom) {
 				reset.style.display = "";
@@ -300,6 +297,8 @@ function Downloader () {
 				reset.style.display = "none";
 				Vault.getItem("Mouse-Droid", function (mouse) {
 					bckSVG.appendChild(mouse.cloneNode(true));
+					mouse.onmouseenter = function() { mouse.style.animationName = "drive_off"; };
+					mouse.onanimationend = function () { mouse.style.animationName = "none"; };
 					document.body.insertBefore(mouse, document.body.firstElementChild);
 				});
 			}
