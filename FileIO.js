@@ -98,7 +98,10 @@ function Uploader (queryString, D) {
 		}
 
 		if (img.tagName.toLowerCase() === "svg") {
-			D.Background = { type: "image/svg+xml", data: img, custom: true };
+			if (img.getAttribute("id").startsWith("Background"))
+				setDefaultBackground();
+			else
+				D.Background = { type: "image/svg+xml", data: img, custom: true };
 		} else {
 			var href = img.getAttribute("href");
 			var mime = href.match(/^data:image\/([\w+-.]+)/);
@@ -272,6 +275,9 @@ function Downloader () {
 			logoSVG = svg.cloneNode(true);
 		},
 		set Background (bck) {
+			var mouse = find("Mouse_Droid");
+			if (mouse)
+				mouse.remove();
 			var width = 0, height = 0;
 			switch (bck.type) {
 				case "image/svg+xml":
@@ -290,9 +296,6 @@ function Downloader () {
 
 			if (bck.custom) {
 				reset.style.display = "";
-				var mouse = find("Mouse_Droid");
-				if (mouse)
-					mouse.remove();
 			} else {
 				reset.style.display = "none";
 				Vault.getItem("Mouse-Droid", function (mouse) {

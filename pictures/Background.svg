@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 25.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="2.0" id="Background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" style="stroke:black;stroke-width:1px;">
+
+<animate
+	href="#Mouse_Droid"
+	attributeType="XML"
+	attributeName="x"
+	begin="click"
+	dur="3s"
+	from="800"
+	to="800"
+	values="800;500;650;-1100;-1100;1100;1100;800"
+/>
+
+<animate
+	href="#Mouse_Droid"
+	attributeType="XML"
+	attributeName="opacity"
+	begin="click"
+	dur="3s"
+	from="1"
+	to="1"
+	values="1;1;1;1;0;0;1;1"
+/>
+
 <style type="text/css">
 	.st0{fill:#0F0F0F;}
 	.st1{fill:#363636;}
