@@ -232,8 +232,8 @@ function Downloader () {
 	}
 
 	function svg2img(svg, width, height) {
-		svg.setAttribute("width", width || 1000);
-		svg.setAttribute("height", height || 700);
+		svg.setAttribute("width", width || 1920);
+		svg.setAttribute("height", height || 1080);
 		var copy = svg.cloneNode(true);
 		var str = xml.serializeToString(copy);
 		var svgEnc = encodeSVG(str);
@@ -283,9 +283,7 @@ function Downloader () {
 				case "image/svg+xml":
 					bckSVG = bck.data;
 					var viewBox = bckSVG.viewBox.baseVal;
-					bckSVG.setAttribute("width", viewBox.width);
-					bckSVG.setAttribute("height", viewBox.height);
-					bckImgURI = "data:image/svg+xml," + encodeSVG(bckSVG.outerHTML);
+					bckImgURI = svg2img(bckSVG, viewBox.width, viewBox.height);
 					break;
 				default:
 					bckImgURI = bck.data;
