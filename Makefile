@@ -55,27 +55,26 @@ wrapper_%.svg: $(RAW)
 	echo "<?xml version='1.0' encoding='UTF-8' standalone='no'?><!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg version='1.1' xmlns='http://www.w3.org/2000/svg'>" > $@;
 	for i in $(notdir $(wildcard $*/*)); do \
 		sed " \
-			1D; \
+			1s|.*|<g id='$$i'>|; \
+			s|/svg></svg>|/g>|; \
 		" $*/$$i >> $@; done;
 	echo "</svg>" >> $@;
 
 gallery/raw/%: gallery/male/% gallery/female/% | gallery/raw
 	echo $@;
-	echo 
-	sed " \
-		/<meta/ ! { d; }; \
-		/.<meta/ { \
-			s|.\+<meta|<?xml version='1.0' encoding='UTF-8'?><svg version='1.1' xmlns='http://www.w3.org/2000/svg'>\n<meta|; \
-			P; \
-			D; \
+	sed -i " \
+		/<meta/ { \
+			s|.*<meta|<?xml version='1.0' encoding='UTF-8'?><svg version='1.1' xmlns='http://www.w3.org/2000/svg'><meta|; \
+			p; h; d; \
 		}; \
-		: top \
-		/^<meta/ { \
-			N; \
-			s|\n[[:space:]]*\n|\n|g; \
-			b top; \
-		} \
-	" $<;
+		x; \
+		/meta/ ! { x; d; }; \
+		x; \
+		/[^[:space:]]/ ! { d; }; \
+	" $^;
+	sed " \
+		s|[[:space:]]d=[\"'][^\"']*[\"']||; \
+	" $< > $@;
 
 gallery/raw:
 	mkdir -p $@;

@@ -1,1 +1,614 @@
-<svg id='Male-Body' viewBox='0 0 1800 3300' version='1.1' xmlns='http://www.w3.org/2000/svg' style='stroke:black;stroke-width:2px;fill-rule:evenodd;height:100%;'><g id='Back_M' transform='translate(0,560)'><g id='Cape_M'><path id='Torn-Full-Cape_Back_M' class='option' style='display: inherit; fill: rgb(52, 38, 25);'/></g></g><g id='Flight-Suit' transform='translate(260,575)'><g id='Soft-Parts_M'><g id='Suit_M'><g id='Neck-Seal_M'><g id='Standard-Neck-Seal_M' class='option' style='display: inherit; fill: rgb(32, 31, 31);'></g></g><g id='Flight-Suit_M' style='fill: rgb(32, 31, 31);'></g></g><g id='Boots_M'><g id='Gunslinger_Boots_M' class='option' style='display: inherit;'><g id='Main_Gunslinger-Boot_M' style='fill: rgb(32, 31, 31);'></g><g id='Bottom_Gunslinger-Boot_M' style='fill: rgb(0, 0, 0);'></g><g id='Top_Gunslinger-Boot_M' style='fill: rgb(53, 53, 53);'></g><g id='Side_Gunslinger-Boot_M' style='fill: rgb(78, 78, 78);'></g></g></g><g id='Sleeves_M' class='toggle' style='fill: rgb(47, 44, 44);'></g><g id='Gloves_M'><g id='Left-Glove_M'><g id='Basic_Left_Glove_M' class='option' style='display: inherit; fill: rgb(32, 31, 31);'></g></g><g id='Right-Glove_M'><g id='Basic_Right_Glove_M' class='option' style='display: inherit; fill: rgb(32, 31, 31);'></g></g></g></g></g><g id='Biceps_Current' transform='translate(199,588)'><g id='LeftBiceps_Current'><g id='Left-Biceps_M'><g id='Basic_Biceps_Left_M' class='option' style='display: inherit;'><path id='Main_Basic_Biceps_Left_M' style='fill: rgb(122, 20, 20);'/><path id='Strap_Basic_Biceps_Left_M' style='fill: rgb(0, 0, 0);'/><path id='Trauma-Plate_Basic_Biceps_Left_M' class='toggle' style='fill: rgb(47, 44, 44);'/></g></g></g><g id='RightBiceps_Current'><g id='Right-Biceps_M'><g id='Basic_Biceps_Right_M' class='option' style='display: inherit;'><path id='Main_Basic_Biceps_Right_M' style='fill: rgb(122, 20, 20);'/><path id='Strap_Basic_Biceps_Right_M' style='fill: rgb(0, 0, 0);'/><path id='Trauma-Plate_Basic_Biceps_Right_M' class='toggle' style='fill: rgb(47, 44, 44);'/></g></g></g></g><g id='Vest_Current' transform='translate(260,575)'><path id='Vest_M' style='fill: rgb(32, 31, 31);'/></g><g id='Upper-Body_M_Wrapper' transform='translate(199,588)'><g id='Chest_Current' class='Heavy_M'><g id='Abdomen_Heavy_M'><g id='Under-Plates_Abdomen_Heavy_M' style='fill: rgb(122, 20, 20);'><rect x='582.9' y='714.9'/><rect x='582.9' y='745.1'/><rect x='582.9' y='775.3'/><rect x='582.9' y='805.5'/><rect x='582.9' y='835.6'/></g><g id='Abdomen-Plate_Heavy_M' style='fill: rgb(18, 17, 17);'><rect x='628.9' y='586.1'/></g></g><g id='Neck-Armor_Heavy_M'><g id='Neck-Plate_Heavy_M' style='fill: rgb(47, 44, 44);'></g><g id='Secondary_Neck-Plate_Heavy_M' style='fill: rgb(255, 0, 0);'></g></g><g id='Full-Chest_Heavy_M'><path id='Under-Plate_Chest_Heavy_M' style='fill: rgb(133, 133, 133);'/><g id='Chest-Plate_Heavy_M' style='fill: rgb(18, 17, 17);'></g><g id='Accents_Chest-Plate_Heavy_MOn' class='toggle'><g id='Accent-3_Accents_Chest-Plate_Heavy_M' style='fill: rgb(178, 0, 0);'><rect x='819.6' y='243.9'/><rect x='819.6' y='262.2'/></g><path id='Accent-2_Accents_Chest-Plate_Heavy_M' style='fill: rgb(47, 44, 44);'/><g id='Accent-1_Accents_Chest-Plate_Heavy_M' style='fill: rgb(47, 44, 44);'></g></g></g><g id='Iron-Heart_Heavy_M'><path id='Heart_Heavy_M' style='fill: rgb(128, 111, 111);'/><g id='Center_Heart_Heavy_M' class='option' style='display: inherit; fill: rgb(236, 50, 50);'><rect x='688.5' y='336.9'/><rect x='688.5' y='367.2'/><rect x='705.1' y='367.2'/><rect x='709.3' y='367.2'/><rect x='696.8' y='367.2'/><rect x='701' y='367.2'/><rect x='692.6' y='367.2'/></g></g></g><g id='Collar_Current'><g id='Collar_M' class='toggle' style=''><g id='Cloth-Wrap-Left_Collar_M' class='option' style='display: inherit;'><g id='Main_Cloth-Wrap-Left_Collar_M' style='fill: rgb(75, 56, 38);'></g><path id='Buckle_Cloth-Wrap-Left_Collar_M' style='fill: rgb(139, 87, 42);'/></g></g></g><g id='ChestAttachments_Current'><g id='Chest-Attachments_M'><g id='Bandoleer_Accessories_Chest_M' class='option' style='display: inherit;'><g id='Strap_Bandoleer_Accessories_Chest_M' style='fill: rgb(80, 54, 32);'></g><g id='Ammo_Bandoleer_Accessories_Chest_M' style='fill: rgb(120, 108, 108);'><g></g><g></g><g></g><g></g></g><g id='Buckles_Bandoleer_Accessories_Chest_M' style='fill: rgb(89, 3, 3);'></g></g></g></g><g id='Shoulders_Current'><g id='LeftShoulder_Current'><g id='Left-Shoulder_M'><g id='Legacy-x2_Shoulder_Left_M' class='option' style='display: inherit;'><path id='Plate-2_Shoulder_Left_Legacy-x2_M' style='fill: rgb(122, 20, 20);'/><path id='Trauma-Plate-2_Shoulder_Legacy-x2_Left_M' class='toggle' style='fill: rgb(47, 44, 44);'/><path id='Plate-1_Shoulder_Left_Legacy-x2_M' style='fill: rgb(122, 20, 20);'/><path id='Trauma-Plate-1_Shoulder_Legacy-x2_Left_M' class='toggle' style='fill: rgb(47, 44, 44);'/></g></g></g><g id='RightShoulder_Current'><g id='Right-Shoulder_M'><g id='Legacy-x2_Shoulder_Right_M' class='option' style='display: inherit;'><path id='Plate-2_Shoulder_Right_Legacy-x2_M' style='fill: rgb(122, 20, 20);'/><path id='Trauma-Plate-2_Shoulder_Legacy-x2_Right_M' class='toggle' style='fill: rgb(47, 44, 44);'/><path id='Plate-1_Shoulder_Right_Legacy-x2_M' style='fill: rgb(122, 20, 20);'/><path id='Trauma-Plate-1_Shoulder_Legacy-x2_Right_M' class='toggle' style='fill: rgb(47, 44, 44);'/></g></g></g></g><g id='Gauntlets_Current'><g id='LeftGauntlets_Current'><g id='Left-Gauntlets_M'><g id='Heavy_Gauntlet_Left_M' class='option' style='display: inherit;'><g id='Top-2_Heavy_Gauntlet_Left_M' style='fill: rgb(0, 0, 0);'><circle cx='1307.9' cy='879.6' r='4'/></g><g id='Top-1_Heavy_Gauntlet_Left_M' style='fill: rgb(79, 79, 79);'></g><g id='Accent-Top_Heavy_Gauntlet_Left_M' style='fill: rgb(178, 0, 0);'></g><path id='Bottom_Heavy_Gauntlet_Left_M' style='fill: rgb(47, 44, 44);'/><g id='Accent-Bottom_Heavy_Gauntlet_Left_M' style='fill: rgb(122, 20, 20);'></g><g id='No-Device_Attachment_Heavy_Gauntlet_Left_M' class='option' style='display: inherit;'></g></g></g></g><g id='RightGauntlets_Current'><g id='Right-Gauntlets_M'><g id='Heavy_Gauntlet_Right_M' class='option' style='display: inherit;'><g id='Top-2_Heavy_Gauntlet_Right_M' style='fill: rgb(0, 0, 0);'><circle cx='96' cy='879.6' r='4'/></g><g id='Top-1_Heavy_Gauntlet_Right_M' style='fill: rgb(79, 79, 79);'></g><g id='Accent-Top_Heavy_Gauntlet_Right_M' style='fill: rgb(178, 0, 0);'></g><path id='Bottom_Heavy_Gauntlet_Right_M' style='fill: rgb(47, 44, 44);'/><g id='Accent-Bottom_Heavy_Gauntlet_Right_M' style='fill: rgb(122, 20, 20);'></g><g id='No-Device_Attachment_Heavy_Gauntlet_Right_M' class='option' style='display: inherit;'></g></g></g></g></g></g><g id='Lower-Body_M_Wrapper' transform='translate(268,1340)'><g id='Knees_Current'><g id='LeftKnee_Current'><g id='Left-Knee_M'><g id='Legacy_Knee_Left_M' class='option' style='display: inherit;'><g id='Missiles_Legacy-Knee_Left_M' class='toggle' style=''><path id='Base_Missiles_Legacy-Knee_Left_M' style='fill: rgb(73, 9, 9);'/><g id='Missile-2_Missiles_Legacy-Knee_Left_M' style='fill: rgb(29, 29, 29);'></g><g id='Missile-1_Missiles_Legacy-Knee_Left_M' style='fill: rgb(29, 29, 29);'></g></g><path id='Plate-2_Legacy-Knee_Left_M' style='fill: rgb(73, 9, 9);'/><path id='Plate-1_Legacy-Knee_Left_M' style='fill: rgb(18, 17, 17);'/></g></g></g><g id='RightKnee_Current'><g id='Right-Knee_M'><g id='Legacy_Knee_Right_M' class='option' style='display: inherit;'><g id='Missiles_Legacy-Knee_Right_M' class='toggle' style=''><path id='Base_Missiles_Legacy-Knee_Right_M' style='fill: rgb(73, 9, 9);'/><g id='Missile-2_Missiles_Legacy-Knee_Right_M' style='fill: rgb(29, 29, 29);'></g><g id='Missile-1_Missiles_Legacy-Knee_Right_M' style='fill: rgb(29, 29, 29);'></g></g><path id='Plate-2_Legacy-Knee_Right_M' style='fill: rgb(73, 9, 9);'/><path id='Plate-1_Legacy-Knee_Right_M' style='fill: rgb(18, 17, 17);'/></g></g></g></g><g id='Shins_Current'><g id='LeftShin_Current'><g id='Left-Shin_M'><g id='Basic_Shin_Left_M' class='option' style='display: inherit;'><path id='Shin_Basic-Shin_Left_M' style='fill: rgb(18, 17, 17);'/></g></g></g><g id='RightShin_Current'><g id='Right-Shin_M'><g id='Basic_Shin_Right_M' class='option' style='display: inherit;'><path id='Shin_Basic-Shin_Right_M' style='fill: rgb(18, 17, 17);'/></g></g></g></g><g id='Ankles_Current'><g id='LeftAnkle_Current'><g id='Left-Ankle_M'><g id='Basic_Ankle_Left_M' class='option' style='display: inherit;'><path id='Main_Basic-Ankle_Left_M' style='fill: rgb(104, 2, 2);'/><path id='Trauma-Plate_Basic-Ankle_Left_M' class='toggle' style='fill: rgb(18, 17, 17);'/></g></g></g><g id='RightAnkle_Current'><g id='Right-Ankle_M'><g id='Basic_Ankle_Right_M' class='option' style='display: inherit;'><path id='Main_Basic-Ankle_Right_M' style='fill: rgb(104, 2, 2);'/><path id='Trauma-Plate_Basic-Ankle_Right_M' class='toggle' style='fill: rgb(18, 17, 17);'/></g></g></g></g><g id='Toes_Current'><g id='LeftToe_Current'><g id='Left-Toe_M'><g id='None_Toe_Left_M' class='option' style='display: inherit;'></g></g></g><g id='RightToe_Current'><g id='Right-Toe_M'><g id='None_Toe_Right_M' class='option' style='display: inherit;'></g></g></g></g><g id='Thighs_Current'><g id='LeftThigh_Current'><g id='Left-Thigh_M'><g id='Basic_Thigh_Left_M' class='option' style='display: inherit;'><path id='Thigh_Basic-Thigh_Left_M' style='fill: rgb(104, 2, 2);'/><path id='Trauma-Plate_Basic-Thigh_Left_M' class='toggle' style='fill: rgb(18, 17, 17);'/><g id='Ridge_Basic-Thigh_Left_M' class='toggle' style='fill: rgb(44, 5, 5);'></g></g></g></g><g id='RightThigh_Current'><g id='Right-Thigh_M'><g id='Basic_Thigh_Right_M' class='option' style='display: inherit;'><path id='Thigh_Basic-Thigh_Right_M' style='fill: rgb(104, 2, 2);'/><path id='Trauma-Plate_Basic-Thigh_Right_M' class='toggle' style='fill: rgb(18, 17, 17);'/><g id='Ridge_Basic-Thigh_Right_M' class='toggle' style='fill: rgb(44, 5, 5);'></g></g></g></g></g><g id='Groin_Current'><g id='Groin_M'><g id='Basic_Groin_M' class='option' style='display: inherit;'><path id='Groin-Plate_Basic_M' style='fill: rgb(87, 16, 16);'/><path id='Trauma-Plating_Groin_M' class='toggle' style='fill: rgb(18, 17, 17);'/></g></g></g><g id='Waist_Current' class='M'><g id='Accessories_Waist_M'><g id='Left-Holster_M' class='toggle' style=''><g id='Belt-Holster_Left_M' class='option' style='display: inherit;'><g id='Weapon_Belt-Holster-Left_M'><g id='Main_Weapon_Belt-Holster-Left_M' style='fill: rgb(0, 0, 0);'></g><g id='Accent_Weapon_Belt-Holster-Left_M' style='fill: rgb(134, 3, 3);'></g></g><path id='Holster_Belt-Holster-Left_M' style='fill: rgb(92, 48, 9);'/></g></g><g id='Right-Holster_M' class='toggle' style=''><g id='Belt-Holster_Right_M' class='option' style='display: inherit;'><g id='Weapon_Belt-Holster-Right_M'><g id='Main_Weapon_Belt-Holster-Right_M' style='fill: rgb(0, 0, 0);'></g><g id='Accent_Weapon_Belt-Holster-Right_M' style='fill: rgb(134, 3, 3);'></g></g><path id='Holster_Belt-Holster-Right_M' style='fill: rgb(92, 48, 9);'/></g></g></g><g id='Under-Belt_M'><g id='Girth-Belt_M' class='option' style='display: inherit; fill: rgb(139, 87, 42);'></g></g><g id='Belt_M'><g id='Pouch-Belt-4_M' class='option' style='display: inherit;'><path id='Main_Pouch-Belt-4_M' style='fill: rgb(80, 54, 32);'/><rect id='Buckle_Pouch-Belt-4_M' x='573.5' y='137.9' style='fill: rgb(57, 51, 51);'/><g id='Pouches_Pouch-Belt-4_M' style='fill: rgb(109, 66, 28);'><g></g><g></g></g></g></g></g></g><g id='Front_M' transform='translate(0,550)'><g id='Cape_M'></g></g><g id='Helmet_M_Wrapper' transform='translate(550,35)'><g id='Helmet_Current' class='Gunslinger'><g id='Left-Earcap_Gunslinger' class='toggle'><g id='Ear-Cap_Left_Gunslinger' style='fill: rgb(32, 31, 31);'><rect x='551' y='356.8'/></g></g><g id='Right-Earcap_Gunslinger' class='toggle'><g id='Sub-Antenna_Right_Gunslinger' class='option' style='display: inherit;'><g id='Shaft_Sub-Antenna_Right_Gunslinger' style='fill: rgb(105, 105, 105);'></g><g id='Base_Sub-Antenna_Right_Gunslinger' style='fill: rgb(32, 31, 31);'></g></g><g id='Ear-Cap_Right_Gunslinger' style='fill: rgb(32, 31, 31);'><rect x='136.8' y='357.1'/></g></g><g id='Helmet_Pieces_Gunslinger'><g id='Face_Gunslinger' style='fill: rgb(32, 31, 31);'></g><g id='Cheeks_Gunslinger' style='fill: rgb(63, 63, 63);'></g><path id='Visor_Gunslinger' style='fill: rgb(0, 0, 0);'/><g id='Eyes_Gunslinger' style='fill: rgb(52, 52, 52);'><rect x='159.3' y='354.6'/></g><path id='Dome_Gunslinger' style='fill: rgb(32, 31, 31);'/><path id='Ridge-2_Gunslinger' style='fill: rgb(83, 3, 3);'/><path id='Ridge-1_Gunslinger' style='fill: rgb(18, 17, 17);'/></g></g></g></svg>
+<?xml version='1.0' encoding='UTF-8'?><svg version='1.1' xmlns='http://www.w3.org/2000/svg'><metadata><rdf:rdf xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/"> <rdf:description> <dc:creator>MandoCreator</dc:creator> <dc:publisher>https://www.mandocreator.com</dc:publisher> <dc:description>Your Beskar'gam - created by MandoCreator</dc:description> <dc:format>image/svg+xml</dc:format> <dc:type>Image</dc:type> <dc:title>MandoCreator - Ner Berskar'gam</dc:title> <dc:date>2021-10-08T16:57:42.434Z</dc:date> </rdf:description> </rdf:rdf></metadata><svg version="1.1" id="Male" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 -55 169 300" style="fill: white; fill-rule: evenodd; stroke: black; stroke-width: 0.2px; pointer-events: none; position: relative; height: 100%;">
+<g id="Extras_Back">
+<g id="Back">
+<path id="Torn-Full-Cape_Back" class="option" style="fill: rgb(52, 38, 25); display: inherit;"/></g>
+</g>
+<g id="Suit">
+<g id="Neck-Seal">
+<g id="Standard-Neck-Seal" class="option" style="fill: rgb(32, 31, 31); display: inherit;">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<g id="Flight-Suit" style="fill: rgb(32, 31, 31);">
+<path/>
+<g>
+<path/>
+<path/>
+</g>
+</g>
+<g id="Sleeves" class="toggle" style="fill: rgb(47, 44, 44);">
+<g>
+<path/>
+<path/>
+</g>
+<g>
+<path/>
+<path/>
+</g>
+</g>
+</g>
+<g id="Boots">
+<g id="Gunslinger_Boots" class="option" style="display: inherit;">
+<g id="Main_Gunslinger-Boot" style="fill: rgb(32, 31, 31);">
+<path/>
+<path/>
+</g>
+<g id="Bottom_Gunslinger-Boot" style="fill: rgb(0, 0, 0);">
+<path/>
+<path/>
+</g>
+<g id="Top_Gunslinger-Boot" style="fill: rgb(53, 53, 53);">
+<path/>
+<path/>
+</g>
+<g id="Side_Gunslinger-Boot" style="fill: rgb(78, 78, 78);">
+<path/>
+<path/>
+</g>
+</g>
+</g>
+<g id="Gloves">
+<g id="Left-Glove">
+<g id="Basic_Left_Glove" class="option" style="fill: rgb(32, 31, 31); display: inherit;">
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<g id="Right-Glove">
+<g id="Basic_Right_Glove" class="option" style="fill: rgb(32, 31, 31); display: inherit;">
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+</g>
+<g id="Biceps">
+<g id="Left-Biceps">
+<g id="Basic_Biceps_Left" class="option" style="display: inherit;">
+<path id="Main_Basic_Biceps_Left" style="fill: rgb(122, 20, 20);"/>
+<path id="Strap_Basic_Biceps_Left" style="fill: rgb(0, 0, 0);"/>
+<path id="Trauma-Plate_Basic_Biceps_Left" class="toggle" style="fill: rgb(47, 44, 44);"/>
+</g>
+</g>
+<g id="Right-Biceps">
+<g id="Basic_Biceps_Right" class="option" style="display: inherit;">
+<path id="Main_Basic_Biceps_Right" style="fill: rgb(122, 20, 20);"/>
+<path id="Strap_Basic_Biceps_Right" style="fill: rgb(0, 0, 0);"/>
+<path id="Trauma-Plate_Basic_Biceps_Right" class="toggle" style="fill: rgb(47, 44, 44);"/>
+</g>
+</g>
+</g>
+<g id="Vest" style="fill: rgb(32, 31, 31);">
+<path/>
+</g>
+<g class="swappable" id="Chest">
+<g id="Chest_Heavy" style="visibility: visible;">
+<g id="Abdomen_Heavy">
+<g id="Under-Plates_Abdomen_Heavy" style="fill: rgb(122, 20, 20);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<g id="Abdomen-Plate_Heavy" style="fill: rgb(18, 17, 17);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<g id="Neck-Armor_Heavy">
+<g id="Neck-Plate_Heavy" style="fill: rgb(47, 44, 44);">
+<path/>
+<path/>
+</g>
+<g id="Secondary_Neck-Plate_Heavy" style="fill: rgb(255, 0, 0);">
+<path/>
+<path/>
+</g>
+</g>
+<g id="Full-Chest_Heavy">
+<path id="Under-Plate_Chest_Heavy" style="fill: rgb(133, 133, 133);"/>
+<g id="Chest-Plate_Heavy" style="fill: rgb(18, 17, 17);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<g id="Accents_Chest-Plate_Heavy" class="toggle">
+<g id="Accent-3_Accents_Chest-Plate_Heavy" style="fill: rgb(178, 0, 0);">
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<path id="Accent-2_Accents_Chest-Plate_Heavy" style="fill: rgb(47, 44, 44);"/>
+<g id="Accent-1_Accents_Chest-Plate_Heavy" style="fill: rgb(47, 44, 44);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+</g>
+<g id="Iron-Heart_Heavy">
+<path id="Heart_Heavy" style="fill: rgb(128, 111, 111);"/>
+<g id="Center_Heart_Heavy" class="option" style="fill: rgb(236, 50, 50); display: inherit;">
+<rect x="83.3" y="34.1" width="2.3" height="2.8"/>
+<rect x="83.3" y="37" width="0.4" height="2.8"/>
+<rect x="84.9" y="37" width="0.4" height="2.8"/>
+<rect x="85.2" y="37" width="0.4" height="2.8"/>
+<rect x="84.1" y="37" width="0.4" height="2.8"/>
+<rect x="84.5" y="37" width="0.4" height="2.8"/>
+<rect x="83.7" y="37" width="0.4" height="2.8"/>
+</g>
+</g>
+</g>
+</g>
+<g id="Chest-Attachments">
+<g id="Bandoleer_Accessories_Chest" class="option" style="display: inherit;">
+<g id="Strap_Bandoleer_Accessories_Chest" style="fill: rgb(80, 54, 32);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<g id="Ammo_Bandoleer_Accessories_Chest" style="fill: rgb(120, 108, 108);">
+<g>
+<g>
+<path/>
+<path/>
+<path/>
+</g>
+<g>
+<path/>
+<path/>
+</g>
+</g>
+<g>
+<g>
+<path/>
+<path/>
+<path/>
+</g>
+<g>
+<path/>
+<path/>
+</g>
+</g>
+<g>
+<g>
+<path/>
+<path/>
+<path/>
+</g>
+<g>
+<path/>
+<path/>
+</g>
+</g>
+<g>
+<g>
+<path/>
+<path/>
+<path/>
+</g>
+<g>
+<path/>
+<path/>
+</g>
+</g>
+</g>
+<g id="Buckles_Bandoleer_Accessories_Chest" style="fill: rgb(89, 3, 3);">
+<g>
+<path/>
+<path/>
+</g>
+<path/>
+</g>
+</g>
+</g>
+<g id="Collar">
+<g id="Cloth-Wrap-Left_Collar" class="option" style="display: inherit;">
+<g id="Main_Cloth-Wrap-Left_Collar" style="fill: rgb(75, 56, 38);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<path id="Buckle_Cloth-Wrap-Left_Collar" style="fill: rgb(139, 87, 42);"/>
+</g>
+</g>
+<svg version="1.1" id="Helmets" xmlns="http://www.w3.org/2000/svg" y="-54px" height="85px" viewBox="0 0 80 80" class="swappable">
+<g id="Helmet_Gunslinger" style="visibility: visible;">
+<g id="Left-Earcap_Gunslinger" class="toggle">
+<g id="Ear-Cap_Left_Gunslinger" style="fill: rgb(32, 31, 31);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<rect x="58.7" y="36" width="1.2" height="1"/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<g id="Right-Earcap_Gunslinger" class="toggle">
+<g id="Sub-Antenna_Right_Gunslinger" class="option" style="display: inherit;">
+<g id="Shaft_Sub-Antenna_Right_Gunslinger" style="fill: rgb(105, 105, 105);">
+<path/>
+<path/>
+</g>
+<g id="Base_Sub-Antenna_Right_Gunslinger" style="fill: rgb(32, 31, 31);">
+<path/>
+<path/>
+</g>
+</g>
+<g id="Ear-Cap_Right_Gunslinger" style="fill: rgb(32, 31, 31);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<rect x="20.1" y="36" width="1.2" height="1"/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<g id="Helmet_Pieces_Gunslinger">
+<g id="Face_Gunslinger" style="fill: rgb(32, 31, 31);">
+<path/>
+<path/>
+</g>
+<g id="Cheeks_Gunslinger" style="fill: rgb(63, 63, 63);">
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<path id="Visor_Gunslinger" style="fill: rgb(0, 0, 0);"/>
+<g id="Eyes_Gunslinger" style="fill: rgb(52, 52, 52);">
+<path/>
+<rect x="22.2" y="35.8" width="35.6" height="0.5"/>
+</g>
+<path id="Dome_Gunslinger" style="fill: rgb(32, 31, 31);"/>
+<path id="Ridge-2_Gunslinger" style="fill: rgb(83, 3, 3);"/>
+<path id="Ridge-1_Gunslinger" style="fill: rgb(18, 17, 17);"/>
+</g>
+</g>
+</svg>
+<g id="Shoulders">
+<g id="Left-Shoulder">
+<g id="Legacy-x2_Shoulder_Left" class="option" style="display: inherit;">
+<path id="Plate-2_Shoulder_Left_Legacy-x2" style="fill: rgb(122, 20, 20);"/>
+<path id="Trauma-Plate-2_Shoulder_Legacy-x2_Left" class="toggle" style="fill: rgb(47, 44, 44);"/>
+<path id="Plate-1_Shoulder_Left_Legacy-x2" style="fill: rgb(122, 20, 20);"/>
+<path id="Trauma-Plate-1_Shoulder_Legacy-x2_Left" class="toggle" style="fill: rgb(47, 44, 44);"/>
+</g>
+</g>
+<g id="Right-Shoulder">
+<g id="Legacy-x2_Shoulder_Right" class="option" style="display: inherit;">
+<path id="Plate-2_Shoulder_Right_Legacy-x2" style="fill: rgb(122, 20, 20);"/>
+<path id="Trauma-Plate-2_Shoulder_Legacy-x2_Right" class="toggle" style="fill: rgb(47, 44, 44);"/>
+<path id="Plate-1_Shoulder_Right_Legacy-x2" style="fill: rgb(122, 20, 20);"/>
+<path id="Trauma-Plate-1_Shoulder_Legacy-x2_Right" class="toggle" style="fill: rgb(47, 44, 44);"/>
+</g>
+</g>
+</g>
+<g id="Gauntlets">
+<g id="Left-Gauntlets">
+<g id="Heavy_Gauntlet_Left" class="option" style="display: inherit;">
+<g id="Top-2_Heavy_Gauntlet_Left" style="fill: rgb(0, 0, 0);">
+<path/>
+<path/>
+<path/>
+</g>
+<g id="Top-1_Heavy_Gauntlet_Left" style="fill: rgb(79, 79, 79);">
+<path/>
+<path/>
+</g>
+<g id="Accent-Top_Heavy_Gauntlet_Left" style="fill: rgb(178, 0, 0);">
+<path/>
+<path/>
+<path/>
+</g>
+<path id="Bottom_Heavy_Gauntlet_Left" style="fill: rgb(47, 44, 44);"/>
+<g id="Accent-Bottom_Heavy_Gauntlet_Left" style="fill: rgb(122, 20, 20);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<g id="No-Device_Attachment_Heavy_Gauntlet_Left" class="option" style="display: inherit;">
+</g>
+</g>
+</g>
+<g id="Right-Gauntlets">
+<g id="Heavy_Gauntlet_Right" class="option" style="display: inherit;">
+<g id="Top-2_Heavy_Gauntlet_Right" style="fill: rgb(0, 0, 0);">
+<path/>
+<path/>
+<path/>
+</g>
+<g id="Top-1_Heavy_Gauntlet_Right" style="fill: rgb(79, 79, 79);">
+<path/>
+<path/>
+</g>
+<g id="Accent-Top_Heavy_Gauntlet_Right" style="fill: rgb(178, 0, 0);">
+<path/>
+<path/>
+<path/>
+</g>
+<path id="Bottom_Heavy_Gauntlet_Right" style="fill: rgb(47, 44, 44);"/>
+<g id="Accent-Bottom_Heavy_Gauntlet_Right" style="fill: rgb(122, 20, 20);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<g id="No-Device_Attachment_Heavy_Gauntlet_Right" class="option" style="display: inherit;">
+</g>
+</g>
+</g>
+</g>
+<g id="Shins">
+<g id="Left-Shin">
+<g id="Basic_Shin_Left" class="option" style="display: inherit;">
+<path id="Shin_Basic-Shin_Left" style="fill: rgb(18, 17, 17);"/>
+<path id="Trauma-Plating_Basic-Shin_Left" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<g id="Ridge_Basic-Shin_Left" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+</g>
+</g>
+<g id="Right-Shin">
+<g id="Basic_Shin_Right" class="option" style="display: inherit;">
+<path id="Shin_Basic-Shin_Right" style="fill: rgb(18, 17, 17);"/>
+<path id="Trauma-Plating_Basic-Shin_Right" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<g id="Ridge_Basic-Shin_Right" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+</g>
+</g>
+</g>
+<g id="Foot">
+<g id="Left-Ankle">
+<g id="Basic_Ankle_Left" class="option" style="display: inherit;">
+<path id="Main_Basic-Ankle_Left" style="fill: rgb(104, 2, 2);"/>
+<path id="Trauma-Plate_Basic-Ankle_Left" class="toggle" style="fill: rgb(18, 17, 17);"/>
+</g>
+</g>
+<g id="Left-Toe">
+<g id="None_Toe_Left" class="option" style="display: inherit;">
+</g>
+</g>
+<g id="Right-Ankle">
+<g id="Basic_Ankle_Right" class="option" style="display: inherit;">
+<path id="Main_Basic-Ankle_Right" style="fill: rgb(104, 2, 2);"/>
+<path id="Trauma-Plate_Basic-Ankle_Right" class="toggle" style="fill: rgb(18, 17, 17);"/>
+</g>
+</g>
+<g id="Right-Toe">
+<g id="None_Toe_Right" class="option" style="display: inherit;">
+</g>
+</g>
+</g>
+<g id="Knees">
+<g id="Left-Knee">
+<g id="Legacy_Knee_Left" class="option" style="display: inherit;">
+<g id="Missiles_Legacy-Knee_Left" class="toggle" style="">
+<path id="Base_Missiles_Legacy-Knee_Left" style="fill: rgb(73, 9, 9);"/>
+<g id="Missile-2_Missiles_Legacy-Knee_Left" style="fill: rgb(29, 29, 29);">
+<path/>
+<path/>
+</g>
+<g id="Missile-1_Missiles_Legacy-Knee_Left" style="fill: rgb(29, 29, 29);">
+<path/>
+<path/>
+</g>
+</g>
+<path id="Plate-2_Legacy-Knee_Left" style="fill: rgb(73, 9, 9);"/>
+<path id="Plate-1_Legacy-Knee_Left" style="fill: rgb(18, 17, 17);"/>
+</g>
+</g>
+<g id="Right-Knee">
+<g id="Legacy_Knee_Right" class="option" style="display: inherit;">
+<g id="Missiles_Legacy-Knee_Right" class="toggle" style="">
+<path id="Base_Missiles_Legacy-Knee_Right" style="fill: rgb(73, 9, 9);"/>
+<g id="Missile-2_Missiles_Legacy-Knee_Right" style="fill: rgb(29, 29, 29);">
+<path/>
+<path/>
+</g>
+<g id="Missile-1_Missiles_Legacy-Knee_Right" style="fill: rgb(29, 29, 29);">
+<path/>
+<path/>
+</g>
+</g>
+<path id="Plate-2_Legacy-Knee_Right" style="fill: rgb(73, 9, 9);"/>
+<path id="Plate-1_Legacy-Knee_Right" style="fill: rgb(18, 17, 17);"/>
+</g>
+</g>
+</g>
+<g id="Thighs">
+<g id="Left-Thigh">
+<g id="Basic_Thigh_Left" class="option" style="display: inherit;">
+<path id="Thigh_Basic-Thigh_Left" style="fill: rgb(104, 2, 2);"/>
+<path id="Trauma-Plate_Basic-Thigh_Left" class="toggle" style="fill: rgb(18, 17, 17);"/>
+<g id="Ridge_Basic-Thigh_Left" class="toggle" style="fill: rgb(44, 5, 5);">
+<path/>
+<path/>
+</g>
+</g>
+</g>
+<g id="Right-Thigh">
+<g id="Basic_Thigh_Right" class="option" style="display: inherit;">
+<path id="Thigh_Basic-Thigh_Right" style="fill: rgb(104, 2, 2);"/>
+<path id="Trauma-Plate_Basic-Thigh_Right" class="toggle" style="fill: rgb(18, 17, 17);"/>
+<g id="Ridge_Basic-Thigh_Right" class="toggle" style="fill: rgb(44, 5, 5);">
+<path/>
+<path/>
+</g>
+</g>
+</g>
+</g>
+<g id="Groin">
+<g id="Basic_Groin" class="option" style="display: inherit;">
+<path id="Groin-Plate_Groin" style="fill: rgb(104, 2, 2);"/>
+<path id="Trauma-Plating_Groin" class="toggle" style="fill: rgb(18, 17, 17);"/>
+</g>
+</g>
+<g id="Waist">
+<g id="Accessories_Waist">
+<g id="Kama" class="toggle" style="display:none"/>
+<g id="Loin-Cloth" class="toggle" style="display:none"/>
+<g id="Left-Holster" class="toggle" style="">
+<g id="Belt-Holster_Left" class="option" style="display: inherit;">
+<g id="Weapon_Belt-Holster-Left">
+<g id="Main_Weapon_Belt-Holster-Left" style="fill: rgb(0, 0, 0);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<g id="Accent_Weapon_Belt-Holster-Left" style="fill: rgb(134, 3, 3);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<path id="Holster_Belt-Holster-Left" style="fill: rgb(92, 48, 9);"/>
+</g>
+</g>
+<g id="Right-Holster" class="toggle" style="">
+<g id="Belt-Holster_Right" class="option" style="display: inherit;">
+<g id="Weapon_Belt-Holster-Right">
+<g id="Main_Weapon_Belt-Holster-Right" style="fill: rgb(0, 0, 0);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+<g id="Accent_Weapon_Belt-Holster-Right" style="fill: rgb(134, 3, 3);">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<path id="Holster_Belt-Holster-Right" style="fill: rgb(92, 48, 9);"/>
+</g>
+</g>
+</g>
+<g id="Under-Belt">
+<g id="Girth-Belt" class="option" style="fill: rgb(139, 87, 42); display: inherit;">
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<g id="Belt">
+<g id="Pouch-Belt-4" class="option" style="display: inherit;">
+<path id="Main_Pouch-Belt-4" style="fill: rgb(80, 54, 32);"/>
+<rect id="Buckle_Pouch-Belt-4" x="78.8" y="86.6" width="11.2" height="9.2" style="fill: rgb(57, 51, 51);"/>
+<g id="Pouches_Pouch-Belt-4" style="fill: rgb(109, 66, 28);">
+<g>
+<g>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<g>
+<path/>
+<path/>
+</g>
+<g>
+<g>
+<path/>
+<path/>
+<path/>
+<path/>
+<path/>
+</g>
+</g>
+<g>
+<path/>
+<path/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="Extras_Front">
+<g id="Front">
+<g id="None_Front" class="option" style="display: inherit;">
+</g>
+</g>
+</g>
+</svg></svg>
