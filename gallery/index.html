@@ -63,16 +63,8 @@
 				z-index: 1;
 			}
 			.return {
-				display: block;
 				color: inherit;
 				text-decoration: none;
-				background: #AB1F1F;
-				border-radius: 0.5em;
-				width: 7em;
-			}
-			.icon {
-				font-size: x-large;
-				vertical-align: sub;
 			}
 			main::-webkit-scrollbar {
 				display: none;
@@ -107,7 +99,6 @@
 				position: fixed;
 				bottom: 0;
 				width: 100%;
-				padding-bottom: 1em;
 				text-align: center;
 			}
 			.toggle_sex {
@@ -115,7 +106,7 @@
 				position: absolute;
 			}
 			.label_sex {
-				margin: 0.5em 0.25em;
+				margin: -0.5em 0.5em;
 				padding: 0.25em;
 				display: inline-block;
 				border: #AAA solid 1px;
@@ -133,7 +124,7 @@
 				font: inherit;
 			}
 			.next_armor {
-				padding: 0 0.5em;
+				padding: 0.5em;
 				background: none;
 				font-size: xx-large;
 				vertical-align: bottom;
@@ -141,12 +132,13 @@
 			.next_armor:focus {
 				color: #AB1F1F;
 			}
-			.main_button {
+			.red_button {
+				margin: 1em;
 				padding: 0.5em 1em;
 				background: #ab1f1f;
 				border-radius: 0.5em;
 			}
-			.main_button:focus {
+			.red_button:focus {
 				background: #801717;
 			}
 		</style>
@@ -163,7 +155,9 @@
 	<body onload="loadSW()">
 		<nav>
 			<img width="100%" src="../images/Logo.svg" alt="MandoCreator Logo"/>
-			<a class="return" href="../index.html"><span class="icon">&#xE90B;</span>Go Back</a>
+			<button class="red_button" style="padding-left:0.5em">
+				<a class="return" href="../index.html">&#xE90B; Go Back</a>
+			</button>
 		</nav>
 		<main id="gallery">
 			<svg viewBox="0 -55 169 300" title="Ara"><use alt="Ara" href="wrapper_male.svg#Ara.svg"></use></svg>
@@ -213,7 +207,7 @@
 					/><label for="female" class="label_sex">&#xe902;</label>
 				</div>
 				<button type="button" class="next_armor" onclick="Gallery.shift--">&#xe90b;</button
-				><button type="submit" class="main_button">Customize</button
+				><button type="submit" class="red_button">Customize</button
 				><button type="button" class="next_armor" onclick="Gallery.shift++">&#xe90c;</button>
 			</form>
 		</footer>

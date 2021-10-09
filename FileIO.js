@@ -298,8 +298,12 @@ function Downloader () {
 				reset.style.display = "none";
 				Vault.getItem("Mouse-Droid", function (mouse) {
 					bckSVG.appendChild(mouse.cloneNode(true));
-					mouse.onmouseenter = function() { mouse.style.animationName = "drive_off"; };
-					mouse.onanimationend = function () { mouse.style.animationName = "none"; };
+					function anim(n) {
+						return function(){this.style.animationName = n;}
+					}
+					mouse.onmouseenter = anim("drive_off");
+					mouse.ontouchstart = anim("drive_off");
+					mouse.onanimationend = anim("none");
 					document.body.insertBefore(mouse, document.body.firstElementChild);
 				});
 			}
