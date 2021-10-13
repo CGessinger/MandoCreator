@@ -429,6 +429,7 @@ function BuildManager (History) {
 				radio.click();
 			}
 		}
+		Picker.cache()
 	}
 }
 

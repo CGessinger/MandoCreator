@@ -271,7 +271,7 @@
 					this.target = svgs[this.shift];
 				else
 					gallery.scroll( {
-						left: (this.shift + 0.5)*width,
+						left: (this.shift + 0.5) * width,
 						behavior: "smooth"
 					});
 			}
@@ -282,14 +282,14 @@
 		var fromScroll = false;
 		gallery.scroll(0,0);
 		gallery.addEventListener("scroll", function (event) {
-			var index = Math.round(this.scrollLeft/width-1/2);
+			var index = Math.round(this.scrollLeft / width - 0.5);
 			fromScroll = true;
 			GallerySkeleton.shift = index;
 			fromScroll = false;
 		}, {passive: true});
 		window.addEventListener("resize", function () {
 			width = svgs[0].clientWidth;
-			var pos = (index + 1/2)*width;
+			var pos = (index + 0.5) * width;
 			gallery.scrollLeft = pos;
 		});
 		return GallerySkeleton;

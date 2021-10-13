@@ -313,6 +313,7 @@ function PickerFactory (history) {
 		onChange = input;
 		_setColor(def);
 	}
+	this.cache = cache;
 }
 
 function HistoryTracker () {
