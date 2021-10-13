@@ -7,67 +7,38 @@
 <g id="Suit">
 <g id="Neck-Seal">
 <g id="Standard-Neck-Seal" class="option" style="fill: rgb(125, 125, 125); display: inherit;">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Flight-Suit" style="fill: rgb(137, 137, 137);">
-<path/>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Sleeves" class="toggle" style="fill: rgb(159, 159, 159);">
 <g>
-<path/>
-<path/>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 </g>
 <g id="Boots">
 <g id="Basic_Boots" class="option" style="display: inherit;">
 <g id="Main_Basic-Boot" style="fill: rgb(78, 63, 47);">
-<path/>
-<path/>
 </g>
 <g id="Bottom_Basic-Boot" style="fill: rgb(47, 38, 28);">
-<path/>
-<path/>
 </g>
 <g id="Top_Basic-Boot" style="fill: rgb(78, 63, 47);">
-<path/>
-<path/>
 </g>
 <g id="Side_Basic-Boot" style="fill: rgb(50, 41, 32);">
-<path/>
-<path/>
 </g>
 </g>
 </g>
 <g id="Gloves">
 <g id="Left-Glove">
 <g id="Basic_Left_Glove" class="option" style="fill: rgb(138, 126, 105); display: inherit;">
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Right-Glove">
 <g id="Basic_Right_Glove" class="option" style="fill: rgb(138, 126, 105); display: inherit;">
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -82,7 +53,6 @@
 </g>
 </g>
 <g id="Vest" style="fill: rgb(185, 177, 162);">
-<path/>
 </g>
 <g class="swappable" id="Chest">
 <g id="Chest_Classic" style="visibility: visible;">
@@ -128,20 +98,14 @@
 <path id="Shaft_Right_Range-Finder_Classic" style="fill: rgb(182, 182, 182);"/>
 <path id="Finder_Right_Range-Finder_Classic" style="fill: rgb(24, 27, 28);"/>
 <g id="Cover_Right_Range-Finder_Classic" style="fill: rgb(42, 48, 51);">
-<path/>
-<path/>
 </g>
 </g>
 <path id="Ear-Cap_Right_Classic" style="fill: rgb(108, 97, 76);"/>
 </g>
 <g id="Helmet_Pieces_Classic">
 <g id="Face_Classic" style="fill: rgb(82, 97, 85);">
-<path/>
-<path/>
 </g>
 <g id="Cheeks_Classic" style="fill: rgb(52, 60, 53);">
-<path/>
-<path/>
 </g>
 <path id="Eyes_Classic" style="fill: rgb(57, 11, 16);"/>
 <g id="Visors_Classic">
@@ -171,9 +135,6 @@
 <path id="Top-2_Basic_Gauntlet_Left" style="fill: rgb(14, 4, 4);"/>
 <path id="Top-1_Basic_Gauntlet_Left" style="fill: rgb(44, 11, 14);"/>
 <g id="Accent-Bottom_Basic_Gauntlet_Left" style="fill: rgb(16, 6, 7);">
-<path/>
-<path/>
-<path/>
 </g>
 <path id="Bottom_Basic_Gauntlet_Left" style="fill: rgb(33, 12, 14);"/>
 <g id="No-Device_Attachment_Basic_Gauntlet_Left" class="option" style="display: inherit;">
@@ -185,9 +146,6 @@
 <path id="Top-2_Basic_Gauntlet_Right" style="fill: rgb(44, 11, 14);"/>
 <path id="Top-1_Basic_Gauntlet_Right" style="fill: rgb(44, 11, 14);"/>
 <g id="Accent-Bottom_Basic_Gauntlet_Right" style="fill: rgb(16, 6, 7);">
-<path/>
-<path/>
-<path/>
 </g>
 <path id="Bottom_Basic_Gauntlet_Right" style="fill: rgb(33, 12, 14);"/>
 <g id="No-Device_Attachment_Basic_Gauntlet_Right" class="option" style="display: inherit;">
@@ -199,32 +157,20 @@
 <g id="Left-Shin">
 <g id="Pockets_Shin_Left" class="option" style="display: inherit;">
 <g id="Accent-2_Pockets-Shin_Left" style="fill: rgb(114, 12, 12);">
-<path/>
-<path/>
 </g>
 <g id="Accent-1_Pockets-Shin_Left" style="fill: rgb(0, 0, 0);">
-<path/>
-<path/>
 </g>
 <g id="Shin_Pockets-Shin_Left" style="fill: rgb(114, 114, 114);">
-<path/>
-<path/>
 </g>
 </g>
 </g>
 <g id="Right-Shin">
 <g id="Pockets_Shin_Right" class="option" style="display: inherit;">
 <g id="Accent-2_Pockets-Shin_Right" style="fill: rgb(114, 12, 12);">
-<path/>
-<path/>
 </g>
 <g id="Accent-1_Pockets-Shin_Right" style="fill: rgb(0, 0, 0);">
-<path/>
-<path/>
 </g>
 <g id="Shin_Pockets-Shin_Right" style="fill: rgb(114, 114, 114);">
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -256,9 +202,6 @@
 <g id="Basic_Knee_Left" class="option" style="display: inherit;">
 <g id="Missiles_Basic-Knee_Left" class="toggle" style="display:none"/>
 <g id="Knee_Basic-Knee_Left" style="fill: rgb(185, 157, 88);">
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -266,9 +209,6 @@
 <g id="Basic_Knee_Right" class="option" style="display: inherit;">
 <g id="Missiles_Basic-Knee_Right" class="toggle" style="display:none"/>
 <g id="Knee_Basic-Knee_Right" style="fill: rgb(185, 157, 88);">
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -276,18 +216,12 @@
 <g id="Thighs">
 <g id="Left-Thigh">
 <g id="Pocket_Thigh_Left" class="option" style="fill: rgb(114, 114, 114); display: inherit;">
-<path/>
-<path/>
 <path id="Stitch_Left"/>
-<path/>
 </g>
 </g>
 <g id="Right-Thigh">
 <g id="Pocket_Thigh_Right" class="option" style="fill: rgb(114, 114, 114); display: inherit;">
-<path/>
-<path/>
 <path id="Stitch_Right"/>
-<path/>
 </g>
 </g>
 </g>
@@ -306,16 +240,6 @@
 </g>
 <g id="Under-Belt">
 <g id="Girth-Belt" class="option" style="fill: rgb(73, 45, 32); display: inherit;">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Belt">
@@ -325,55 +249,27 @@
 <g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 <g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 </g>

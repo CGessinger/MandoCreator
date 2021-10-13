@@ -25,10 +25,7 @@ images:
 
 images/%.svg: pictures/%.svg | images
 	sed -E " : top \
-		/>/ ! { \
-			N; \
-			b top; \
-		}; \
+		/>/ ! { N; b top; }; \
 		s/(^|\s)\s+/\1/g; \
 		s/_(F|M)([^[:lower:]])/\2/; \
 		/Toggle/ { \
@@ -55,9 +52,10 @@ wrapper_%.svg: $(RAW)
 	echo "<?xml version='1.0' encoding='UTF-8' standalone='no'?><!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg version='1.1' xmlns='http://www.w3.org/2000/svg'>" > $@;
 	for i in $(notdir $(wildcard $*/*)); do \
 		sed " \
+			s|[[:space:]]id=\"[^\"]*\"||g; \
 			1s|.*|<g id='$$i'>|; \
-			s|/svg></svg>|/g>|; \
-		" $*/$$i >> $@; done;
+			$$ s|/svg></svg>|/g>|; \
+		" $*/$$i | tr -d '\n' >> $@; done;
 	echo "</svg>" >> $@;
 
 gallery/raw/%: gallery/male/% gallery/female/% | gallery/raw
@@ -74,6 +72,7 @@ gallery/raw/%: gallery/male/% gallery/female/% | gallery/raw
 	" $^;
 	sed " \
 		s|[[:space:]]d=[\"'][^\"']*[\"']||; \
+		/<\w\+\/>/ { d; }; \
 	" $< > $@;
 
 gallery/raw:

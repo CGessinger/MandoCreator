@@ -7,67 +7,38 @@
 <g id="Suit">
 <g id="Neck-Seal">
 <g id="Standard-Neck-Seal" class="option" style="fill: rgb(126, 126, 126); display: inherit;">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Flight-Suit" style="fill: rgb(110, 110, 110);">
-<path/>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Sleeves" class="toggle" style="fill: rgb(140, 140, 140);">
 <g>
-<path/>
-<path/>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 </g>
 <g id="Boots">
 <g id="Basic_Boots" class="option" style="display: inherit;">
 <g id="Main_Basic-Boot" style="fill: rgb(76, 76, 76);">
-<path/>
-<path/>
 </g>
 <g id="Bottom_Basic-Boot" style="fill: rgb(49, 49, 49);">
-<path/>
-<path/>
 </g>
 <g id="Top_Basic-Boot" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 </g>
 <g id="Side_Basic-Boot" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 </g>
 </g>
 </g>
 <g id="Gloves">
 <g id="Left-Glove">
 <g id="Basic_Left_Glove" class="option" style="fill: rgb(84, 84, 84); display: inherit;">
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Right-Glove">
 <g id="Basic_Right_Glove" class="option" style="fill: rgb(84, 84, 84); display: inherit;">
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -88,7 +59,6 @@
 </g>
 </g>
 <g id="Vest" style="fill: rgb(89, 89, 89);">
-<path/>
 </g>
 <g class="swappable" id="Chest">
 <g id="Chest_Galaxy" style="visibility: visible;">
@@ -101,8 +71,6 @@
 <path id="Trauma-Plating_Left-Chest_Galaxy" class="toggle" style="fill: rgb(163, 163, 163);"/>
 <path id="Trauma-Plating_Right-Chest_Galaxy" class="toggle" style="fill: rgb(163, 163, 163);"/>
 <g id="Accents_Chest-Plate_Galaxy" class="toggle" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 </g>
 </g>
 <g id="Iron-Heart_Galaxy">
@@ -111,12 +79,8 @@
 </g>
 <g id="Neck-Armor_Galaxy">
 <g id="Neck-Plate_Galaxy" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 </g>
 <g id="Trauma-Plates_Neck_Galaxy" class="toggle" style="fill: rgb(77, 127, 173);">
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -124,70 +88,36 @@
 <g id="Chest-Attachments">
 <g id="Bandoleer_Accessories_Chest" class="option" style="display: inherit;">
 <g id="Strap_Bandoleer_Accessories_Chest" style="fill: rgb(164, 106, 57);">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g id="Ammo_Bandoleer_Accessories_Chest" style="fill: rgb(163, 163, 163);">
 <g>
 <g>
-<path/>
-<path/>
-<path/>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 </g>
 <g id="Buckles_Bandoleer_Accessories_Chest" style="fill: rgb(203, 185, 92);">
 <g>
-<path/>
-<path/>
 </g>
-<path/>
 </g>
 </g>
 </g>
@@ -199,96 +129,40 @@
 <g id="Helmet_Ironside" style="visibility: visible;">
 <g id="Left-Earcap_Ironside" class="toggle">
 <g id="Ear-Cap_Left_Ironside" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 </g>
 </g>
 <g id="Right-Earcap_Ironside" class="toggle">
 <g id="Main-Antenna_Right_Ironside" class="option" style="display: inherit;">
 <path id="Shaft_Main-Antenna_Right_Ironside" style="fill: rgb(77, 127, 173);"/>
 <g id="Base_Main-Antenna_Right_Ironside" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 <rect x="18.9" y="33.2" width="2.5" height="0.4"/>
 <rect x="20" y="30.4" width="0.4" height="2.4"/>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Ear-Cap_Right_Ironside" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 </g>
 </g>
 <g id="Helmet_Pieces_Ironside">
 <g id="Face-2_Ironside" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g id="Face-1_Ironside" style="fill: rgb(163, 163, 163);">
-<path/>
-<path/>
 </g>
 <g id="Cheeks_Ironside" style="fill: rgb(77, 127, 173);">
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <path id="Visor_Ironside" style="fill: rgb(0, 0, 0);"/>
 <g id="Eyes-2_Ironside" style="fill: rgb(77, 127, 173);">
-<path/>
-<path/>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Eyes-1_Ironside" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g id="Dome-2_Ironside" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
-<path/>
 </g>
 <path id="Dome-1_Ironside" style="fill: rgb(77, 127, 173);"/>
 </g>
@@ -314,32 +188,15 @@
 <path id="Top-2_Basic_Gauntlet_Left" style="fill: rgb(255, 214, 0);"/>
 <path id="Top-1_Basic_Gauntlet_Left" style="fill: rgb(77, 127, 173);"/>
 <g id="Accent-Bottom_Basic_Gauntlet_Left" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
-<path/>
 </g>
 <path id="Bottom_Basic_Gauntlet_Left" style="fill: rgb(77, 127, 173);"/>
 <g id="Whistling-Birds_Attachment_Basic_Gauntlet_Left" class="option" style="display: inherit;">
 <path id="Head_Whistling-Birds_Attachment_Basic_Gauntlet_Left" style="fill: rgb(255, 214, 0);"/>
 <g id="Birds_Whistling-Birds_Attachment_Basic_Gauntlet_Left" style="fill: rgb(77, 127, 173);">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g id="Base_Whistling-Birds_Attachment_Basic_Gauntlet_Left" style="fill: rgb(163, 163, 163);">
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g id="Accent_Whistling-Birds_Attachment_Basic_Gauntlet_Left" style="fill: rgb(163, 163, 163);">
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -349,31 +206,14 @@
 <path id="Top-2_Basic_Gauntlet_Right" style="fill: rgb(255, 214, 0);"/>
 <path id="Top-1_Basic_Gauntlet_Right" style="fill: rgb(77, 127, 173);"/>
 <g id="Accent-Bottom_Basic_Gauntlet_Right" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
-<path/>
 </g>
 <path id="Bottom_Basic_Gauntlet_Right" style="fill: rgb(77, 127, 173);"/>
 <g id="Flamethrower_Attachment_Basic_Gauntlet_Right" class="option" style="display: inherit;">
 <g id="Tubes_Flamethrower_Attachment_Basic_Gauntlet_Right" style="fill: rgb(163, 163, 163);">
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g id="Main_Flamethrower_Attachment_Basic_Gauntlet_Right" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g id="Accent_Flamethrower_Attachment_Basic_Gauntlet_Right" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <path id="Base_Flamethrower_Attachment_Basic_Gauntlet_Right" style="fill: rgb(77, 127, 173);"/>
 </g>
@@ -406,12 +246,8 @@
 <g id="Left-Toe">
 <g id="Armored_Toe_Left" class="option" style="display: inherit;">
 <g id="Plate_Armored_Toe_Left" style="fill: rgb(77, 127, 173);">
-<path/>
-<path/>
 </g>
 <g id="Trim_Armored_Toe_Left" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -424,12 +260,8 @@
 <g id="Right-Toe">
 <g id="Armored_Toe_Right" class="option" style="display: inherit;">
 <g id="Plate_Armored_Toe_Right" style="fill: rgb(77, 127, 173);">
-<path/>
-<path/>
 </g>
 <g id="Trim_Armored_Toe_Right" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -440,23 +272,14 @@
 <g id="Missiles_Galaxy-Knee_Left" class="toggle" style="">
 <path id="Base_Missiles_Galaxy-Knee_Left" style="fill: rgb(255, 214, 0);"/>
 <g id="Missile-2_Missiles_Galaxy-Knee_Left" style="fill: rgb(255, 0, 0);">
-<path/>
-<path/>
 </g>
 <g id="Missile-1_Missiles_Galaxy-Knee_Left" style="fill: rgb(255, 0, 0);">
-<path/>
-<path/>
 </g>
 </g>
 <g id="Strap_Galaxy-Knee_Left" style="fill: rgb(164, 106, 57);">
-<path/>
-<path/>
 </g>
 <path id="Knee_Galaxy-Knee_Left" style="fill: rgb(77, 127, 173);"/>
 <g id="Trim_Galaxy-Knee_Left" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -465,23 +288,14 @@
 <g id="Missiles_Galaxy-Knee_Right" class="toggle" style="">
 <path id="Base_Missiles_Galaxy-Knee_Right" style="fill: rgb(255, 214, 0);"/>
 <g id="Missile-2_Missiles_Galaxy-Knee_Right" style="fill: rgb(255, 0, 0);">
-<path/>
-<path/>
 </g>
 <g id="Missile-1_Missiles_Galaxy-Knee_Right" style="fill: rgb(255, 0, 0);">
-<path/>
-<path/>
 </g>
 </g>
 <g id="Strap_Galaxy-Knee_Right" style="fill: rgb(164, 106, 57);">
-<path/>
-<path/>
 </g>
 <path id="Knee_Galaxy-Knee_Right" style="fill: rgb(77, 127, 173);"/>
 <g id="Trim_Galaxy-Knee_Right" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -513,12 +327,8 @@
 <g id="Kama" class="toggle" style="">
 <g id="Clean_Kama" class="option" style="display: inherit;">
 <g id="Trim_Kama-Clean" style="fill: rgb(255, 214, 0);">
-<path/>
-<path/>
 </g>
 <g id="Main_Kama-Clean" style="fill: rgb(77, 127, 173);">
-<path/>
-<path/>
 </g>
 </g>
 </g>
@@ -532,22 +342,8 @@
 <g id="Belt-Holster_Left" class="option" style="display: inherit;">
 <g id="Weapon_Belt-Holster-Left">
 <g id="Main_Weapon_Belt-Holster-Left" style="fill: rgb(98, 98, 98);">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g id="Accent_Weapon_Belt-Holster-Left" style="fill: rgb(66, 66, 66);">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <path id="Holster_Belt-Holster-Left" style="fill: rgb(77, 127, 173);"/>
@@ -557,22 +353,8 @@
 <g id="Belt-Holster_Right" class="option" style="display: inherit;">
 <g id="Weapon_Belt-Holster-Right">
 <g id="Main_Weapon_Belt-Holster-Right" style="fill: rgb(98, 98, 98);">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 <g id="Accent_Weapon_Belt-Holster-Right" style="fill: rgb(66, 66, 66);">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <path id="Holster_Belt-Holster-Right" style="fill: rgb(77, 127, 173);"/>
@@ -581,16 +363,6 @@
 </g>
 <g id="Under-Belt">
 <g id="Girth-Belt" class="option" style="fill: rgb(80, 80, 80); display: inherit;">
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g id="Belt">
@@ -601,49 +373,25 @@
 <g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 <g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g>
 <g>
-<path/>
-<path/>
-<path/>
-<path/>
-<path/>
 </g>
 </g>
 <g>
-<path/>
-<path/>
 </g>
 </g>
 </g>
