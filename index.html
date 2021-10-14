@@ -67,47 +67,56 @@
 		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WDVDR2H" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<nav>
 			<svg id="title"></svg>
-			<div id="left_nav" data-nosnippet="">
-				<span class="nav_icon icon-helmet-icon"></span>
-				<div id="parts_list" class="sub_nav">
-					<input type="radio" name="parts_list" id="HelmetRadio" value="Helmet (Buy'ce)" onchange="openFolder('Helmet')" checked hidden/>
-					<label for="HelmetRadio" class="sub_nav_label"><span class="nav_icon icon-helmet-icon"></span>Helmet (Buy'ce)</label>
-					<input type="radio" name="parts_list" id="SoftPartsRadio" value="Flight Suit (Kute)" onchange="openFolder('SoftParts')" hidden/>
-					<label for="SoftPartsRadio" class="sub_nav_label"><span class="nav_icon icon-suit-icon"></span>Flight Suit (Kute)</label>
-					<input type="radio" name="parts_list" id="UpperArmorRadio" value="Upper Body" onchange="openFolder('UpperArmor')" hidden/>
-					<label for="UpperArmorRadio" class="sub_nav_label"><span class="nav_icon  icon-upper-armor-icon"></span>Upper Body</label>
-					<input type="radio" name="parts_list" id="LowerArmorRadio" value="Lower Body" onchange="openFolder('LowerArmor')" hidden/>
-					<label for="LowerArmorRadio" class="sub_nav_label"><span class="nav_icon icon-lower-armor-icon"></span>Lower Body</label>
-					<input type="radio" name="parts_list" id="ExtrasRadio" value="Extras" onchange="openFolder('Extras')" hidden/>
-					<label for="ExtrasRadio" class="sub_nav_label"><span class="nav_icon  icon-accessories-icon"></span>Extras (Majyce)</label>
-				</div>
-				<span class="nav_icon icon-cog"></span>
-				<div class="sub_nav">
-					<input type="radio" name="sex" class="toggle_sex" id="male" checked onchange="Settings.Sex(false)"
-					><label for="male" class="label_sex"><span class="nav_icon icon-male"></span></label
-					><input type="radio" name="sex" class="toggle_sex" id="female" onchange="Settings.Sex(true)"
-					><label for="female" class="label_sex"><span class="nav_icon icon-female"></span></label>
-					<input id="background_upload" type="file" accept="image/*" hidden/>
-					<label for="background_upload" class="sub_nav_label"><span class="nav_icon icon-image"></span>Upload Background</label>
-					<button id="reset_wrapper" class="sub_nav_label" onclick="setDefaultBackground()"><span class="nav_icon icon-refresh"></span>Reset Background</button>
-					<input id="reupload" type="file" accept="image/svg+xml" hidden/>
-					<label for="reupload" class="sub_nav_label"><span class="nav_icon icon-folder-upload"></span>Continue Editing</label>
-					<a id="download_svg" class="sub_nav_label" download="MandoCreator.svg" href="/"><span class="nav_icon icon-download"></span>Download as SVG</a>
-					<a id="download_jpeg" class="sub_nav_label" download="MandoCreator.jpeg" href="/"><span class="nav_icon icon-download"></span>Download as JPEG</a>
-				</div>
-				<span class="nav_icon icon-info"></span>
-				<div class="sub_nav">
-					<a id="contact_opener" class="sub_nav_label" href="contact.html">Contact Us</a>
-				</div>
-				<span class="nav_icon icon-grid_view"></span>
-				<div class="sub_nav">
-					<a id="gallery" class="sub_nav_label" href="gallery/" >Armor Gallery</a>
-				</div>
-				<span class="nav_icon icon-heart"></span>
-				<div class="sub_nav">
-					<a id="donate" class="sub_nav_label" target="_blank" href="https://www.paypal.com/donate?hosted_button_id=TJGV33MFJL26W">Donate</a>
-				</div>
-			</div>
+			<ul id="left_nav" data-nosnippet="">
+				<li><span class="nav_icon icon-helmet-icon"></span>
+					<div id="parts_list" class="sub_nav">
+						<input type="radio" name="parts_list" id="HelmetRadio" value="Helmet (Buy'ce)" onchange="openFolder('Helmet')" checked hidden/>
+						<label for="HelmetRadio" class="sub_nav_label"><span class="nav_icon icon-helmet-icon"></span>Helmet (Buy'ce)</label>
+						<input type="radio" name="parts_list" id="SoftPartsRadio" value="Flight Suit (Kute)" onchange="openFolder('SoftParts')" hidden/>
+						<label for="SoftPartsRadio" class="sub_nav_label"><span class="nav_icon icon-suit-icon"></span>Flight Suit (Kute)</label>
+						<input type="radio" name="parts_list" id="UpperArmorRadio" value="Upper Body" onchange="openFolder('UpperArmor')" hidden/>
+						<label for="UpperArmorRadio" class="sub_nav_label"><span class="nav_icon  icon-upper-armor-icon"></span>Upper Body</label>
+						<input type="radio" name="parts_list" id="LowerArmorRadio" value="Lower Body" onchange="openFolder('LowerArmor')" hidden/>
+						<label for="LowerArmorRadio" class="sub_nav_label"><span class="nav_icon icon-lower-armor-icon"></span>Lower Body</label>
+						<input type="radio" name="parts_list" id="ExtrasRadio" value="Extras" onchange="openFolder('Extras')" hidden/>
+						<label for="ExtrasRadio" class="sub_nav_label"><span class="nav_icon  icon-accessories-icon"></span>Extras (Majyce)</label>
+					</div>
+				</li>
+				<li>
+					<span class="nav_icon icon-cog"></span>
+					<div class="sub_nav">
+						<input type="radio" name="sex" class="toggle_sex" id="male" checked onchange="Settings.Sex(false)"
+						><label for="male" class="label_sex"><span class="nav_icon icon-male"></span></label
+						><input type="radio" name="sex" class="toggle_sex" id="female" onchange="Settings.Sex(true)"
+						><label for="female" class="label_sex"><span class="nav_icon icon-female"></span></label>
+						<input id="background_upload" type="file" accept="image/*" hidden/>
+						<label for="background_upload" class="sub_nav_label"><span class="nav_icon icon-image"></span>Upload Background</label>
+						<button id="reset_wrapper" class="sub_nav_label" onclick="setDefaultBackground()"><span class="nav_icon icon-refresh"></span>Reset Background</button>
+						<input id="reupload" type="file" accept="image/svg+xml" hidden/>
+						<label for="reupload" class="sub_nav_label"><span class="nav_icon icon-folder-upload"></span>Continue Editing</label>
+						<a id="download_svg" class="sub_nav_label" download="MandoCreator.svg" href="/"><span class="nav_icon icon-download"></span>Download as SVG</a>
+						<a id="download_jpeg" class="sub_nav_label" download="MandoCreator.jpeg" href="/"><span class="nav_icon icon-download"></span>Download as JPEG</a>
+					</div>
+				</li>
+				<li>
+					<span class="nav_icon icon-info"></span>
+					<div class="sub_nav">
+						<a id="contact_opener" class="sub_nav_label" href="contact.html">Contact Us</a>
+					</div>
+				</li>
+				<li>
+					<span class="nav_icon icon-grid_view"></span>
+					<div class="sub_nav">
+						<a id="gallery" class="sub_nav_label" href="gallery/" >Armor Gallery</a>
+					</div>
+				</li>
+				<li>
+					<span class="nav_icon icon-heart"></span>
+					<div class="sub_nav">
+						<a id="donate" class="sub_nav_label" target="_blank" href="https://www.paypal.com/donate?hosted_button_id=TJGV33MFJL26W">Donate</a>
+					</div>
+				</li>
+			</ul>
 		</nav>
 		<div id="controls" class="controls_column controls_collapsed">
 			<button id="controls_toggle" title="Toggle Controls Menu">&#xE900;</button>

@@ -182,13 +182,20 @@ nav {
 #left_nav {
 	height: 100%;
 	background: var(--mainColor);
-	text-align: center;
+	text-align: center;	
+	margin: 0;
+	padding: 0;
+}
+
+#left_nav li {
+	list-style: none;
 }
 
 .nav_icon {
 	font-size: 1.5em;
 	display: inline-block;
 	padding: 12px;
+	cursor: pointer;
 }
 
 :hover + .sub_nav {
