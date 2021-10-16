@@ -26,17 +26,19 @@ FONTS
 	font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class*="icon-"]:before {
+	display: inline-block;
+	width: 2em;
+	padding: 0.5em 0;
+	font-size: 1.5em;
+	line-height: 1em;
+	text-align: center;
+
 	/* use !important to prevent issues with browser extensions that change fonts */
 	font-family: 'icomoon' !important;
 	speak: never;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
 
-	/* Better Font Rendering =========== */
+	/* Better Font Rendering */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -176,30 +178,14 @@ nav {
 	left: 0;
 	height: 100%;
 	width: 3em;
-	z-index: 1;
+	top: 0;
 }
 
 #left_nav {
 	height: 100%;
 	background: var(--mainColor);
-	text-align: center;	
 	margin: 0;
 	padding: 0;
-}
-
-#left_nav li {
-	list-style: none;
-}
-
-.nav_icon {
-	font-size: 1.5em;
-	display: inline-block;
-	padding: 12px;
-	cursor: pointer;
-}
-
-:hover + .sub_nav {
-	left: 0;
 }
 
 .sub_nav {
@@ -211,7 +197,10 @@ nav {
 	position: absolute;
 	transition: left 0.2s ease-out;
 	z-index: -1;
-	text-align: left;
+}
+
+li:hover > .sub_nav {
+	left: 0;
 }
 
 .sub_nav:hover {
@@ -220,22 +209,16 @@ nav {
 
 .sub_nav_label {
 	display: block;
+	min-height: 3em;
 	position: relative;
 	background: var(--mainColor);
 	display: flex;
 	align-items: center;
-	padding: 12px 0px 12px 12px;
 	cursor: pointer;
 }
 
 .sub_nav_label:hover, .label_sex:hover {
 	background: var(--softLight);
-}
-
-.sub_nav .nav_icon {
-	width: 2em;
-	text-align: center;
-	padding: 0;
 }
 
 :checked + .sub_nav_label {
@@ -254,8 +237,6 @@ nav {
 	background: var(--softColor);
 	color: var(--highlight);
 	text-align: center;
-	padding: 12px 0;
-	cursor: pointer;
 }
 
 /*
@@ -281,28 +262,7 @@ button {
 	padding: 0;
 }
 
-.male .female {
-	display: none;
-}
-
-.female .male {
-	display: none;
-}
-
-input {
-	color: inherit;
-	font: inherit;
-	padding: 0;
-}
-
-button {
-	color: inherit;
-	font: inherit;
-	padding: 0;
-	cursor: pointer;
-}
-
-summary {
+button, summary {
 	cursor: pointer;
 }
 
@@ -314,16 +274,10 @@ hr {
 	background: none;
 }
 
-.separator {
-	margin: 1em 0 0 0;
-}
-
-.title {
-	display: block;
+#title {
 	width: 25em;
 	max-width: 75vw;
 }
-
 
 #reset_wrapper {
 	border: none;
@@ -338,23 +292,18 @@ hr {
 	transform: translate(-50%,-50%);
 	min-width: 50%;
 	max-width: 100%;
-	z-index: 1;
 }
 
 form {
 	position: fixed;
 	padding: 1em;
-	min-width: 20em;
-	max-height: 100%;
 	top: 50%;
 	left: 50%;
-	z-index: 1;
 	transform: translate(-50%,-50%);
 	background: var(--mainColor);
 	box-shadow: grey 0 0 5px;
 	color: var(--softLight);
 	text-align: center;
-	overflow-y: auto;
 }
 
 legend {
@@ -535,7 +484,7 @@ footer > * {
 	width: 20em;
 	max-width: 100%;
 	right: 0;
-	z-index: 1;
+	top: 0;
 	background: var(--mainColor);
 }
 
@@ -608,6 +557,10 @@ footer > * {
 .type_button input {
 	opacity: 0;
 	position: absolute;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	cursor: pointer;
 }
 
 .new:before {
@@ -625,7 +578,6 @@ footer > * {
 	fill: white;
 	stroke: black;
 	stroke-width: 0.3px;
-	pointer-events: none;
 }
 
 :checked + .preview_icon {
@@ -801,11 +753,11 @@ footer > * {
 	transition: left ease-out .1s;
 }
 
-:focus + :before {
+.armor_toggle:focus + :before {
 	background: var(--accent);
 }
 
-:checked + :before {
+.armor_toggle:checked + :before {
 	left: 50%;
 }
 

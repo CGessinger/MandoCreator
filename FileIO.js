@@ -31,7 +31,7 @@ function Uploader (queryString, D) {
 				if (!node.id)
 					return NodeFilter.FILTER_REJECT;
 				node.id = node.id.replace(/_(M|F|Toggle(Off)?|Option)($|_)/g,"$3");
-				if (!(node.style.fill || node.hasAttribute("class")))
+				if (!(node.hasAttribute("fill") || node.hasAttribute("class") || node.style.fill))
 					return NodeFilter.FILTER_SKIP;
 				return NodeFilter.FILTER_ACCEPT;
 			} }
@@ -40,7 +40,10 @@ function Uploader (queryString, D) {
 		var node;
 		while (node = iter.nextNode()) {
 			var id = node.id.replace(/_Toggle(Off|On)?|_Option/, "");
-			if (node.style.fill) {
+			if (node.hasAttribute("fill")) {
+				var bn = id + "Color";
+				colors[bn] = node.getAttribute("fill");
+			} else if (node.style.fill) {
 				var bn = id + "Color";
 				colors[bn] = node.style.fill;
 			}
@@ -63,7 +66,7 @@ function Uploader (queryString, D) {
 					var ch = node.firstElementChild;
 					variants.setItem(node.id, ch.id);
 					break;
-				default:
+				default: /* For backwards compatibility */
 					if (id.endsWith("Current")) {
 						var cls = node.getAttribute("class").replace(/_M|_F/,"");
 						var name = id.replace("_Current","");
@@ -74,7 +77,6 @@ function Uploader (queryString, D) {
 					}
 			}
 		}
-		localStorage.setItem("variants", variants.toString());
 		localStorage.setItem("colors", JSON.stringify(colors));
 	}
 
@@ -179,6 +181,16 @@ function Downloader () {
 	var canvasCtx = canvas.getContext('2d');
 	var logoSVG, bckImgURI, bckSVG;
 
+	(function(){
+		var t = find("title");
+		t.addEventListener("load", function() {
+			var doc = this.contentDocument.documentElement;
+			logoSVG = doc.cloneNode(true);
+			prepareCanvas(bckImgURI);
+		});
+		t.setAttribute("data", "images/Logo.svg");
+	})();
+
 	function prepareForExport (svg) {
 		var iter = document.createNodeIterator(svg, NodeFilter.SHOW_ELEMENT,
 			{ "acceptNode": function (node) {
@@ -242,6 +254,7 @@ function Downloader () {
 	}
 
 	function prepareCanvas (href) {
+		if (!href) return;
 		canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 		img.onload = function () {
 			/* Background Image */
@@ -271,9 +284,6 @@ function Downloader () {
 	}
 
 	return {
-		set Logo (svg) {
-			logoSVG = svg.cloneNode(true);
-		},
 		set Background (bck) {
 			var mouse = find("Mouse_Droid");
 			if (mouse)
@@ -289,7 +299,8 @@ function Downloader () {
 					bckImgURI = bck.data;
 					bckSVG = null;
 			}
-			prepareCanvas(bckImgURI);
+			if (logoSVG)
+				prepareCanvas(bckImgURI);
 			document.body.style.backgroundImage = "url(\"" + bckImgURI + "\")";
 
 			if (bck.custom) {

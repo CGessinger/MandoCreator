@@ -14,7 +14,7 @@ function PickerFactory (history) {
 		elem.addEventListener(event, func, {passive: false});
 	}
 
-	function _init(o, done) {
+	function setupDragAncClick(o, done) {
 		function clamp(n, min, max) {
 			if (n > max)
 				return max;
@@ -220,8 +220,8 @@ function PickerFactory (history) {
 		var Okay = bottom[1];
 		on(Okay, "click", function() { DOM.parent = null; });
 
-		_init(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });
-		_init(spectrum, function(s, v) { var c = color.hsv; c[1] = s; c[2] = 1-v; return _setColor(c)});
+		setupDragAncClick(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });
+		setupDragAncClick(spectrum, function(s, v) { var c = color.hsv; c[1] = s; c[2] = 1-v; return _setColor(c)});
 
 		on(window, "mousedown", function (event) {
 			if (!(wrapper.contains(event.target)))
@@ -249,6 +249,8 @@ function PickerFactory (history) {
 				return _parent;
 			},
 			set parent (p) {
+				if (_parent == p)
+					return;
 				_parent = p;
 				if (!p) {
 					onChange = null;
@@ -276,7 +278,7 @@ function PickerFactory (history) {
 			onChange(color.hex);
 	}
 
-	function getDefaultColor (SVGNode, id) {
+	function getDefaultColor (id) {
 		if (id in colors)
 			return colors[id];
 		return "#FFF";
@@ -288,7 +290,7 @@ function PickerFactory (history) {
 	this.attach = function (button, colorText, SVGNode) {
 		function input (hex) {
 			button.style.backgroundColor = hex;
-			SVGNode.style.fill = hex;
+			SVGNode.setAttribute("fill", hex);
 			colorText.innerText = hex;
 			if (hex === "#FFFFFF")
 				delete colors[button.id];
@@ -299,17 +301,16 @@ function PickerFactory (history) {
 			if (event.defaultPrevented)
 				return;
 			onChange = input;
-			_setColor(this.style.backgroundColor);
-			if (!showPicker)
-				return;
-			DOM.parent = this;
 
-			var oldValue = SVGNode.style.fill;
-			if (!oldValue)
-				return;
+			var oldValue = this.style.backgroundColor;
 			latestChange = history.format("color", oldValue, "", button.id);
+			_setColor(oldValue);
+			latestChange.newValue = latestChange.oldValue;
+
+			if (showPicker)
+				DOM.parent = this;
 		});
-		var def = getDefaultColor(SVGNode, button.id);
+		var def = getDefaultColor(button.id);
 		onChange = input;
 		_setColor(def);
 	}

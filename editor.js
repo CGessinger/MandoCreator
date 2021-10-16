@@ -156,7 +156,7 @@ function BuildManager (History) {
 		}
 		/* Step 3: If the parent is empty, make a headline */
 		if (parent.childElementCount == 0) {
-			DOMNode("hr", {class: "separator"}, parent);
+			DOMNode("hr", {}, parent);
 			var par = DOMNode("h3", {class: "option_name hidden"}, parent);
 			par.innerText = prettify(id) + " Options:";
 			var symmetric = id.match(/Left|Right/);
@@ -577,10 +577,7 @@ function onload () {
 	Download.attach(find("download_jpeg"), "image/jpeg");
 
 	var Upload = new Uploader(window.location.search, Download);
-	Vault.getItem("Logo", function (logo) {
-		Download.Logo = logo.cloneNode(true);
-		setDefaultBackground();
-	}, find("title"));
+	setDefaultBackground();
 	find("kote").volume = 0.15;
 
 	setupControlMenu();
@@ -715,7 +712,8 @@ function setDefaultBackground () {
 	Vault.getItem("Background", function (bck) {
 		Download.Background = {
 			type: "image/svg+xml",
-			data: bck
+			data: bck,
+			custom: false
 		};
 	});
 }
