@@ -14,7 +14,7 @@ function PickerFactory (history) {
 		elem.addEventListener(event, func, {passive: false});
 	}
 
-	function setupDragAncClick(o, done) {
+	function setupDragAndClick(o, done) {
 		function clamp(n, min, max) {
 			if (n > max)
 				return max;
@@ -23,13 +23,13 @@ function PickerFactory (history) {
 			return n;
 		}
 
+		var dimensions;
 		function touch(event) {
 			event.preventDefault();
-			if (event.touches && 1 === event.touches.length)
+			if ("touches" in event)
 				event = event.touches[0];
-			else if (1 !== event.buttons)
+			else if (event.buttons != 1)
 				return;
-			var dimensions = o.getBoundingClientRect();
 			var width = dimensions.width;
 			var height = dimensions.height;
 			var s = clamp(event.clientX - dimensions.left, 0, width);
@@ -37,16 +37,20 @@ function PickerFactory (history) {
 			done(s / width, l / height);
 		}
 
-		on(o, "mousedown", touch);
-		on(o, "touchstart", touch);
+		on(o, "mousedown", function (event) {
+			dimensions = o.getBoundingClientRect();
+			touch(event);
+		});
+		on(o, "touchstart", function (event) {
+			dimensions = o.getBoundingClientRect();
+			touch(event);
+		});
 		on(o, "mousemove", touch);
 		on(o, "touchmove", touch);
 	}
 
 	function Color () {
 		function hexToHsv(hex) {
-			var shorthandRegex = /^#([a-f\d])([a-f\d])([a-f\d])$/i;
-			_hex = hex = hex.replace(shorthandRegex, "#$1$1$2$2$3$3");
 			var result = hex.match( /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i )
 			if (!result)
 				return undefined;
@@ -84,13 +88,14 @@ function PickerFactory (history) {
 
 		function hsvToHex(f) {
 			var h = f[0]*6, s = f[1], v = f[2];
-			var f = h - Math.floor(h);
+			var i = Math.floor(h);
+			var f = h - i;
 
 			var	p = v*(1-s),
 				q = v*(1-s*f),
 				t = v*(1-s*(1-f));
 			var rgb;
-			switch(Math.floor(h)) {
+			switch(i) {
 				case 1:
 					rgb = [q,v,p]; break;
 				case 2:
@@ -113,14 +118,12 @@ function PickerFactory (history) {
 			}).join("");
 		}
 
-		var _hsv, _hex;
+		var _hsv = [0,0,0], _hex = "#FFFFFF";
 		return {
 			get hsv () {
 				return _hsv;
 			},
 			set hsv (value) {
-				if (value == undefined)
-					return;
 				_hsv = value;
 				_hex = hsvToHex(value).toUpperCase();
 			},
@@ -132,6 +135,10 @@ function PickerFactory (history) {
 					return;
 				if (!/^#([\da-f]{3}){1,2}$/.test(value))
 					return;
+				if (value.length == 4) {
+					var shorthandRegex = /^#([a-f\d])([a-f\d])([a-f\d])$/i;
+					value = value.replace(shorthandRegex, "#$1$1$2$2$3$3");
+				}
 				_hex = value.toUpperCase();
 				_hsv = hexToHsv(_hex);
 			},
@@ -162,32 +169,16 @@ function PickerFactory (history) {
 		}
 	}
 
-	function PickerDOM() {
+	function PickerDOM () {
 		var wrapper = find("picker");
-		on(wrapper, "click", function(event){
-			event.stopPropagation();
-			if (!DOM.parent)
-				return;
-			wrapper.style.visibility = "";
-			var rect = wrapper.getBoundingClientRect();
-			if (rect.bottom > window.innerHeight)
-				wrapper.style.bottom = "0px";
-			if (rect.left < 0)
-				wrapper.style.left = -rect.right + "px";
-		});
 		var ch = wrapper.children;
 		var colors = ["#F00", "#0085FF", "#FFD600", "#08CB33", "#8B572A", "#A3A3A3", "#000", "#fff"];
-
-		function setAttributes (obj, atts) {
-			for (var a in atts)
-				obj.setAttribute(a, atts[a]);
-		}
 
 		var timer;
 		var pals = ch[1].children;
 		for (var i = 0; i < colors.length; i++) {
 			var pal = pals[i];
-			setAttributes(pal, {
+			XML.setAttributes(pal, {
 					style: "background:" + colors[i],
 					title: "Right-click to save the current color"
 				});
@@ -218,15 +209,10 @@ function PickerFactory (history) {
 		var editor = bottom[0];
 		on(editor, "input", function() { _setColor(this.value, true); });
 		var Okay = bottom[1];
-		on(Okay, "click", function() { DOM.parent = null; });
+		on(Okay, "click", function(event) { event.preventDefault(); DOM.parent = null; });
 
-		setupDragAncClick(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });
-		setupDragAncClick(spectrum, function(s, v) { var c = color.hsv; c[1] = s; c[2] = 1-v; return _setColor(c)});
-
-		on(window, "mousedown", function (event) {
-			if (!(wrapper.contains(event.target)))
-				DOM.parent = null;
-		});
+		setupDragAndClick(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });
+		setupDragAndClick(spectrum, function(s, v) { var c = color.hsv; c[1] = s; c[2] = 1-v; return _setColor(c)});
 
 		function move(key, t, f) {
 			t.style[key] = 100 * f + "%";
@@ -253,18 +239,35 @@ function PickerFactory (history) {
 					return;
 				_parent = p;
 				if (!p) {
-					onChange = null;
-					wrapper.style = "visibility:hidden";
-					document.body.appendChild(wrapper); /* Move it somewhere else! */
 					history.push(latestChange);
 					latestChange = {};
 					cache();
-				} else {
-					p.appendChild(wrapper);
 				}
 			},
+			display: function () {
+				var p = DOM.parent;
+				if (p == null) {
+					wrapper.style = "display:none";
+					document.body.appendChild(wrapper); /* Move it somewhere else! */
+				} else if (p !== wrapper.parentNode) {
+					p.appendChild(wrapper);
+					wrapper.style = "";
+					var rect = wrapper.getBoundingClientRect();
+					if (rect.bottom > window.innerHeight)
+						wrapper.style.bottom = "0px";
+					if (rect.left < 0)
+						wrapper.style.left = -rect.right + "px";
+				}
+			}
 		}
 	}
+
+	document.addEventListener("mousedown", function () {
+		DOM.parent = null;
+	});
+	document.addEventListener("click", function () {
+		DOM.display();
+	});
 
 	function _setColor(value, fromEditor) {
 		if (typeof value === "string")
@@ -274,13 +277,16 @@ function PickerFactory (history) {
 		color.update(value);
 		DOM.update(fromEditor);
 		latestChange["newValue"] = color.hex;
-		if (onChange)
-			onChange(color.hex);
+		onChange(color.hex);
 	}
 
-	function getDefaultColor (id) {
+	function getDefaultColor (id, SVGNode) {
 		if (id in colors)
 			return colors[id];
+		if (SVGNode.hasAttribute("fill"))
+			return SVGNode.getAttribute("fill");
+		if (SVGNode.hasAttribute("color"))
+			return SVGNode.getAttribute("color");
 		return "#FFF";
 	}
 
@@ -290,7 +296,7 @@ function PickerFactory (history) {
 	this.attach = function (button, colorText, SVGNode) {
 		function input (hex) {
 			button.style.backgroundColor = hex;
-			SVGNode.setAttribute("fill", hex);
+			SVGNode.setAttribute("color", hex);
 			colorText.innerText = hex;
 			if (hex === "#FFFFFF")
 				delete colors[button.id];
@@ -309,10 +315,29 @@ function PickerFactory (history) {
 
 			if (showPicker)
 				DOM.parent = this;
+			else
+				DOM.parent = null;
 		});
-		var def = getDefaultColor(button.id);
+		SVGNode.addEventListener("click", function () {
+			button.click();
+		});
+		var def = getDefaultColor(button.id, SVGNode);
 		onChange = input;
 		_setColor(def);
+	}
+	this.build = function (target, parent, labelText) {
+		var wrapper = XML.DOMNode("div", {class: "color_wrapper"}, parent);
+
+		var buttonID = target.id + "Color";
+		var b = XML.DOMNode("button", {class: "color_picker", id: buttonID}, wrapper);
+
+		var label = XML.DOMNode("label", {class: "color_label no_collapse", for: buttonID}, wrapper);
+		var p = XML.DOMNode("p", {class: "soft_text"}, label);
+		p.innerText = labelText;
+		var c = XML.DOMNode("p", {class: "detail"}, label);
+
+		this.attach(b, c, target);
+		return b;
 	}
 	this.cache = cache;
 }
@@ -323,25 +348,26 @@ function HistoryTracker () {
 	var self = this;
 
 	function undoSingleChange (type, targetID, value) {
-		if (type == "variant") /* Mandual Override */
+		if (type == "variant") /* Manual Override */
 			targetID = value + "Radio";
 		var target = find(targetID);
 		if (!target) return false;
 		switch (type) {
+			case "color":
+				target.style.background = value;
+				break;
+			case "variant":
+				target.checked = false;
+				break;
 			case "select":
 				target.value = value;
 				target.dispatchEvent(new Event("change"));
-				break;
-			case "color":
-				target.style.background = value;
-				/* Fall-Through! */
-			case "variant":
-				target.checked = false;
-				/* Fall-through */
-			default:
-				target.click();
-				break;
+				return true;
+			case "decal":
+				Decals.Set(target, value);
+				return true;
 		}
+		target.click();
 		return true;
 	}
 
@@ -371,7 +397,7 @@ function HistoryTracker () {
 		self.track = false;
 		var change = from.pop();
 		if (!change) {
-			showPicker =  self.track = true;
+			showPicker = self.track = true;
 			return;
 		} else if ("target" in change) {
 			undoSingleChange(change["type"], change["target"], change[key]);

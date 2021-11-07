@@ -326,7 +326,7 @@
 </g>
 <g id="Groin">
 <g id="Basic_Groin" class="option" style="display: inherit;">
-<path id="Groin-Plate_Groin" style="fill: rgb(215, 190, 105);"/>
+<path id="Groin-Plate_Basic" style="fill: rgb(215, 190, 105);"/>
 <path id="Trauma-Plating_Groin" class="toggle" style="fill: rgb(196, 202, 206);"/>
 </g>
 </g>

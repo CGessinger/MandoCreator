@@ -17,7 +17,7 @@ clean:
 
 #=========================IMAGES==========================
 
-pictures: images/Helmets.svg images/Female.svg images/Male.svg images/Logo.svg images/Background.svg images/Mouse-Droid.svg
+pictures: images/Helmets.svg images/Female.svg images/Male.svg images/Logo.svg images/Background.svg images/Mouse-Droid.svg images/Decals.svg
 	touch pictures
 
 images:
@@ -33,6 +33,11 @@ images/%.svg: pictures/%.svg | images
 			s|Off|\" style=\"display:none|; \
 		}; \
 		s|_Option|\" class=\"option|; \
+		s|(\w+)Decals|&\" mask=\"url(#\1Mask)|; \
+		/Visor/ { \
+			s| | color=\"#000\" |; \
+			/class/ ! { s| | class=\"no_mask\" |; }; \
+		}; \
 		/\"Chest\"/ { \
 			s/ / class=\"swappable\" /; \
 		}; \

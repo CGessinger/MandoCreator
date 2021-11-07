@@ -16,14 +16,14 @@
 		<!-- End Google Analytics -->
 		<meta http-equiv="x-ua-compatible" content="ie=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<meta name="description" content="Design your custom set of mandalorian Armor, also known as Beskar'gam. Choose from dozens of options, and bring your vision to life! Whether it's for Cosplay or an RPG character, the perfect design is only a few clicks away." />
+		<meta name="description" content="Design your custom set of mandalorian armor. Choose from dozens of options, to bring your vision to life." />
 
-		<meta property="og:title" content="MandoCreator" />
-		<meta property="og:description" content="Design your custom set of mandalorian Armor, also known as Beskar'gam. Choose from dozens of options, and bring your vision to life! Whether it's for Cosplay or an RPG character, the perfect design is only a few clicks away." />
+		<meta property="og:title" content="MandoCreator - Design your Mandalorian" />
+		<meta property="og:description" content="Design your custom set of mandalorian armor. Choose from dozens of options, to bring your vision to life." />
 		<meta property="og:url" content="http://www.mandocreator.com/index.html" />
 		<meta property="og:image" content="http://www.mandocreator.com/assets/header.jpg" />
-		<meta name="twitter:title" content="MandoCreator" />
-		<meta name="twitter:description" content="Design your custom set of mandalorian Armor, also known as Beskar'gam. Choose from dozens of options, and bring your vision to life! Whether it's for Cosplay or an RPG character, the perfect design is only a few clicks away." />
+		<meta name="twitter:title" content="MandoCreator - Design your Mandalorian" />
+		<meta name="twitter:description" content="Design your custom set of mandalorian armor. Choose from dozens of options, to bring your vision to life." />
 		<meta name="twitter:image" content="http://www.mandocreator.com/assets/header.jpg" />
 		<meta name="twitter:card" content="summary_large_image" />
 
@@ -38,17 +38,28 @@
 		<link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#ab1f1f" />
 		<meta name="msapplication-TileColor" content="#b91d47" />
 		<meta name="theme-color" content="#ffffff" />
-		<title>MandoCreator</title>
+		<title>MandoCreator - Design your Mandalorian</title>
 		<script type="application/ld+json">
 		{
 			"@context":"https://schema.org",
-			"@type":"WebApplication",
+			"@type":"SoftwareApplication",
 			"name":"MandoCreator",
 			"url":"https://www.mandocreator.com/",
-			"description":"Design your custom set of mandalorian Armor, also known as Beskar'gam. Choose from dozens of options, and bring your vision to life! Whether it's for Cosplay or an RPG character, the perfect design is only a few clicks away.",
+			"description":"Design your custom set of mandalorian armor. Choose from dozens of options, to bring your vision to life.",
 			"applicationCategory": "DesignApplication",
 			"operatingSystem": "Any",
 			"softwareVersion": "3.3",
+			"author": [
+				{
+					"@type":"Person",
+					"name":"Jev Va'sal",
+					"url":"https://twitter.com/Foilrose_Studio"
+				}, {
+					"@type":"Person",
+					"name":"Cin Vhetin",
+					"url":"https://github.com/MGessinger"
+				}
+			],
 			"offers": [ {
 				"@type":"Offer",
 				"price":"0",
@@ -58,13 +69,25 @@
 			"aggregateRating": {
 				"@type": "AggregateRating",
 				"ratingValue": "4.5",
-				"ratingCount": "130"
+				"ratingCount": "193"
 			}
 		}
 		</script>
 	</head>
 	<body onload="onload()">
-		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WDVDR2H" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<svg id="brace" class="brace" style="visibility: hidden" >
+			<g style="fill:white;stroke:white;stroke-width:0.5px;filter:drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)">
+				<rect width="100" height="100" rx="1" x="-50" y="-50" style="fill:none;stroke-width:1.5px" vector-effect="non-scaling-stroke"/>
+				<line y1="-50" y2="-55" />
+				<rect width="5" height="5" x="-2.5" y="-60" rx="1" />
+				<circle r="3.5" cx="50" cy="50" />
+			</g>
+			<g style="fill:transparent;stroke:none;">
+				<rect width="100" height="100" rx="1" x="-50" y="-50"  style="cursor:move" />
+				<rect width="40" height="40" x="-20" y="-75" style="cursor:grab"/>
+				<rect width="40" height="40" x="30" y="30" style="cursor:nwse-resize"/>
+			</g>
+		</svg>
 		<div class="picker_wrapper" id="picker" style="visibility: hidden;">
 			<div class="info"> a swatch to save your color</div>
 			<div class="picker_palette">
@@ -90,7 +113,7 @@
 			<svg id="Body"> </svg>
 		</main>
 		<nav>
-			<object id="title" type="image/svg+xml">MandoCreator Logo</object>
+			<object id="title" type="image/svg+xml" data="images/Logo.svg">MandoCreator Logo</object>
 			<ul id="left_nav" data-nosnippet="">
 				<li class="nav_icon icon-helmet-icon">
 					<div id="parts_list" class="sub_nav">
@@ -140,24 +163,24 @@
 		</nav>
 		<footer>
 			<span>
-				<button class="undo_redo" onclick="History.undo(0)">&#xe91f;</button>
+				<button class="icon-undo undo_redo" onclick="History.undo(0)"></button>
 				<button class="reset" onclick="reset()">Reset</button>
-				<button class="undo_redo" style="transform:scale(-1,1);" onclick="History.undo(1)">&#xe91f;</button>
+				<button class="icon-undo undo_redo" style="transform:scale(-1,1);" onclick="History.undo(1)"></button>
 			</span>
 			<div class="zoom_wrapper">
-					<span class="zoom_icon" onclick="zoomInOut(-10)">&#xe916;</span
-					><input id="zoom" type="range" min="100" max="300" value="100" oninput="zoom(this.value)" /
-					><span class="zoom_icon" onclick="zoomInOut(10)">&#xe917;</span>
+					<span class="zoom_icon" onclick="Zoom.out()">&#xe916;</span
+					><input id="zoom" type="range" min="100" max="1000" value="100" oninput="Zoom.scale=(this.value)" /
+					><span class="zoom_icon" onclick="Zoom.in()">&#xe917;</span>
 			</div>
 		</footer>
-		<div id="controls" class="controls_column controls_collapsed">
-			<button id="controls_toggle" title="Toggle Controls Menu">&#xE900;</button>
-			<div id="HelmetOptions" onclick="openFolder(this)" class="folder selected">
-				<div class="hidden">
+		<div id="armor_menu" class="menu_column menu_collapsed">
+			<button id="menu_toggle" class="menu_toggle" title="Toggle Controls Menu">&#xE900;</button>
+			<div id="HelmetOptions" class="folder">
+				<div class="no_collapse">
 					<h2 class="slide_title">Helmet (Buy'ce)</h2>
 					<details open>
-					<summary class="option_name">Style:</summary>
-					<div id="HelmetTypes" class="armor_types" onchange="UpdateSponsor('Helmet')">
+					<summary class="headline">Style:</summary>
+					<div id="HelmetTypes" class="styles_preview" onchange="UpdateSponsor('Helmet')">
 						<details open>
 							<summary class="sponsor_title">Common</summary>
 							<label class="type_button current_variant">
@@ -297,7 +320,7 @@
 							<label class="type_button">
 								<input type="radio" name="helmet" id="Helmet_Budget-BucketRadio"
 								onclick="setSponsor('Budget','#');">
-								<svg viewBox="0 0 80 80" class="preview_icon"><use href="#Helmet_Budget-Bucket"/></svg>
+								<svg viewBox="0 -5 80 80" class="preview_icon"><use href="#Helmet_Budget-Bucket"/></svg>
 								Budget
 							</label><label class="type_button">
 								<input type="radio" name="helmet" id="Helmet_RamikadycRadio">
@@ -329,7 +352,7 @@
 								Assassin
 							</label><label class="type_button">
 								<input type="radio" name="helmet" id="Helmet_NeoRadio">
-								<svg viewBox="0 0 80 80" class="preview_icon"><use href="#Helmet_Neo"/></svg>
+								<svg viewBox="0 5 80 80" class="preview_icon"><use href="#Helmet_Neo"/></svg>
 								Neo-Crusader
 							</label>
 						</details>
@@ -337,7 +360,13 @@
 					</details>
 				</div>
 				<div class="folder_content">
-					<div id="HelmetColors" class="slide_content"></div>
+					<div id="HelmetColors" class="slide_content no_overview"></div>
+					<details open class="overview no_collapse no_overview">
+						<summary class="headline">Detailing</summary>
+						<button class="decals_toggle no_collapse" data-category='Helmets'>
+							<p class="larger">Add decals</p>
+						</button>
+					</details>
 				</div>
 				<div class="sponsors" style="position: relative">
 					<button class="close_sponsors" style="display:none" onclick="UpdateSponsor('Helmet');">X</button>
@@ -349,12 +378,12 @@
 					<a id="Budget" class="sponsor_link" style="display:none" onclick="showRoll('Bucket')"><img width="100%" alt="Buy this Helmet from your local hardware store"/></a>
 				</div>
 			</div>
-			<div id="UpperArmorOptions" onclick="openFolder(this)" class="folder overview">
-				<div class="folder_head hidden">
+			<div id="UpperArmorOptions" class="folder overview">
+				<div class="folder_head no_collapse">
 					<h2 class="slide_title">Upper Body</h2>
 					<details open>
-						<summary class="option_name">Style:</summary>
-						<div id="ChestTypes" class="armor_types">
+						<summary class="headline">Style:</summary>
+						<div id="ChestTypes" class="styles_preview">
 							<label class="type_button current_variant">
 								<input type="radio" name="chest" id="Chest_ClassicRadio">
 								<svg viewBox="42 5 85 85" class="preview_icon"><use href="#Chest_Classic"/></svg>
@@ -382,181 +411,349 @@
 							</label>
 						</div>
 					</details>
-					<p class="option_name">Parts:</p>
+					<p class="headline">Parts:</p>
 				</div>
 				<div class="folder_content">
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Upper Body</p>
-								<p>Neck (Ghet'bur)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Upper Body</p>
+							<p class="larger">Neck (Ghet'bur)</p>
 						</button>
-						<div id="CollarColors" class="slide_content"></div>
-						<div id="Neck-ArmorColors" class="slide_content"></div>
+						<details open id="CollarColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Collar'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
+						<div id="Neck-ArmorColors" class="slide_content no_overview"></div>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Chest'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Upper Body</p>
-								<p>Chest Attachments</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Upper Body</p>
+							<p class="larger">Chest Attachments</p>
 						</button>
-						<div id="Chest-AttachmentsColors" class="slide_content"></div>
+						<details open id="Chest-AttachmentsColors" class="slide_content no_overview"></details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Upper Body</p>
-								<p>Chest (Hal'cabur)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Upper Body</p>
+							<p class="larger">Chest (Hal'cabur)</p>
 						</button>
-						<div id="Full-ChestColors" class="slide_content"></div>
-						<div id="Right-ChestColors" class="slide_content"></div>
-						<div id="Left-ChestColors" class="slide_content"></div>
+						<div id="Full-ChestColors" class="slide_content no_overview"></div>
+						<div id="Right-ChestColors" class="slide_content no_overview"></div>
+						<div id="Left-ChestColors" class="slide_content no_overview"></div>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Chest'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Upper Body</p>
-								<p>Iron Heart (Kar'ta Beskar)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Upper Body</p>
+							<p class="larger">Iron Heart (Kar'ta Beskar)</p>
 						</button>
-						<div id="Iron-HeartColors" class="slide_content"></div>
+						<div id="Iron-HeartColors" class="slide_content no_overview"></div>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Upper Body</p>
-								<p>Abdomen (Shar'tas)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Upper Body</p>
+							<p class="larger">Abdomen (Shar'tas)</p>
 						</button>
-						<div id="AbdomenColors" class="slide_content"></div>
+						<div id="AbdomenColors" class="slide_content no_overview"></div>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Chest'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Upper Body</p>
-								<p>Shoulders (Bes'mabur)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Upper Body</p>
+							<p class="larger">Shoulders (Bes'mabur)</p>
 						</button>
-						<div id="Right-ShoulderColors" class="slide_content"></div>
-						<div id="Left-ShoulderColors" class="slide_content"></div>
+						<details open id="Right-ShoulderColors" class="slide_content no_overview"></details>
+						<details open id="Left-ShoulderColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Shoulders'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Upper Body</p>
-								<p>Biceps (Irud'cabur)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Upper Body</p>
+							<p class="larger">Biceps (Irud'cabur)</p>
 						</button>
-						<div id="Right-BicepsColors" class="slide_content"></div>
-						<div id="Left-BicepsColors" class="slide_content"></div>
+						<details open id="Right-BicepsColors" class="slide_content no_overview"></details>
+						<details open id="Left-BicepsColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Biceps'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Upper Body</p>
-								<p>Gauntlets (Kom'rk)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Upper Body</p>
+							<p class="larger">Gauntlets (Kom'rk)</p>
 						</button>
-						<div id="Right-GauntletsColors" class="slide_content"></div>
-						<div id="Left-GauntletsColors" class="slide_content"></div>
+						<details open id="Right-GauntletsColors" class="slide_content no_overview"></details>
+						<details open id="Left-GauntletsColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Gauntlets'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 				</div>
 			</div>
-			<div id="SoftPartsOptions" onclick="openFolder(this)" class="folder">
-				<div class="hidden">
+			<div id="SoftPartsOptions" class="folder">
+				<div class="no_collapse">
 					<h2 class="slide_title">Flight Suit (Kute)</h2>
 				</div>
 				<div class="folder_content">
-					<div id="Right-GloveColors" class="slide_content"></div>
-					<div id="Left-GloveColors" class="slide_content"></div>
-					<div id="SuitColors" class="slide_content"></div>
-					<div id="BootsColors" class="slide_content"></div>
+					<details open id="Right-GloveColors" class="slide_content no_overview"></details>
+					<details open id="Left-GloveColors" class="slide_content no_overview"></details>
+					<details open id="SuitColors" class="slide_content no_overview"></details>
+					<details open id="BootsColors" class="slide_content no_overview"></details>
 				</div>
 			</div>
-			<div id="LowerArmorOptions" onclick="openFolder(this)" class="folder overview">
-				<div class="folder_head hidden">
+			<div id="LowerArmorOptions" class="folder overview">
+				<div class="folder_head no_collapse">
 					<h2 class="slide_title">Lower Body</h2>
-					<p class="option_name">Parts:</p>
+					<p class="headline">Parts:</p>
 				</div>
 				<div class="folder_content">
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Lower Body</p>
-								<p>Waist</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Lower Body</p>
+							<p class="larger">Waist</p>
 						</button>
-						<div id="BeltColors" class="slide_content"></div>
-						<div id="Under-BeltColors" class="slide_content"></div>
-						<div id="AccessoriesColors" class="slide_content"></div>
+						<details open id="BeltColors" class="slide_content no_overview"></details>
+						<details open id="Under-BeltColors" class="slide_content no_overview"></details>
+						<details open id="AccessoriesColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Waist'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Lower Body</p>
-								<p>Groin (Ven'cabur)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Lower Body</p>
+							<p class="larger">Groin (Ven'cabur)</p>
 						</button>
-						<div id="GroinColors" class="slide_content"></div>
+						<details open id="GroinColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Groin'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Lower Body</p>
-								<p>Thighs (Motun'bur)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Lower Body</p>
+							<p class="larger">Thighs (Motun'bur)</p>
 						</button>
-						<div id="Right-ThighColors" class="slide_content"></div>
-						<div id="Left-ThighColors" class="slide_content"></div>
+						<details open id="Right-ThighColors" class="slide_content no_overview"></details>
+						<details open id="Left-ThighColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Thighs'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Lower Body</p>
-								<p>Knees (Bes'lovik)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Lower Body</p>
+							<p class="larger">Knees (Bes'lovik)</p>
 						</button>
-						<div id="Right-KneeColors" class="slide_content"></div>
-						<div id="Left-KneeColors" class="slide_content"></div>
+						<details open id="Right-KneeColors" class="slide_content no_overview"></details>
+						<details open id="Left-KneeColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Knees'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Lower Body</p>
-								<p>Shins (Tadun'bur)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Lower Body</p>
+							<p class="larger">Shins (Tadun'bur)</p>
 						</button>
-						<div id="Right-ShinColors" class="slide_content"></div>
-						<div id="Left-ShinColors" class="slide_content"></div>
+						<details open id="Right-ShinColors" class="slide_content no_overview"></details>
+						<details open id="Left-ShinColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Shins'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 					<div class="slide">
-						<button class="slide_toggle hidden">
-							<div class="toggle_text">
-								<p class="parent_title">Lower Body</p>
-								<p>Foot (Cetar'bur)</p>
-							</div>
+						<button class="slide_toggle no_collapse">
+							<p class="soft_text">Lower Body</p>
+							<p class="larger">Foot (Cetar'bur)</p>
 						</button>
-						<div id="Right-AnkleColors" class="slide_content"></div>
-						<div id="Left-AnkleColors" class="slide_content"></div>
-						<div id="Right-ToeColors" class="slide_content"></div>
-						<div id="Left-ToeColors" class="slide_content"></div>
+						<details open id="Right-AnkleColors" class="slide_content no_overview"></details>
+						<details open id="Left-AnkleColors" class="slide_content no_overview"></details>
+						<details open id="Right-ToeColors" class="slide_content no_overview"></details>
+						<details open id="Left-ToeColors" class="slide_content no_overview"></details>
+						<details open class="overview no_collapse no_overview">
+							<summary class="headline">Detailing</summary>
+							<button class="decals_toggle" data-category='Foot'>
+								<p class="larger">Add decals</p>
+							</button>
+						</details>
 					</div>
 				</div>
 			</div>
-			<div id="ExtrasOptions" onclick="openFolder(this)" class="folder">
-				<div class="hidden">
+			<div id="ExtrasOptions" class="folder">
+				<div class="no_collapse">
 					<h2 class="slide_title">Extras (Majyce)</h2>
 				</div>
 				<div class="folder_content">
-					<div class="slide_content" id="BackColors"></div>
-					<div class="slide_content" id="FrontColors"></div>
+					<details open class="slide_content no_overview" id="BackColors"></details>
+					<details open class="slide_content no_overview" id="FrontColors"></details>
 				</div>
 			</div>
 		</div>
-
+		<div id="decals_menu" class="menu_column menu_collapsed folder">
+			<button id="decals_toggle" class="menu_toggle" title="Toggle Decals Menu">&#xE900;</button>
+			<button class="slide_toggle no_collapse" onclick="Decals.Category=null">
+				<p class="soft_text">Detailing</p>
+				<p class="larger">Decals (Aliike)</p>
+			</button>
+			<details open class="no_collapse">
+				<summary class="headline">Style:</summary>
+				<div id="Decal_Previews" class="styles_preview">
+					<details open>
+						<summary class="sponsor_title">Mandalorian</summary>
+						<button class="type_button" data-name="Mytho-Skull">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mytho-Skull"/></svg>
+							Mythosaur
+						</button><button class="type_button" data-name="Beskar-ta">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Beskar-ta"/></svg>
+							Beskar'ta
+						</button><button class="type_button" data-name="Beskar-ta--Hollow-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Beskar-ta--Hollow-"/></svg>
+							Beskar'ta (2)
+						</button><button class="type_button" data-name="Mando-a-1">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mando-a-1"/></svg>
+							Mando'a (1)
+						</button><button class="type_button" data-name="Mando-a-2">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mando-a-2"/></svg>
+							Mando'a (2)
+						</button><button class="type_button" data-name="Jaig-Eyes">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Jaig-Eyes"/></svg>
+							Jaig Eyes
+						</button><button class="type_button" data-name="Deathwatch">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Deathwatch"/></svg>
+							Deathwatch
+						</button><button class="type_button" data-name="MandoCreator">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#MandoCreator"/></svg>
+							MandoCreator
+						</button>
+					</details>
+					<details open>
+						<summary class="sponsor_title">Basic Shapes</summary>
+						<button class="type_button" data-name="Stripe-1">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Stripe-1"/></svg>
+							Stripe (1)
+						</button><button class="type_button" data-name="Stripe-2">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Stripe-2"/></svg>
+							Stripe (2)
+						</button><button class="type_button" data-name="Stripe-3">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Stripe-3"/></svg>
+							Stripe (3)
+						</button><button class="type_button" data-name="Circle">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Circle"/></svg>
+							Circle
+						</button><button class="type_button" data-name="Square">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Square"/></svg>
+							Square
+						</button><button class="type_button" data-name="Triangle">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Triangle"/></svg>
+							Triangle
+						</button><button class="type_button" data-name="Circle--Hollow-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Circle--Hollow-"/></svg>
+							Circle 2
+						</button><button class="type_button" data-name="Square--Hollow-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Square--Hollow-"/></svg>
+							Square 2
+						</button><button class="type_button" data-name="Triangle--Hollow-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Triangle--Hollow-"/></svg>
+							Triangle 2
+						</button><button class="type_button" data-name="Star--3-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--3-"/></svg>
+							Star (3)
+						</button><button class="type_button" data-name="Star--4-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--4-"/></svg>
+							Star (4)
+						</button><button class="type_button" data-name="Star--5-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--5-"/></svg>
+							Star (5)
+						</button><button class="type_button" data-name="Star--6-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--6-"/></svg>
+							Star (6)
+						</button><button class="type_button" data-name="Star--7-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--7-"/></svg>
+							Star (7)
+						</button><button class="type_button" data-name="Star--8-">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--8-"/></svg>
+							Star (8)
+						</button>
+					</details>
+					<details open>
+						<summary class="sponsor_title">Weathering</summary>
+						<button class="type_button" data-name="Claw-Marks">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Claw-Marks"/></svg>
+							Claw-Marks
+						</button><button class="type_button" data-name="Scratches">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Scratches"/></svg>
+							Scratches
+						</button><button class="type_button" data-name="Medium-Weathering">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Medium-Weathering"/></svg>
+							Weathering (M)
+						</button><button class="type_button" data-name="Heavy-Weathering">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Heavy-Weathering"/></svg>
+							Weathering (H)
+						</button>
+					</details>
+				</div>
+			</details>
+			<div id="Decal_Lists" class="folder_content">
+				<div id="HelmetsDecalsList" class="slide slide_content"></div>
+				<div id="CollarDecalsList" class="slide slide_content"></div>
+				<div id="ShouldersDecalsList" class="slide slide_content"></div>
+				<div id="ChestDecalsList" class="slide slide_content"></div>
+				<div id="BicepsDecalsList" class="slide slide_content"></div>
+				<div id="GauntletsDecalsList" class="slide slide_content"></div>
+				<div id="WaistDecalsList" class="slide slide_content"></div>
+				<div id="GroinDecalsList" class="slide slide_content"></div>
+				<div id="ThighsDecalsList" class="slide slide_content"></div>
+				<div id="KneesDecalsList" class="slide slide_content"></div>
+				<div id="ShinsDecalsList" class="slide slide_content"></div>
+				<div id="FootDecalsList" class="slide slide_content"></div>
+			</div>
+		</div>
 		<video id="rickroll" style="display:none" autoplay></video>
 		<form id="reload" style="display:none">
 			<legend>A new version is available</legend>
@@ -574,9 +771,11 @@
 			<canvas id="canvas" height="720" width="1280"></canvas>
 			<audio id="kote" autoplay></audio>
 			<span id="vault"></span>
+			<svg id="decal_vault"></svg>
 		</div>
 		<script src="color.js"></script>
 		<script src="FileIO.js"></script>
+		<script src="decals.js"></script>
 		<script src="editor.js"></script>
 	</body>
 </html>

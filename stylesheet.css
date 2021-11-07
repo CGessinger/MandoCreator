@@ -28,11 +28,8 @@ FONTS
 
 [class*="icon-"]:before {
 	display: inline-block;
-	width: 2em;
-	padding: 0.5em 0;
 	font-size: 1.5em;
-	line-height: 1em;
-	text-align: center;
+	line-height: 1.25em;
 
 	/* use !important to prevent issues with browser extensions that change fonts */
 	font-family: 'icomoon' !important;
@@ -41,6 +38,18 @@ FONTS
 	/* Better Font Rendering */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+.nav_icon:before,
+.sub_nav_label:before,
+.label_sex:before {
+	width: 2em;
+	text-align: center;
+	line-height: 2em;
+}
+
+.reorder:before {
+	line-height: 1em;
 }
 
 .icon-accessories-icon:before {
@@ -113,6 +122,28 @@ FONTS
 	content: "\e902";
 }
 
+.icon-main-antenna:before {
+	content: "\e918";
+}
+.icon-range-finder:before {
+	content: "\e919";
+}
+.icon-sensor-stalk:before {
+	content: "\e91a";
+}
+.icon-sub-antenna:before {
+	content: "\e91b";
+}
+.icon-antenna:before {
+	content: "\e91c";
+}
+.icon-lear-cap:before {
+	content: "\e91d";
+}
+.icon-module:before {
+	content: "\e922";
+}
+
 /*
 -----------------------------------------
 ANIMATIONS
@@ -145,7 +176,7 @@ HEAD TAGS
 
 body {
 	margin: 0;
-	color: var(--mainFont);
+	color: var(--highlight);
 	font-family: 'icomoon', 'Raleway', Verdana, sans-serif;
 	background: var(--mainColor) center / cover no-repeat;
 	-webkit-user-select: none;
@@ -157,7 +188,6 @@ body {
 	--softColor: #555;
 	--softLight: #AAA;
 	--highlight: #DDD;
-	--mainFont: white;
 	--accent: #AB1F1F;
 	--translucent: rgb(0,0,0,50%);
 }
@@ -186,6 +216,7 @@ nav {
 	background: var(--mainColor);
 	margin: 0;
 	padding: 0;
+	list-style: none;
 }
 
 .sub_nav {
@@ -247,7 +278,7 @@ GENERICS
 
 a {
 	text-decoration: none;
-	color: var(--mainFont);
+	color: white;
 }
 
 p {
@@ -341,8 +372,15 @@ legend {
 	scrollbar-width: none;
 }
 
-.image_column g {
-	pointer-events: visiblefill;
+.image_column svg {
+	position: relative;
+	pointer-events: none;
+	overflow: visible;
+}
+
+#Male-Body *,
+#Female-Body * {
+	pointer-events: visiblePainted;
 }
 
 .swappable {
@@ -371,10 +409,7 @@ footer > * {
 }
 
 .zoom_wrapper {
-	height: 3em;
-	padding: 0.75em;
-	margin-top: 0.5em;
-	box-sizing: border-box;
+	padding: 1em 0;
 	background: var(--translucent);
 }
 
@@ -453,12 +488,11 @@ footer > * {
 }
 
 .undo_redo {
-	margin: 0 1em;
 	width: 2em;
-	height: 2em;
 	background: var(--mainColor);
 	border: 1px solid var(--softLight);
 	border-radius: 12%;
+	vertical-align: sub;
 }
 
 .undo_redo:focus {
@@ -466,8 +500,8 @@ footer > * {
 }
 
 .reset {
-	margin: 0;
 	padding: 0.5em 1em;
+	margin: 1em;
 	border: none;
 	background: var(--accent);
 	border-radius: 0.5em;
@@ -478,17 +512,17 @@ footer > * {
 	background: var(--accent);
 }
 
-.controls_column {
+.menu_column {
 	position: fixed;
 	height: 100%;
-	width: 20em;
+	width: 23em;
 	max-width: 100%;
 	right: 0;
 	top: 0;
 	background: var(--mainColor);
 }
 
-#controls_toggle {
+.menu_toggle {
 	position: absolute;
 	right: 0;
 	border: none;
@@ -498,17 +532,17 @@ footer > * {
 	color: var(--accent);
 }
 
-.armor_types {
+.styles_preview {
 	padding-top: 0.5em;
 	overflow-y: auto;
+	border-bottom: 1px solid var(--softColor);
 	resize: vertical;
-	height: 20em;
+	height: 19em;
 }
 
 .sponsor_title {
 	color: var(--softLight);
 	padding: 0 0 0.5em 3%;
-	font-size: larger;
 }
 
 .slide_title {
@@ -516,8 +550,7 @@ footer > * {
 	padding-left: 1em;
 }
 
-.option_name {
-	margin: 0;
+.headline {
 	padding: 0.5em 0.75em;
 	background: var(--softColor);
 	line-height: 1.5em;
@@ -526,17 +559,14 @@ footer > * {
 .mirror_button {
 	height: 1.5em;
 	width: 1.5em;
-	float: right;
 	background: var(--accent);
 	border: none;
-	color: white;
 }
 
 .folder {
 	display: none;
-	flex-direction: column;
 	height: 100%;
-	font-size: small;
+	flex-direction: column;
 }
 
 .folder_head {
@@ -544,22 +574,23 @@ footer > * {
 }
 
 .type_button {
-	display: inline-block;
-	width: 30%;
 	position: relative;
-	margin-left: 3%;
+	display: inline-block;
 	margin-bottom: 1em;
+	margin-left: 3%;
+	width: 30%;
+	text-align: center;
+	font-size: smaller;
 	background: none;
 	border: none;
-	text-align: center;
 }
 
 .type_button input {
-	opacity: 0;
 	position: absolute;
 	height: 100%;
 	width: 100%;
 	margin: 0;
+	opacity: 0;
 	cursor: pointer;
 }
 
@@ -575,7 +606,9 @@ footer > * {
 
 .preview_icon {
 	border: 1px currentColor solid;
+	max-height: 100%;
 	fill: white;
+	fill-rule: evenodd;
 	stroke: black;
 	stroke-width: 0.3px;
 }
@@ -584,15 +617,29 @@ footer > * {
 	border-color: var(--accent);
 }
 
+.decals_toggle {
+	height: 3em;
+	width: 100%;
+	padding-left: 0.5em;
+	background: none;
+	border: none;
+}
+
+.decals_toggle:after {
+	content: "\e90c";
+	float: right;
+	color: var(--accent);
+	font-size: x-large;
+}
+
 .slide_toggle {
 	height: 3em;
 	width: 100%;
 	padding-left: 0.5em;
 	text-align: left;
 	background: none;
-	font-size: larger;
-	border: 1px var(--softColor);
-	border-style: none none solid none;
+	border: 1px none var(--softColor);
+	border-bottom-style: solid;
 }
 
 .slide_toggle:before {
@@ -600,7 +647,7 @@ footer > * {
 	float: left;
 	color: var(--accent);
 	font-size: x-large;
-	line-height: 1.25em;
+	line-height: 1.5em;
 	padding-right: 0.25em;
 }
 
@@ -615,17 +662,7 @@ footer > * {
 	display: none;
 }
 
-.toggle_text {
-	display: inline-block;
-	font-size: large;
-}
-
-.parent_title {
-	font-size: small;
-	color: var(--softLight);
-}
-
-.overview .parent_title {
+.overview .soft_text {
 	display: none;
 }
 
@@ -638,6 +675,18 @@ footer > * {
 	display: none;
 }
 
+.slide:empty:before {
+	content: "No decals applied.";
+	display: block;
+	width: 100%;
+	padding-top: 1em;
+	text-align: center;
+}
+
+.menu_collapsed .slide:empty {
+	display: none;
+}
+
 .overview .folder_head {
 	display: block;
 }
@@ -646,18 +695,52 @@ footer > * {
 	display: block;
 }
 
-.overview .slide_content {
+.overview .no_overview {
 	display: none;
+}
+
+.decal_control {
+	padding-bottom: 0.75em;
+	border-left: 0.25em solid transparent;
+	border-bottom: 1px solid var(--softColor);
+}
+
+.decal_control.selected {
+	border-left-color: var(--accent);
+	background: var(--softColor);
+}
+
+.menu_collapsed .decal_control {
+	border: none;
+	background: none;
+	padding: 0;
+}
+
+.right {
+	float: right;
+}
+
+.reorder {
+	margin: 0 0.25em;
+	background: none;
+	border: 1px solid var(--highlight);
+	border-radius: 0.25em;
+}
+
+.remove {
+	margin: 1em;
+	width: 1.5em;
+	height: 1.5em;
+	background: var(--accent);
+	border-radius: 0.25em;
+	border: none;
+	vertical-align: super;
 }
 
 .color_wrapper {
 	display: inline-block;
-	padding: 1em 0 0 1em;
+	padding: 0.75em 0 0 0.75em;
 	min-width: 6.5em;
-}
-
-.synchronized .color_wrapper {
-	display: none;
 }
 
 .color_picker {
@@ -677,9 +760,13 @@ footer > * {
 	line-height: 1em;
 }
 
-.name {
+.soft_text {
 	color: var(--softLight);
-	font-size: smaller;
+}
+
+.larger {
+	float: left;
+	font-size: larger;
 }
 
 .detail {
@@ -688,7 +775,7 @@ footer > * {
 }
 
 .checkbox_list {
-	padding: 0.5em 1em 0 1em;
+	padding: 0.75em 0 0 0.75em;
 }
 
 .checkbox_wrapper {
@@ -697,17 +784,19 @@ footer > * {
 }
 
 .checkbox {
-	opacity: 0;
+	display: none;
 	position: absolute;
 }
 
 .checkbox_label {
 	display: inline-block;
-	padding: 0.25em;
 	margin-right: 0.5em;
-	font-size: 1.33em;
+	height: 2em;
+	width: 2em;
 	border: 1px solid currentColor;
 	color: var(--highlight);
+	text-align: center;
+	box-sizing: border-box;
 }
 
 :checked + .checkbox_label {
@@ -716,8 +805,10 @@ footer > * {
 
 .pseudo_checkbox {
 	display: block;
-	padding: 1em 1em 0 1em;
 	height: 1.5em;
+	padding: 0.75em;
+	padding-bottom: 0;
+	line-height: 1.5em;
 }
 
 .pseudo_label {
@@ -733,7 +824,6 @@ footer > * {
 .slider {
 	height: 100%;
 	width: 3em;
-	float: right;
 	margin-left: 1em;
 	background: var(--highlight);
 	border-radius: 0.75em;
@@ -764,7 +854,8 @@ footer > * {
 .select_wrapper {
 	display: block;
 	position: relative;
-	margin: 1em 1em 0 1em;
+	margin: 0.75em;
+	margin-bottom: 0;
 }
 
 .select_wrapper::after {
@@ -772,7 +863,6 @@ footer > * {
 	position: absolute;
 	right: 0;
 	pointer-events: none;
-	font-size: larger;
 }
 
 .component_select {
@@ -797,38 +887,37 @@ footer > * {
 	background: var(--mainColor);
 	border: 1px solid var(--accent);
 	border-radius: 25%;
-	text-align: center;
 }
 
-.controls_collapsed {
+.menu_collapsed {
 	width: 3em;
 	text-align: center;
 }
 
-.controls_collapsed #controls_toggle {
+.menu_collapsed .menu_toggle {
 	position: relative;
 	color: unset;
 }
 
-.controls_collapsed hr {
+.menu_collapsed hr {
 	margin: 0.5em 0;
 }
 
-.controls_collapsed .color_wrapper {
+.menu_collapsed .color_wrapper {
 	padding: 0.25em 0;
 	min-width: 0;
 }
 
-.controls_collapsed .slider {
+.menu_collapsed .slider {
 	display: inline-block;
 	float: none;
 }
 
-.controls_collapsed .sync {
+.menu_collapsed .sync {
 	padding: 0.5em 0 1em 0;
 }
 
-.controls_collapsed .hidden {
+.menu_collapsed .no_collapse {
 	display: none;
 }
 

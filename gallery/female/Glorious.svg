@@ -354,7 +354,7 @@
 </g>
 <g id="Groin">
 <g id="Basic_Groin" class="option" style="display: inherit;">
-<path id="Groin-Plate_Groin" d="M78.2,107.5L67.7,86.2h33.8l-10.6,21.2c0,0-4.2,5.1-6.3,5.1 C82.5,112.5,78.2,107.5,78.2,107.5z" style="fill: rgb(140, 29, 29);"/>
+<path id="Groin-Plate_Basic" d="M78.2,107.5L67.7,86.2h33.8l-10.6,21.2c0,0-4.2,5.1-6.3,5.1 C82.5,112.5,78.2,107.5,78.2,107.5z" style="fill: rgb(140, 29, 29);"/>
 <path id="Trauma-Plating_Groin" class="toggle" style="fill: rgb(102, 16, 16);" d="M89.8,106.7l9.5-19.2H69.8l9.5,19.2c0.4,0.5,2.1,2.4,3.7,3.6 c0.6,0.4,1.1,0.8,1.5,0.8c0.4,0,0.9-0.4,1.5-0.8C87.7,109.2,89.4,107.2,89.8,106.7"/>
 </g>
 </g>

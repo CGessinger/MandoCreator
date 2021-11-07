@@ -1,7 +1,28 @@
 "use strict";
 
+var XML = {
+	SVGNode: function (type, atts, parent) {
+		var n = document.createElementNS("http://www.w3.org/2000/svg", type);
+		this.setAttributes(n, atts);
+		if (parent)
+			parent.appendChild(n);
+		return n;
+	},
+	DOMNode: function (type, atts, parent) {
+		var n = document.createElement(type);
+		this.setAttributes(n, atts);
+		if (parent)
+			parent.appendChild(n);
+		return n;
+	},
+	setAttributes: function (obj, atts) {
+		for (var a in atts)
+			obj.setAttribute(a, atts[a]);
+	}
+}
+
 function Uploader (queryString, D) {
-	var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	var svg = XML.SVGNode("svg");
 	var readerBck = new FileReader;
 	var file;
 	readerBck.onload = function() {
@@ -31,7 +52,10 @@ function Uploader (queryString, D) {
 				if (!node.id)
 					return NodeFilter.FILTER_REJECT;
 				node.id = node.id.replace(/_(M|F|Toggle(Off)?|Option)($|_)/g,"$3");
-				if (!(node.hasAttribute("fill") || node.hasAttribute("class") || node.style.fill))
+				if ( !(node.hasAttribute("fill")
+					|| node.hasAttribute("color")
+					|| node.hasAttribute("class")
+					|| node.style.fill) )
 					return NodeFilter.FILTER_SKIP;
 				return NodeFilter.FILTER_ACCEPT;
 			} }
@@ -40,11 +64,12 @@ function Uploader (queryString, D) {
 		var node;
 		while (node = iter.nextNode()) {
 			var id = node.id.replace(/_Toggle(Off|On)?|_Option/, "");
-			if (node.hasAttribute("fill")) {
-				var bn = id + "Color";
+			var bn = id + "Color";
+			if (node.hasAttribute("color")) {
+				colors[bn] = node.getAttribute("color");
+			} else if (node.hasAttribute("fill")) {
 				colors[bn] = node.getAttribute("fill");
 			} else if (node.style.fill) {
-				var bn = id + "Color";
 				colors[bn] = node.style.fill;
 			}
 			switch (node.getAttribute("class")) {
@@ -66,6 +91,18 @@ function Uploader (queryString, D) {
 					var ch = node.firstElementChild;
 					variants.setItem(node.id, ch.id);
 					break;
+				case "decal":
+					var l = node.transform.baseVal;
+					var tm  = l[0].matrix;
+					var phi = l[1].angle * Math.PI / 180;
+					var sm  = l[2].matrix;
+					variants.setItem(node.id, {
+						x: tm.e,
+						y: tm.f,
+						phi: phi,
+						ax: sm.a,
+						ay: sm.d
+					}, "decal", node.parentNode.id);
 				default: /* For backwards compatibility */
 					if (id.endsWith("Current")) {
 						var cls = node.getAttribute("class").replace(/_M|_F/,"");
@@ -173,22 +210,19 @@ function Uploader (queryString, D) {
 	return parseMando;
 }
 
-function Downloader () {
+function Downloader (Decals) {
 	var xml = new XMLSerializer();
 	var img = new Image();
 	var reset = find("reset_wrapper");
 	var canvas = find("canvas");
 	var canvasCtx = canvas.getContext('2d');
-	var logoSVG, bckImgURI, bckSVG;
+	var bckImgURI, bckSVG;
 
-	(function(){
+	var logoSVG = (function () {
 		var t = find("title");
-		t.addEventListener("load", function() {
-			var doc = this.contentDocument.documentElement;
-			logoSVG = doc.cloneNode(true);
-			prepareCanvas(bckImgURI);
-		});
-		t.setAttribute("data", "images/Logo.svg");
+		var d = t.contentDocument;
+		var de = d.documentElement;
+		return de.cloneNode(true);
 	})();
 
 	function prepareForExport (svg) {
@@ -206,11 +240,14 @@ function Downloader () {
 				parent.removeChild(rem);
 			}
 			rem = null;
-			return (node = iter.nextNode());
+			return iter.nextNode();
 		}
-		while (advance()) {
+		while (node = advance()) {
 			var display = node.style.display;
 			switch (node.getAttribute("class")) {
+				case "brace":
+					rem = node;
+					break;
 				case "option":
 					if (display !== "inherit")
 						rem = node;
@@ -240,6 +277,10 @@ function Downloader () {
 	function SVGFromEditor () {
 		var SVG = find("main").firstElementChild;
 		var copy = SVG.cloneNode(true);
+
+		var decals = Decals.SVG;
+		copy.appendChild(decals);
+
 		return prepareForExport(copy);
 	}
 
@@ -273,14 +314,6 @@ function Downloader () {
 			img.src = svg2img(logoSVG, canvas.width, Math.round(canvas.height / 12) );
 		};
 		img.src = href;
-	}
-
-	function SVGNode (type, atts, par) {
-		var node = document.createElementNS("http://www.w3.org/2000/svg", type);
-		for (var a in atts)
-			node.setAttribute(a, atts[a]);
-		if (par) par.appendChild(node);
-		return node;
 	}
 
 	return {
@@ -320,7 +353,7 @@ function Downloader () {
 			}
 		},
 		get Background () {
-			var svgMain = new SVGNode("svg", {
+			var svgMain = XML.SVGNode("svg", {
 				"version": "1.1",
 				"width": canvas.width,
 				"height": canvas.height,
@@ -329,16 +362,19 @@ function Downloader () {
 			if (bckSVG) {
 				svgMain.appendChild(bckSVG);
 			} else {
-				var img = new SVGNode("image", {
+				var img = XML.SVGNode("image", {
 					"width": "100%",
 					"height": "100%",
 					"href": bckImgURI
 				}, svgMain);
 			}
+
 			var logo = logoSVG.cloneNode(true);
 			svgMain.appendChild(logo);
-			var meta = SVGNode("metadata", {}, svgMain);
+
+			var meta = XML.SVGNode("metadata", {}, svgMain);
 			meta.innerHTML = "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#' xmlns:dc='http://purl.org/dc/elements/1.1/'> <rdf:Description> <dc:creator>MandoCreator</dc:creator> <dc:publisher>https://www.mandocreator.com</dc:publisher> <dc:description>Your Beskar'gam - created by MandoCreator</dc:description> <dc:format>image/svg+xml</dc:format> <dc:type>Image</dc:type> <dc:title>MandoCreator - Ner Berskar'gam</dc:title> <dc:date>" + (new Date).toISOString() + "</dc:date> </rdf:Description> </rdf:RDF>";
+
 			return svgMain;
 		},
 		attach: function (a, type) {
@@ -351,7 +387,7 @@ function Downloader () {
 					isSetUp = false;
 				}, 500);
 			});
-			a.setAttribute("type", type);
+			a.type = type;
 			if (type === "image/svg+xml") {
 				var self = this;
 				a.addEventListener("click", function () {
@@ -362,7 +398,7 @@ function Downloader () {
 					var document = "<?xml version='1.0' encoding='UTF-8'?>" + noEmptyLines;
 					var blob = new Blob([document], {type: "image/svg+xml"});
 					blobURL = URL.createObjectURL(blob);
-					this.setAttribute("href", blobURL);
+					this.href = blobURL;
 				});
 			} else {
 				a.addEventListener("click", function (event) {
@@ -375,7 +411,7 @@ function Downloader () {
 						canvasCtx.drawImage(this, 0, 0);
 						canvas.toBlob(function (blob) {
 							blobURL = URL.createObjectURL(blob);
-							a.setAttribute("href", blobURL);
+							a.href = blobURL;
 							isSetUp = true;
 							a.click();
 						}, "image/jpeg");
