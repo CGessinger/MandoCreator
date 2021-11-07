@@ -607,8 +607,7 @@ footer > * {
 .preview_icon {
 	border: 1px currentColor solid;
 	max-height: 100%;
-	fill: white;
-	fill-rule: evenodd;
+	fill: currentColor;
 	stroke: black;
 	stroke-width: 0.3px;
 }

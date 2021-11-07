@@ -3,16 +3,16 @@
 <svg version="1.1" id="Male-Body" xmlns="http://www.w3.org/2000/svg" viewBox="0 -55 169 300" style="fill-rule:evenodd;stroke:black;stroke-width:0.2px;stroke-linejoin:round">
 <style>
 .no_mask {
-fill: black;
+fill: var(--override);
 }
-#Main-Body .no_mask {
-fill: inherit;
+#Masks {
+--override: black;
 }
 .decal {
 stroke: none;
 }
 </style>
-<defs fill="white">
+<defs id="Masks" fill="white">
 <mask id="HelmetsMask"> <use href="#Helmets" /> </mask>
 <mask id="CollarMask"> <use href="#Collar" /> </mask>
 <mask id="ShouldersMask"> <use href="#Shoulders" /> </mask>

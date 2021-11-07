@@ -38,6 +38,10 @@ images/%.svg: pictures/%.svg | images
 			s| | color=\"#000\" |; \
 			/class/ ! { s| | class=\"no_mask\" |; }; \
 		}; \
+		/-Earcap/ { \
+			/class/ { s|class=\"|&no_mask |; }; \
+			/class/ ! { s| | class=\"no_mask\" |; }; \
+		}; \
 		/\"Chest\"/ { \
 			s/ / class=\"swappable\" /; \
 		}; \
