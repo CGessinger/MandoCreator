@@ -137,7 +137,7 @@ function Uploader (queryString, D) {
 		}
 
 		if (img.tagName.toLowerCase() === "svg") {
-			if (img.getAttribute("id").startsWith("Background"))
+			if (img.getAttribute("id") == "Background")
 				setDefaultBackground();
 			else
 				D.Background = { type: "image/svg+xml", data: img, custom: true };
@@ -145,7 +145,7 @@ function Uploader (queryString, D) {
 			var href = img.getAttribute("href");
 			var mime = href.match(/^data:image\/([\w+-.]+)/);
 			if (!mime) return;
-			D.Background = { type: mime[1], data: href };
+			D.Background = { type: mime[1], data: href, custom: true };
 		}
 	}
 
@@ -235,10 +235,8 @@ function Downloader (Decals) {
 		);
 		var node, rem;
 		function advance () {
-			if (rem) {
-				var parent = rem.parentNode;
-				parent.removeChild(rem);
-			}
+			if (rem)
+				rem.remove();
 			rem = null;
 			return iter.nextNode();
 		}
@@ -269,11 +267,6 @@ function Downloader (Decals) {
 		return svg;
 	}
 
-	function encodeSVG (svg) {
-		var san = svg.replace(/\s+/g," ").replace(/"/g,"'");
-		return encodeURIComponent(san);
-	}
-
 	function SVGFromEditor () {
 		var SVG = find("main").firstElementChild;
 		var copy = SVG.cloneNode(true);
@@ -289,7 +282,7 @@ function Downloader (Decals) {
 		svg.setAttribute("height", height || 1080);
 		var copy = svg.cloneNode(true);
 		var str = xml.serializeToString(copy);
-		var svgEnc = encodeSVG(str);
+		var svgEnc = encodeURIComponent(str);
 		var image64 = 'data:image/svg+xml,' + svgEnc;
 		return image64;
 	}

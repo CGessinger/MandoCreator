@@ -75,19 +75,6 @@
 		</script>
 	</head>
 	<body onload="onload()">
-		<svg id="brace" class="brace" style="visibility: hidden" >
-			<g style="fill:white;stroke:white;stroke-width:0.5px;filter:drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)">
-				<rect width="100" height="100" rx="1" x="-50" y="-50" style="fill:none;stroke-width:1.5px" vector-effect="non-scaling-stroke"/>
-				<line y1="-50" y2="-55" />
-				<rect width="5" height="5" x="-2.5" y="-60" rx="1" />
-				<circle r="3.5" cx="50" cy="50" />
-			</g>
-			<g style="fill:transparent;stroke:none;">
-				<rect width="100" height="100" rx="1" x="-50" y="-50"  style="cursor:move" />
-				<rect width="40" height="40" x="-20" y="-75" style="cursor:grab"/>
-				<rect width="40" height="40" x="30" y="30" style="cursor:nwse-resize"/>
-			</g>
-		</svg>
 		<div class="picker_wrapper" id="picker" style="visibility: hidden;">
 			<div class="info"> a swatch to save your color</div>
 			<div class="picker_palette">
@@ -770,8 +757,21 @@
 		<div style="display:none">
 			<canvas id="canvas" height="720" width="1280"></canvas>
 			<audio id="kote" autoplay></audio>
-			<span id="vault"></span>
-			<svg id="decal_vault"></svg>
+			<svg id="decal_vault">
+			<g id="brace" class="brace" style="visibility: hidden" >
+				<g style="fill:white;stroke:white;stroke-width:0.5px;filter:drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)">
+					<rect width="100" height="100" rx="1" x="-50" y="-50" style="fill:none;stroke-width:1.5px" vector-effect="non-scaling-stroke"/>
+					<line y1="-50" y2="-55" />
+					<rect width="5" height="5" x="-2.5" y="-60" rx="1" />
+					<circle r="3.5" cx="50" cy="50" />
+				</g>
+				<g style="fill:transparent;stroke:none;">
+					<rect width="100" height="100" rx="1" x="-50" y="-50"  style="cursor:move" />
+					<rect width="40" height="40" x="-20" y="-75" style="cursor:grab"/>
+					<rect width="40" height="40" x="30" y="30" style="cursor:nwse-resize"/>
+				</g>
+			</g>
+			</svg>
 		</div>
 		<script src="color.js"></script>
 		<script src="FileIO.js"></script>

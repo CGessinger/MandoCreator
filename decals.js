@@ -146,9 +146,9 @@ function DecalFactory (Vault, Picker) {
 	var brace = find("brace");
 	var decals_brace = new DecalsBrace(brace);
 
-	var main_svg, target_div;
+	var main_svg, target_div, all_decals;
 
-	Vault.getItem("Decals", null, find("decal_vault"));
+	Vault.getItem("Decals", function (decals) {all_decals = decals.children;}, find("decal_vault"));
 
 	/* Event Handlers */
 	var decals_menu = find("decals_menu");
@@ -255,8 +255,8 @@ function DecalFactory (Vault, Picker) {
 
 		var div = XML.DOMNode("div", {class: "decal_control"});
 		decals_list.insertBefore(div, decals_list.firstElementChild);
-		var display_name = find(name).getAttribute("serif:id");
-		var button = Picker.build(use, div, display_name || name);
+		var display_name = find(name).getAttribute("serif:id") || name;
+		var button = Picker.build(use, div, display_name);
 
 		var close = BuildControlButtons(div, use, button.id);
 		var closed = false;
@@ -288,10 +288,13 @@ function DecalFactory (Vault, Picker) {
 		decals_group = node;
 		decals_list = find(node.id + "List");
 		for (var name in decals) {
-			var data = name.match(/([\w-]+)(\d+)/);
-			if (!data || data.length != 3)
-				continue;
-			AddDecal(data[1], name, decals[name]);
+			for (var i = 0; i < all_decals.length; i++) {
+				var id = all_decals[i].id
+				if ( name.includes(id) ) {
+					AddDecal(id, name, decals[name]);
+					break;
+				}
+			}
 		}
 		decals_brace.target = null;
 	}
@@ -354,10 +357,12 @@ function DecalFactory (Vault, Picker) {
 				var ch = svg.children;
 				var i = 0;
 				while (i < ch.length) {
-					if (count[ch[i].id] >= 1)
+					if (count[ch[i].id] >= 1) {
+						ch[i].removeAttribute("serif:id");
 						defs.appendChild(ch[i]);
-					else
+					} else {
 						i++;
+					}
 				}
 			});
 			return defs;
