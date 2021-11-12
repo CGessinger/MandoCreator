@@ -601,7 +601,12 @@ function onload () {
 	var nsw = navigator.serviceWorker;
 	if (nsw) {
 		nsw.onmessage = function (event) {
+			var v = localStorage.getItem("version");
+			console.log(v);
+			if (v == event.data)
+				return;
 			localStorage.clear();
+			localStorage.setItem("version", event.data);
 			var form = find("reload");
 			form.style.display = "";
 		};
