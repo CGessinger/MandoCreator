@@ -295,7 +295,7 @@ function PickerFactory (history) {
 	this.attach = function (button, colorText, SVGNode, def_val) {
 		function input (hex) {
 			button.style.backgroundColor = hex;
-			SVGNode.setAttribute("color", hex);
+			SVGNode.setAttribute("fill", hex);
 			colorText.innerText = hex;
 			if (hex === def_val)
 				delete colors[button.id];
@@ -326,15 +326,14 @@ function PickerFactory (history) {
 		_setColor(def);
 	}
 	this.build = function (target, parent, kwargs) {
-		var wrapper = XML.DOMNode("div", {class: "color_wrapper"}, parent);
+		var label = XML.DOMNode("label", {class: "color_wrapper"}, parent);
 
 		var buttonID = target.id + "Color";
-		var b = XML.DOMNode("button", {class: "color_picker", id: buttonID}, wrapper);
+		var b = XML.DOMNode("button", {class: "color_picker", id: buttonID}, label);
 
-		var label = XML.DOMNode("label", {class: "color_label no_collapse", for: buttonID}, wrapper);
-		var p = XML.DOMNode("p", {class: "soft_text"}, label);
+		var p = XML.DOMNode("span", {class: "soft_text no_collapse"}, label);
 		p.innerText = kwargs.text;
-		var c = XML.DOMNode("p", {class: "detail"}, label);
+		var c = XML.DOMNode("p", {class: "detail no_collapse"}, label);
 
 		this.attach(b, c, target, kwargs["default"]);
 		return b;

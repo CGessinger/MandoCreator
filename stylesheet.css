@@ -634,6 +634,7 @@ footer > * {
 .slide_toggle {
 	height: 3em;
 	width: 100%;
+	flex-shrink: 0;
 	padding-left: 0.5em;
 	text-align: left;
 	background: none;
@@ -738,25 +739,21 @@ footer > * {
 
 .color_wrapper {
 	display: inline-block;
-	padding: 0.75em 0 0 0.75em;
-	min-width: 6.5em;
+	padding: 0.75em 0 0 0.25em;
+	min-width: 7em;
+	line-height: 1em;
 }
 
 .color_picker {
 	height: 2em;
 	width: 2em;
 	float: left;
+	margin: 0 0.5em;
 	border: 1px solid var(--softColor);
 }
 
 .color_picker:focus {
 	border-color: var(--accent);
-}
-
-.color_label {
-	display: inline-block;
-	margin-left: 0.5em;
-	line-height: 1em;
 }
 
 .soft_text {
