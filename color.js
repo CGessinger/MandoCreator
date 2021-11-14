@@ -287,18 +287,17 @@ function PickerFactory (history) {
 			return SVGNode.getAttribute("fill");
 		if (SVGNode.hasAttribute("color"))
 			return SVGNode.getAttribute("color");
-		return "#FFF";
 	}
 
 	var color = new Color();
 	var DOM = new PickerDOM();
 	var onChange = null;
-	this.attach = function (button, colorText, SVGNode) {
+	this.attach = function (button, colorText, SVGNode, def_val) {
 		function input (hex) {
 			button.style.backgroundColor = hex;
 			SVGNode.setAttribute("color", hex);
 			colorText.innerText = hex;
-			if (hex === "#FFFFFF")
+			if (hex === def_val)
 				delete colors[button.id];
 			else
 				colors[button.id] = hex;
@@ -322,10 +321,11 @@ function PickerFactory (history) {
 			button.click();
 		});
 		var def = getDefaultColor(button.id, SVGNode);
+		if (!def) def = def_val;
 		onChange = input;
 		_setColor(def);
 	}
-	this.build = function (target, parent, labelText) {
+	this.build = function (target, parent, kwargs) {
 		var wrapper = XML.DOMNode("div", {class: "color_wrapper"}, parent);
 
 		var buttonID = target.id + "Color";
@@ -333,10 +333,10 @@ function PickerFactory (history) {
 
 		var label = XML.DOMNode("label", {class: "color_label no_collapse", for: buttonID}, wrapper);
 		var p = XML.DOMNode("p", {class: "soft_text"}, label);
-		p.innerText = labelText;
+		p.innerText = kwargs.text;
 		var c = XML.DOMNode("p", {class: "detail"}, label);
 
-		this.attach(b, c, target);
+		this.attach(b, c, target, kwargs["default"]);
 		return b;
 	}
 	this.cache = cache;

@@ -2,7 +2,7 @@
 
 function DecalsBrace (g) {
 	var main_svg = XML.SVGNode("svg");
-	var x, y, ax, ay, phi;
+	var x, y, ax, ay, phi, c, s;
 	var target_id, target_category;
 
 	/* Transforms */
@@ -64,6 +64,7 @@ function DecalsBrace (g) {
 
 	var hitbox = g.lastElementChild;
 	var ch = hitbox.children;
+	var c = Math.cos(phi), s = Math.sin(phi);
 	setupDragAndDrop(ch[0], function (offset) {
 		return [offset[0] - x, offset[1] - y];
 	}, function (coord) {
@@ -72,13 +73,14 @@ function DecalsBrace (g) {
 		this_translate.setTranslate(x, y);
 	});
 	setupDragAndDrop(ch[1], function (offset) {
-		var c = Math.cos(phi);
-		var s = Math.sin(phi);
 		return [
 			offset[0] - (57.5 * s * ay),
 			offset[1] - (-57.5 * c * ay)
 		];
 	}, function (coord) {
+		c = Math.cos(phi);
+		s = Math.sin(phi);
+
 		coord[0] = coord[0] / (57.5 * ay);
 		coord[1] = coord[1] / (-57.5 * ay);
 		phi = Math.atan2(coord[0], coord[1]);
@@ -86,16 +88,11 @@ function DecalsBrace (g) {
 		target_rotate.setRotate(phi * 180 / Math.PI, 0, 0);
 	});
 	setupDragAndDrop(ch[2], function (offset) {
-		var c = Math.cos(phi);
-		var s = Math.sin(phi);
 		return [
 			offset[0] - 50 * (c * ax - s * ay),
 			offset[1] - 50 * (s * ax + c * ay)
 		];
 	}, function (coord) {
-		var c = Math.cos(phi);
-		var s = Math.sin(phi);
-
 		ax = (c * coord[0] + s * coord[1]) / 50;
 		ay = (c * coord[1] - s * coord[0]) / 50;
 		target_scale.setScale(ax, ay);
@@ -128,6 +125,7 @@ function DecalsBrace (g) {
 				var ms = target_scale.matrix;
 				ax = ms.a; ay = ms.d;
 				phi = target_rotate.angle * Math.PI / 180;
+				c = Math.cos(phi); s = Math.sin(phi);
 
 				this_translate.setTranslate(x, y);
 				this_rotate.setRotate(phi * 180 / Math.PI, 0, 0);
@@ -199,15 +197,11 @@ function DecalFactory (Vault, Picker) {
 
 	/* Construction Functions */
 	function BuildUse (name, id) {
-		var use = XML.SVGNode("use", {
+		return XML.SVGNode("use", {
 			class: "decal",
 			href: "#" + name,
 			id: id
 		}, decals_group);
-		var i = id + "Color";
-		if ( !(i in colors) )
-			colors[i] = "#000";
-		return use;
 	}
 
 	function BuildControlButtons (div, use) {
@@ -256,7 +250,10 @@ function DecalFactory (Vault, Picker) {
 		var div = XML.DOMNode("div", {class: "decal_control"});
 		decals_list.insertBefore(div, decals_list.firstElementChild);
 		var display_name = find(name).getAttribute("serif:id") || name;
-		var button = Picker.build(use, div, display_name);
+		var button = Picker.build(use, div, {
+			text: display_name,
+			default: "#000000",
+		});
 
 		var close = BuildControlButtons(div, use, button.id);
 		var closed = false;

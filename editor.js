@@ -362,7 +362,10 @@ function BuildManager (History, Picker, Decals) {
 		for (var i = 0; i < ch.length; i++)
 			allNamed &= (ch[i].id !== "");
 		if (!allNamed)
-			return Picker.build(node, realParent, prettify(node.id));
+			return Picker.build(node, realParent, {
+				text: prettify(node.id),
+				default: "#FFFFFF"
+			});
 
 		/* Step 2.1: Node has only named children
 		 * -> map `BuildManager` over `ch`, but filter out .option and .toggle */
@@ -602,7 +605,6 @@ function onload () {
 	if (nsw) {
 		nsw.onmessage = function (event) {
 			var v = localStorage.getItem("version");
-			console.log(v);
 			if (v == event.data)
 				return;
 			localStorage.clear();
