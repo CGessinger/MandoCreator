@@ -325,7 +325,7 @@ hr {
 	max-width: 100%;
 }
 
-form {
+#reload {
 	position: fixed;
 	padding: 1em;
 	top: 50%;
@@ -343,12 +343,12 @@ legend {
 	color: var(--highlight);
 }
 
-.credit_link {
+.changelog_link {
 	color: var(--accent);
 	text-decoration: none;
 }
 
-.submit {
+.reload_button {
 	margin: 2em auto 0 auto;
 	padding: 1em 2em;
 	border: none;
@@ -515,7 +515,7 @@ footer > * {
 .menu_column {
 	position: fixed;
 	height: 100%;
-	width: 23em;
+	width: 24em;
 	max-width: 100%;
 	right: 0;
 	top: 0;
@@ -608,6 +608,7 @@ footer > * {
 	border: 1px currentColor solid;
 	max-height: 100%;
 	fill: currentColor;
+	fill-rule: evenodd;
 	stroke: black;
 	stroke-width: 0.3px;
 }
@@ -740,7 +741,7 @@ footer > * {
 .color_wrapper {
 	display: inline-block;
 	padding: 0.75em 0 0 0.25em;
-	min-width: 7em;
+	min-width: 7.5em;
 	line-height: 1em;
 }
 

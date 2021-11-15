@@ -721,6 +721,7 @@ function reset (skipBuild, skipPrompt) {
 	if (!conf) return;
 	variants = new VariantsVault(null, History);
 	colors = resetColorCache(false);
+	Decals.reset();
 	if (skipBuild)
 		return;
 	var female = find("female").checked;

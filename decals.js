@@ -237,8 +237,7 @@ function DecalFactory (Vault, Picker) {
 		else
 			count[name] = 1;
 		nonce++;
-		if (!id)
-			id = name + nonce;
+		if (!id) id = name + "__" + nonce;
 
 		var category = decals_group.id;
 		var cat_short = category.replace("Decals", "");
@@ -285,13 +284,8 @@ function DecalFactory (Vault, Picker) {
 		decals_group = node;
 		decals_list = find(node.id + "List");
 		for (var name in decals) {
-			for (var i = 0; i < all_decals.length; i++) {
-				var id = all_decals[i].id
-				if ( name.includes(id) ) {
-					AddDecal(id, name, decals[name]);
-					break;
-				}
-			}
+			var data = name.match(/(.+)__\d+/);
+			AddDecal(data[1], name, decals[name]);
 		}
 		decals_brace.target = null;
 	}
@@ -367,6 +361,10 @@ function DecalFactory (Vault, Picker) {
 		set SVG (value) {
 			main_svg = value;
 			decals_brace.SVG = value;
+		},
+		reset: function () {
+			nonce = 0;
+			count = {};
 		}
 	};
 }
