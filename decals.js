@@ -285,6 +285,8 @@ function DecalFactory (Vault, Picker) {
 		decals_list = find(node.id + "List");
 		for (var name in decals) {
 			var data = name.match(/(.+)__\d+/);
+			if (!data)
+				continue;
 			AddDecal(data[1], name, decals[name]);
 		}
 		decals_brace.target = null;

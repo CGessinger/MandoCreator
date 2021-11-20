@@ -175,7 +175,25 @@ function PickerFactory (history) {
 		var colors = ["#F00", "#0085FF", "#FFD600", "#08CB33", "#8B572A", "#A3A3A3", "#000", "#fff"];
 
 		var timer;
-		var pals = ch[1].children;
+		var pals = wrapper.getElementsByClassName("palette_icon");
+		function save (event) {
+			event.preventDefault();
+			this.style.background = color.hex;
+		}
+		function startTimer () {
+			var that = this;
+			timer = setTimeout(function() {
+				timer = 0;
+				that.style.background = color.hex;
+			}, 500);
+		}
+		function stopTimer () {
+			if (timer) {
+				clearTimeout(timer);
+				_setColor(this.style.background);
+				timer = 0;
+			}
+		}
 		for (var i = 0; i < colors.length; i++) {
 			var pal = pals[i];
 			XML.setAttributes(pal, {
@@ -183,32 +201,18 @@ function PickerFactory (history) {
 					title: "Right-click to save the current color"
 				});
 			on(pal, "click", function() { _setColor(this.style.background); });
-			on(pal, "contextmenu", function(event) { event.preventDefault(); this.style.background = color.hex; });
-			on(pal, "touchstart", function() {
-				var that = this;
-				timer = setTimeout(function() {
-					that.style.background = color.hex;
-					timer = 0;
-				}, 500);
-			});
-			on(pal, "touchend", function() {
-				if (timer) {
-					clearTimeout(timer);
-					_setColor(this.style.background);
-					timer = 0;
-				}
-			});
+			on(pal, "contextmenu", save);
+			on(pal, "touchstart", startTimer);
+			on(pal, "touchend", stopTimer);
 		}
 
-		var ch1 = ch[2].children;
-		var hue = ch1[0], spectrum = ch1[1];
+		var hue = ch[1], spectrum = ch[2];
 		var hueSelector = hue.firstElementChild;
 		var colorSelector = spectrum.firstElementChild;
 
-		var bottom = ch[3].children;
-		var editor = bottom[0];
+		var editor = ch[3];
 		on(editor, "input", function() { _setColor(this.value, true); });
-		var Okay = bottom[1];
+		var Okay = ch[4];
 		on(Okay, "click", function(event) { event.preventDefault(); DOM.parent = null; });
 
 		setupDragAndClick(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });

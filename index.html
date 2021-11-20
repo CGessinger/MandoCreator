@@ -30,7 +30,6 @@
 		<meta name="keywords" content="MandoCreator,Mando,Creator,Beskar'gam,Armor,Mandalorian,Design,Beskar" />
 		<meta name="author" content="Foilrose Studio, Cin Vhetin" />
 		<link rel="stylesheet" href="stylesheet.css" />
-		<link rel="stylesheet" href="color.css" />
 		<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
 		<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
@@ -76,25 +75,19 @@
 	</head>
 	<body onload="onload()">
 		<div class="picker_wrapper" id="picker" style="visibility: hidden;">
-			<div class="info"> a swatch to save your color</div>
-			<div class="picker_palette">
-				<button class="palette_icon" /> <button class="palette_icon" />
-				<button class="palette_icon" /> <button class="palette_icon" />
-				<button class="palette_icon" /> <button class="palette_icon" />
-				<button class="palette_icon" /> <button class="palette_icon" />
+			<div id="info"> to save your color</div>
+			<div id="picker_hue">
+				<div class="picker_selector"></div>
 			</div>
-			<div class="picker_main">
-				<div class="picker_hue">
-					<div class="picker_selector"></div>
-				</div>
-				<div class="picker_sl">
-					<div class="picker_selector"></div>
-				</div>
+			<div id="picker_sl">
+				<div class="picker_selector"></div>
 			</div>
-			<div class="picker_bottom">
-				<input type="text" class="picker_editor" aria_label="Type a Color name or Hexadecimal code"
-				/><button class="picker_done">Okay</button>
-			</div>
+			<input type="text" id="picker_editor" aria_label="Type a Color name or Hexadecimal code"
+			/><button id="picker_done">Okay</button>
+			<button class="palette_icon" /> <button class="palette_icon" />
+			<button class="palette_icon" /> <button class="palette_icon" />
+			<button class="palette_icon" /> <button class="palette_icon" />
+			<button class="palette_icon" /> <button class="palette_icon" />
 		</div>
 		<main id="main" class="image_column">
 			<noscript>MandoCreator lets you design your custom set of mandalorian armor. For cosplay or RPG, choose from dozens of options, to bring your vision to life.</noscript>
