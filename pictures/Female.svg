@@ -2,11 +2,8 @@
 <!-- Generator: Adobe Illustrator 26.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Female-Body" xmlns="http://www.w3.org/2000/svg" viewBox="0 -55 169 300" style="fill:white;fill-rule:evenodd;stroke:black;stroke-width:0.2px;stroke-linejoin:round">
 <style>
-	.no_mask {
-		fill: var(--override);
-	}
-	#Masks {
-		--override: black;
+	mask {
+		mask-type: alpha;
 	}
 	.decal {
 		stroke: none;

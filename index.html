@@ -89,6 +89,25 @@
 			<button class="palette_icon" /> <button class="palette_icon" />
 			<button class="palette_icon" /> <button class="palette_icon" />
 		</div>
+		<div style="display:none">
+			<canvas id="canvas" height="720" width="1280"></canvas>
+			<audio id="kote" autoplay></audio>
+			<svg id="decal_vault">
+			<g id="brace" class="brace" style="visibility: hidden" >
+				<g style="fill:white;stroke:white;stroke-width:0.5px;filter:drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)">
+					<rect width="100" height="100" rx="1" x="-50" y="-50" style="fill:none;stroke-width:1.5px" vector-effect="non-scaling-stroke"/>
+					<line y1="-50" y2="-55" />
+					<rect width="5" height="5" x="-2.5" y="-60" rx="1" />
+					<circle r="3.5" cx="50" cy="50" />
+				</g>
+				<g style="fill:transparent;stroke:none;">
+					<rect width="100" height="100" rx="1" x="-50" y="-50"  style="cursor:move" />
+					<rect width="40" height="40" x="-20" y="-75" style="cursor:grab"/>
+					<rect width="40" height="40" x="30" y="30" style="cursor:nwse-resize"/>
+				</g>
+			</g>
+			</svg>
+		</div>
 		<main id="main" class="image_column">
 			<noscript>MandoCreator lets you design your custom set of mandalorian armor. For cosplay or RPG, choose from dozens of options, to bring your vision to life.</noscript>
 			<p id="Body"></p>
@@ -748,25 +767,6 @@
 			</div>
 			<button class="reload_button">RELOAD</button>
 		</form>
-		<div style="display:none">
-			<canvas id="canvas" height="720" width="1280"></canvas>
-			<audio id="kote" autoplay></audio>
-			<svg id="decal_vault">
-			<g id="brace" class="brace" style="visibility: hidden" >
-				<g style="fill:white;stroke:white;stroke-width:0.5px;filter:drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)">
-					<rect width="100" height="100" rx="1" x="-50" y="-50" style="fill:none;stroke-width:1.5px" vector-effect="non-scaling-stroke"/>
-					<line y1="-50" y2="-55" />
-					<rect width="5" height="5" x="-2.5" y="-60" rx="1" />
-					<circle r="3.5" cx="50" cy="50" />
-				</g>
-				<g style="fill:transparent;stroke:none;">
-					<rect width="100" height="100" rx="1" x="-50" y="-50"  style="cursor:move" />
-					<rect width="40" height="40" x="-20" y="-75" style="cursor:grab"/>
-					<rect width="40" height="40" x="30" y="30" style="cursor:nwse-resize"/>
-				</g>
-			</g>
-			</svg>
-		</div>
 		<script src="color.js"></script>
 		<script src="FileIO.js"></script>
 		<script src="decals.js"></script>

@@ -36,11 +36,6 @@ images/%.svg: pictures/%.svg | images
 		s|(\w+)Decals|&\" mask=\"url(#\1Mask)|; \
 		/Visor/ { \
 			s| | color=\"#000\" |; \
-			/class/ ! { s| | class=\"no_mask\" |; }; \
-		}; \
-		/-Earcap/ { \
-			/class/ { s|class=\"|&no_mask |; }; \
-			/class/ ! { s| | class=\"no_mask\" |; }; \
 		}; \
 		/\"Chest\"/ { \
 			s/ / class=\"swappable\" /; \

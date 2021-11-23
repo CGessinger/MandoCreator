@@ -11,7 +11,7 @@ function PickerFactory (history) {
 	}
 
 	function on(elem, event, func) {
-		elem.addEventListener(event, func, {passive: false});
+		elem.addEventListener(event, func);
 	}
 
 	function setupDragAndClick(o, done) {
@@ -23,26 +23,24 @@ function PickerFactory (history) {
 			return n;
 		}
 
-		var dimensions;
+		var rect;
 		function touch(event) {
 			event.preventDefault();
 			if ("touches" in event)
 				event = event.touches[0];
 			else if (event.buttons != 1)
 				return;
-			var width = dimensions.width;
-			var height = dimensions.height;
-			var s = clamp(event.clientX - dimensions.left, 0, width);
-			var l = clamp(event.clientY - dimensions.top, 0, height);
-			done(s / width, l / height);
+			var s = (event.clientX - rect.left) / rect.width;
+			var l = (event.clientY - rect.top) / rect.height;
+			done(clamp(s, 0, 1), clamp(l, 0, 1));
 		}
 
 		on(o, "mousedown", function (event) {
-			dimensions = o.getBoundingClientRect();
+			rect = o.getBoundingClientRect();
 			touch(event);
 		});
 		on(o, "touchstart", function (event) {
-			dimensions = o.getBoundingClientRect();
+			rect = o.getBoundingClientRect();
 			touch(event);
 		});
 		on(o, "mousemove", touch);
@@ -51,11 +49,7 @@ function PickerFactory (history) {
 
 	function Color () {
 		function hexToHsv(hex) {
-			var result = hex.match( /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i )
-			if (!result)
-				return undefined;
-			var y = result.slice(1).map(function(r) {return parseInt(r,16)/255;});
-			var r = y[0], g = y[1], b = y[2];
+			var r = hex[0]/255, g = hex[1]/255, b = hex[2]/255;
 			var max = Math.max(r, g, b), min = Math.min(r, g, b);
 			var h, d = max - min;
 
@@ -76,16 +70,6 @@ function PickerFactory (history) {
 			return [h, s, max];
 		}
 
-		var canvas = find("canvas");
-		var ctx = canvas.getContext("2d");
-		function nameToHex (e) {
-			ctx.fillStyle = e;
-			var f = ctx.fillStyle;
-			if (f === "#000000" && e != "black")
-				f = undefined;
-			return f;
-		}
-
 		function hsvToHex(f) {
 			var h = f[0]*6, s = f[1], v = f[2];
 			var i = Math.floor(h);
@@ -97,17 +81,17 @@ function PickerFactory (history) {
 			var rgb;
 			switch(i) {
 				case 1:
-					rgb = [q,v,p]; break;
+					rgb = [q, v, p]; break;
 				case 2:
-					rgb = [p,v,t]; break;
+					rgb = [p, v, t]; break;
 				case 3:
-					rgb = [p,q,v]; break;
+					rgb = [p, q, v]; break;
 				case 4:
-					rgb = [t,p,v]; break;
+					rgb = [t, p, v]; break;
 				case 5:
-					rgb = [v,p,q]; break;
+					rgb = [v, p, q]; break;
 				default:
-					rgb = [v,t,p]; break;
+					rgb = [v, t, p]; break;
 			}
 			return "#" + rgb.map(function(x) {
 				var e = Math.round(x*255);
@@ -118,7 +102,7 @@ function PickerFactory (history) {
 			}).join("");
 		}
 
-		var _hsv = [0,0,0], _hex = "#FFFFFF";
+		var _hsv = [0, 0, 0], _hex = "#FFFFFF";
 		return {
 			get hsv () {
 				return _hsv;
@@ -131,40 +115,13 @@ function PickerFactory (history) {
 				return _hex;
 			},
 			set hex (value) {
-				if (value == undefined)
-					return;
-				if (!/^#([\da-f]{3}){1,2}$/.test(value))
-					return;
-				if (value.length == 4) {
-					var shorthandRegex = /^#([a-f\d])([a-f\d])([a-f\d])$/i;
-					value = value.replace(shorthandRegex, "#$1$1$2$2$3$3");
-				}
-				_hex = value.toUpperCase();
-				_hsv = hexToHsv(_hex);
-			},
-			update: function(value) {
-				if (Array.isArray(value))
-					return this.hsv = value;
-				var string = value.toLowerCase();
-				var validHex = /^[a-f\d]{3}|[a-f\d]{6}$/i;
-				if (string[0] == '#') {
-					this.hex = string;
-				} else if (validHex.test(string)) {
-					this.hex = '#' + string;
-				} else if (string.startsWith("rgb")) {
-					var p = string.match(/\d{1,3}/g);
-					if (!p || p.length < 3)
-						return;
-					this.hex = "#" + p.slice(0,3).map(function(e, l) {
-						var n = parseInt(e);
-						var p = n.toString(16);
-						if (n < 16)
-							return "0" + p;
-						return p;
-					}).join("");
-				} else {
-					this.hex = nameToHex(string);
-				}
+				_hsv = hexToHsv(value);
+				_hex = "#" + value.map(function(x) {
+					var p = x.toString(16);
+					if (x < 16)
+						return "0" + p;
+					return p;
+				}).join("").toUpperCase();
 			}
 		}
 	}
@@ -178,29 +135,29 @@ function PickerFactory (history) {
 		var pals = wrapper.getElementsByClassName("palette_icon");
 		function save (event) {
 			event.preventDefault();
-			this.style.background = color.hex;
+			this.style.backgroundColor = color.hex;
 		}
 		function startTimer () {
 			var that = this;
 			timer = setTimeout(function() {
 				timer = 0;
-				that.style.background = color.hex;
+				that.style.backgroundColor = color.hex;
 			}, 500);
 		}
 		function stopTimer () {
 			if (timer) {
 				clearTimeout(timer);
-				_setColor(this.style.background);
+				_setColor(this.style.backgroundColor);
 				timer = 0;
 			}
 		}
 		for (var i = 0; i < colors.length; i++) {
 			var pal = pals[i];
 			XML.setAttributes(pal, {
-					style: "background:" + colors[i],
-					title: "Right-click to save the current color"
-				});
-			on(pal, "click", function() { _setColor(this.style.background); });
+				style: "background-color:" + colors[i],
+				title: "Right-click to save the current color"
+			});
+			on(pal, "click", function() { _setColor(this.style.backgroundColor); });
 			on(pal, "contextmenu", save);
 			on(pal, "touchstart", startTimer);
 			on(pal, "touchend", stopTimer);
@@ -211,7 +168,7 @@ function PickerFactory (history) {
 		var colorSelector = spectrum.firstElementChild;
 
 		var editor = ch[3];
-		on(editor, "input", function() { _setColor(this.value, true); });
+		on(editor, "input", function() { var s = this.value; _setColor(s.trim(), true); });
 		var Okay = ch[4];
 		on(Okay, "click", function(event) { event.preventDefault(); DOM.parent = null; });
 
@@ -226,11 +183,11 @@ function PickerFactory (history) {
 			update: function (fromEditor) {
 				var hsvColor = color.hsv;
 				var colorName = "hsl(" + 360 * hsvColor[0] + ", 100%, 50%)";
-				move("left",hueSelector, hsvColor[0]);
-				move("left",colorSelector, hsvColor[1]);
-				move("top",colorSelector, 1 - hsvColor[2]);
-				spectrum.style.backgroundColor = hueSelector.style.background = colorName;
-				colorSelector.style.background = color.hex;
+				move("left", hueSelector, hsvColor[0]);
+				move("left", colorSelector, hsvColor[1]);
+				move("top", colorSelector, 1 - hsvColor[2]);
+				spectrum.style.backgroundColor = hueSelector.style.backgroundColor = colorName;
+				colorSelector.style.backgroundColor = color.hex;
 				if (!fromEditor) {
 					editor.value = color.hex;
 				}
@@ -273,12 +230,34 @@ function PickerFactory (history) {
 		DOM.display();
 	});
 
+	function parseColorString (s) {
+		if (/[^#A-Fa-f0-9]/.test(s)) {
+			var canvas = find("canvas");
+			var ctx = canvas.getContext("2d");
+			ctx.fillStyle = s;
+			var f = ctx.fillStyle;
+			if (f === "#000000" && s != "black")
+				return;
+			s = f;
+		}
+		if (s[0] == '#')
+			s = s.slice(1);
+		if (s.length == 3)
+			s = [s[0]+s[0], s[1]+s[1], s[2]+s[2]];
+		else
+			s = [s[0]+s[1], s[2]+s[3], s[4]+s[5]];
+		return s.map(function (e) {return parseInt(e, 16)});
+	}
+
 	function _setColor(value, fromEditor) {
-		if (typeof value === "string")
+		if (Array.isArray(value)) {
+			color.hsv = value;
+		} else {
 			value = value.trim();
-		if (!value)
-			return;
-		color.update(value);
+			var v = parseColorString(value);
+			if (!v) return;
+			color.hex = v;
+		}
 		DOM.update(fromEditor);
 		latestChange["newValue"] = color.hex;
 		onChange(color.hex);
@@ -357,7 +336,7 @@ function HistoryTracker () {
 		if (!target) return false;
 		switch (type) {
 			case "color":
-				target.style.background = value;
+				target.style.backgroundColor = value;
 				break;
 			case "variant":
 				target.checked = false;

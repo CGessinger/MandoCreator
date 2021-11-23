@@ -73,12 +73,10 @@ function BuildManager (History, Picker, Decals) {
 	var hax = { /* Store the location for all those parts, where it isn't apparent from the name */
 		"Vest": "Suit",
 	}
-	var variantID = null;
 	var swapFilter = document.createTreeWalker(document, NodeFilter.SHOW_ELEMENT,
 		{ acceptNode: function (node) {
 			if (node.getAttribute("class") == "swappable")
 				return NodeFilter.FILTER_ACCEPT;
-			variantID = node.id;
 			return NodeFilter.FILTER_REJECT;
 		} }
 	);
@@ -150,7 +148,6 @@ function BuildManager (History, Picker, Decals) {
 		}
 		if (!parent) return;
 		/* Step 2: Check for swappable armor pieces */
-		variantID = node.id;
 		swapFilter.currentNode = node;
 		if (swapFilter.parentNode()) {
 			parent = XML.DOMNode("details", {class: "swapslide", open: true}, parent);
