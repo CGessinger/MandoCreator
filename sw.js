@@ -10,8 +10,7 @@ self.addEventListener("install", function (event) {
 			"FileIO.js",
 			"color.js",
 			"decals.js",
-			"stylesheet.css",
-			"color.css"
+			"stylesheet.css"
 		]))
 	);
 	self.skipWaiting();

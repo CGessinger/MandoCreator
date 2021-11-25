@@ -75,19 +75,20 @@
 	</head>
 	<body onload="onload()">
 		<div class="picker_wrapper" id="picker" style="visibility: hidden;">
-			<div id="info"> to save your color</div>
+			<div id="info"> to save a color</div>
 			<div id="picker_hue">
-				<div class="picker_selector"></div>
+				<span class="picker_selector"></span>
 			</div>
 			<div id="picker_sl">
-				<div class="picker_selector"></div>
+				<span class="picker_selector"></span>
 			</div>
-			<input type="text" id="picker_editor" aria_label="Type a Color name or Hexadecimal code"
-			/><button id="picker_done">Okay</button>
-			<button class="palette_icon" /> <button class="palette_icon" />
-			<button class="palette_icon" /> <button class="palette_icon" />
-			<button class="palette_icon" /> <button class="palette_icon" />
-			<button class="palette_icon" /> <button class="palette_icon" />
+			<input type="text" id="picker_editor" aria_label="Type a color name or hexadecimal code" />
+			<button id="picker_done">Okay</button>
+			<button class="palette_icon"></button> <button class="palette_icon"></button>
+			<button class="palette_icon"></button> <button class="palette_icon"></button>
+			<button class="palette_icon"></button> <button class="palette_icon"></button>
+			<button class="palette_icon"></button> <button class="palette_icon"></button>
+			<span class="icon-keyboard_arrow_down" style="grid-column:1;grid-row:1;font-size:smaller"></span>
 		</div>
 		<div style="display:none">
 			<canvas id="canvas" height="720" width="1280"></canvas>
@@ -656,12 +657,6 @@
 						</button><button class="type_button" data-name="Beskar-ta--Hollow-">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Beskar-ta--Hollow-"/></svg>
 							Beskar'ta (2)
-						</button><button class="type_button" data-name="Mando-a-1">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mando-a-1"/></svg>
-							Mando'a (1)
-						</button><button class="type_button" data-name="Mando-a-2">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mando-a-2"/></svg>
-							Mando'a (2)
 						</button><button class="type_button" data-name="Jaig-Eyes">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Jaig-Eyes"/></svg>
 							Jaig Eyes
@@ -721,6 +716,96 @@
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--8-"/></svg>
 							Star (8)
 						</button>
+					</details>
+					<details open>
+						<summary class="sponsor_title">Text</summary>
+						<button class="type_button" data-name="A">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#A"/></svg>
+							A
+						</button><button class="type_button" data-name="B">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#B"/></svg>
+							B
+						</button><button class="type_button" data-name="C">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#C"/></svg>
+							C
+						</button><button class="type_button" data-name="D">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#D"/></svg>
+							D
+						</button><button class="type_button" data-name="E">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#E"/></svg>
+							E
+						</button><button class="type_button" data-name="F">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#F"/></svg>
+							F
+						</button><button class="type_button" data-name="G">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#G"/></svg>
+							G
+						</button><button class="type_button" data-name="H">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#H"/></svg>
+							H
+						</button><button class="type_button" data-name="I">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#I"/></svg>
+							I
+						</button><button class="type_button" data-name="J">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#J"/></svg>
+							J
+						</button><button class="type_button" data-name="K">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#K"/></svg>
+							K
+						</button><button class="type_button" data-name="L">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#L"/></svg>
+							L
+						</button><button class="type_button" data-name="M">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#M"/></svg>
+							M
+						</button><button class="type_button" data-name="N">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#N"/></svg>
+							N
+						</button><button class="type_button" data-name="O">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#O"/></svg>
+							O
+						</button><button class="type_button" data-name="P">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#P"/></svg>
+							P
+						</button><button class="type_button" data-name="Q">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Q"/></svg>
+							Q
+						</button><button class="type_button" data-name="R">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#R"/></svg>
+							R
+						</button><button class="type_button" data-name="S">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#S"/></svg>
+							S
+						</button><button class="type_button" data-name="T">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#T"/></svg>
+							T
+						</button><button class="type_button" data-name="U">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#U"/></svg>
+							U
+						</button><button class="type_button" data-name="V">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#V"/></svg>
+							V
+						</button><button class="type_button" data-name="W">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#W"/></svg>
+							W
+						</button><button class="type_button" data-name="X">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#X"/></svg>
+							X
+						</button><button class="type_button" data-name="Y">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Y"/></svg>
+							Y
+						</button><button class="type_button" data-name="Z">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Z"/></svg>
+							Z
+						</button><button class="type_button" data-name="Beten">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Beten"/></svg>
+							Beten
+						</button><button class="type_button" data-name="Mando-a-1">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mando-a-1"/></svg>
+							Mando'a (1)
+						</button><button class="type_button" data-name="Mando-a-2">
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mando-a-2"/></svg>
+							Mando'a (2)
 					</details>
 					<details open>
 						<summary class="sponsor_title">Weathering</summary>

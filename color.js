@@ -235,17 +235,16 @@ function PickerFactory (history) {
 			var canvas = find("canvas");
 			var ctx = canvas.getContext("2d");
 			ctx.fillStyle = s;
-			var f = ctx.fillStyle;
-			if (f === "#000000" && s != "black")
-				return;
-			s = f;
+			s = ctx.fillStyle;
 		}
 		if (s[0] == '#')
 			s = s.slice(1);
 		if (s.length == 3)
 			s = [s[0]+s[0], s[1]+s[1], s[2]+s[2]];
-		else
+		else if (s.length == 6)
 			s = [s[0]+s[1], s[2]+s[3], s[4]+s[5]];
+		else
+			return undefined;
 		return s.map(function (e) {return parseInt(e, 16)});
 	}
 

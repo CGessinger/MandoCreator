@@ -106,7 +106,8 @@ function DecalsBrace (g) {
 		},
 		set SVG (value) {
 			main_svg = value;
-			main_svg.appendChild(g);
+			var main_body = main_svg.lastElementChild;
+			main_body.appendChild(g);
 		},
 		set target (value) {
 			if (value == null) {
