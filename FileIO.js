@@ -254,14 +254,6 @@ function Downloader (Decals) {
 					if (display == "none")
 						node.innerHTML = "";
 					break;
-				case "swappable":
-					var ch = node.children;
-					for (var i = 0; i < ch.length;) {
-						if (ch[i].style.visibility !== "visible")
-							node.removeChild(ch[i]);
-						else
-							i++;
-					}
 			}
 		}
 		return svg;

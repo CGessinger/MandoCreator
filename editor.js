@@ -307,14 +307,17 @@ function BuildManager (History, Picker, Decals) {
 		}
 	}
 
-	function attachSwapRadio (node, type) {
+	function attachSwapRadio (node, parent) {
 		var radio = find(node.id + "Radio");
 		var s = swapLists;
+		var vault = find("svg_vault");
 		radio.onchange = function () {
-			node.dataset.show = "true";
+			var ch = parent.firstElementChild;
+			vault.appendChild(ch);
+			parent.appendChild(node);
 			for (var i = 0; i < s.length; i++)
 				s[i].dataset.show = "true";
-			variants.setItem(type, node.id, "variant");
+			variants.setItem(parent.id, node.id, "variant");
 		}
 		swapLists = [];
 	}
@@ -322,7 +325,6 @@ function BuildManager (History, Picker, Decals) {
 	function setupSwapHandler (node, category) {
 		var options = find(category + "Options");
 		var slides = options.getElementsByClassName("swapslide");
-		var ch = node.children;
 		var typesList = options.getElementsByTagName("details")[0];
 		typesList.onchange = function () {
 			for (var i = 0; i < slides.length; i++) {
@@ -331,14 +333,6 @@ function BuildManager (History, Picker, Decals) {
 					delete slides[i].dataset.show;
 				} else {
 					slides[i].style.display = "";
-				}
-			}
-			for (var j = 0; j < ch.length; j++) {
-				if ("show" in ch[j].dataset) {
-					ch[j].style.visibility = "visible";
-					delete ch[j].dataset.show;
-				} else {
-					ch[j].style.visibility = "";
 				}
 			}
 		}
@@ -378,7 +372,7 @@ function BuildManager (History, Picker, Decals) {
 			else
 				BuildManager(ch[i], parent);
 			if (isSwappable)
-				attachSwapRadio(ch[i], node.id);
+				attachSwapRadio(ch[i], node);
 		}
 
 		/* Step 2.2: Build controls for .option and .toggle */
@@ -414,6 +408,12 @@ function BuildManager (History, Picker, Decals) {
 			BuildManager(nodes[i]);
 			if (nodes[i].getAttribute("class") == "swappable") {
 				setupSwapHandler(nodes[i], category);
+
+				var vault = find("svg_vault");
+				var ch = nodes[i].children;
+				while (ch.length > 1)
+					vault.appendChild(ch[1]);
+
 				var selected = variants.getItem(nodes[i].id);
 				var radio = find(selected + "Radio");
 				radio.checked = false;
@@ -484,7 +484,7 @@ function VariantsVault (asString, History) {
 
 		if (value == v[key])
 			return;
-		var c = History.format(type, v[key], value, key); // TODO
+		var c = History.format(type, v[key], value, key);
 		v[key] = value;
 
 		if (category)

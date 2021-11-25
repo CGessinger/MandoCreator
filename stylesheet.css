@@ -473,19 +473,14 @@ legend {
 	scrollbar-width: none;
 }
 
-.image_column svg {
+#Male-Body, #Female-Body {
 	position: relative;
 	pointer-events: none;
 	overflow: visible;
 }
 
-#Male-Body *,
-#Female-Body * {
+#Main-Body {
 	pointer-events: visiblePainted;
-}
-
-.swappable {
-	visibility: hidden;
 }
 
 .swapslide {
