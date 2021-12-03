@@ -1,6 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" id="Background" stroke="#000" stroke-width="1" version="2.0" viewBox="0 0 1920 1080">
-  <animate href="#Mouse_Droid" attributeName="x" attributeType="XML" begin="mouseenter" dur="3s" from="800" restart="whenNotActive" to="800" values="800;500;650;-1100;-1100;1100;1100;800"/>
-  <animate href="#Mouse_Droid" attributeName="opacity" attributeType="XML" begin="mouseenter" dur="3s" from="1" restart="whenNotActive" to="1" values="1;1;1;1;0;0;1;1"/>
   <style>
     .st1{fill:#363636}.st5{fill:#aeaeae}.st6{fill:#ab1f1f}.st7{fill:#ffea00}.st8{fill:#60ff00}.st9{fill:#787878}.st10{fill:#313131}.st17{fill:#919191}
   </style>

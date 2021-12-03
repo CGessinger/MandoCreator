@@ -260,7 +260,7 @@ function Downloader (Decals) {
 	}
 
 	function SVGFromEditor () {
-		var SVG = find("main").firstElementChild;
+		var SVG = find("main").lastElementChild;
 		var copy = SVG.cloneNode(true);
 
 		var decals = Decals.SVG;
@@ -303,9 +303,6 @@ function Downloader (Decals) {
 
 	return {
 		set Background (bck) {
-			var mouse = find("Mouse_Droid");
-			if (mouse)
-				mouse.remove();
 			var width = 0, height = 0;
 			switch (bck.type) {
 				case "image/svg+xml":
@@ -321,21 +318,7 @@ function Downloader (Decals) {
 				prepareCanvas(bckImgURI);
 			document.body.style.backgroundImage = "url(\"" + bckImgURI + "\")";
 
-			if (bck.custom) {
-				reset.style.display = "";
-			} else {
-				reset.style.display = "none";
-				Vault.getItem("Mouse-Droid", function (mouse) {
-					bckSVG.appendChild(mouse.cloneNode(true));
-					function anim(n) {
-						return function(){this.style.animationName = n;}
-					}
-					mouse.onmouseenter = anim("drive_off");
-					mouse.ontouchstart = anim("drive_off");
-					mouse.onanimationend = anim("none");
-					document.body.insertBefore(mouse, document.body.firstElementChild);
-				});
-			}
+			reset.style.display = bck.custom ? "" : "none";
 		},
 		get Background () {
 			var svgMain = XML.SVGNode("svg", {

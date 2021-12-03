@@ -162,9 +162,10 @@ ANIMATIONS
 }
 
 #Mouse_Droid {
-	position: absolute;
-	bottom: 17%;
 	right: 10%;
+	bottom: 17%;
+	height: 10%;
+	position: absolute;
 	animation: none 3s ease-in-out 1;
 }
 
@@ -326,9 +327,9 @@ COLOR PICKER
 }
 
 #picker_hue .picker_selector {
-	border-radius: 0.3em;
-	transform: translate(-50%, -2px);
-	height: 50%;
+	border-radius: 0.25em;
+	transform: translate(-50%);
+	height: 100%;
 }
 
 #picker_sl {
@@ -355,13 +356,13 @@ COLOR PICKER
 
 .picker_selector {
 	position: absolute;
-	padding: 0.33em;
 	-webkit-transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	border: 2px solid white;
+	outline: 2px solid white;
 	border-radius: 50%;
-	cursor: pointer;
+	height: 0.75em;
+	width: 0.75em;
 }
 
 /*
@@ -407,6 +408,7 @@ button:focus {
 }
 
 #title {
+	display: block;
 	width: 25em;
 	max-width: 75vw;
 }
@@ -506,13 +508,12 @@ footer > * {
 }
 
 .zoom_wrapper {
-	padding: 1em 0;
 	background: var(--translucent);
 }
 
 .zoom_icon {
-	vertical-align: sub;
-	padding: 0 0.5em;
+	display: inline-block;
+	padding: 1em;
 	cursor: pointer;
 }
 
@@ -652,6 +653,7 @@ footer > * {
 	font-size: smaller;
 	background: none;
 	border: none;
+	cursor: pointer;
 }
 
 .type_button input {
@@ -660,7 +662,6 @@ footer > * {
 	width: 100%;
 	margin: 0;
 	opacity: 0;
-	cursor: pointer;
 }
 
 .new:before {

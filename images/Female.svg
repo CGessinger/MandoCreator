@@ -1145,7 +1145,7 @@ z"/>
 </g>
 <g id="CollarDecals" mask="url(#CollarMask)">
 </g>
-<g id="Helmets"></g>
+<g id="Helmets" class="swappable" transform="translate(44.5,-52)"></g>
 <g id="HelmetsDecals" mask="url(#HelmetsMask)"></g>
 <g id="Shoulders">
 <g id="Left-Shoulder">

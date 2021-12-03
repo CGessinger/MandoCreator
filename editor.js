@@ -435,21 +435,23 @@ function SettingsManager (Builder, History, Vault, Decals) {
 		History.track = false; /* Do not track any changes during setup */
 		var helmet;
 		var master_file = female ? "Female" : "Male";
-		var body = Vault.getItem(master_file, function (Body) {
-			var h = Body.getElementById("Helmets");
-			Decals.SVG = Body;
-			Body = Body.getElementById("Main-Body");
-			Builder.setup(Body.children);
+		var body = Vault.getItem(master_file, function (svg) {
+			Decals.SVG = svg;
+			var body = svg.lastElementChild;
+			var h = svg.getElementById("Helmets");
+			Builder.setup(body.children);
 			helmet = Vault.getItem("Helmets", function (helmets) {
-				helmets.className.baseVal = "swappable";
-				Builder.setup([helmets], upload);
-			}, h);
-		}, main.firstElementChild);
+				var ch = helmets.children;
+				while (ch.length)
+					h.appendChild(ch[0]);
+				Builder.setup([h], upload);
+			});
+		}, main.lastElementChild);
 
 		localStorage.setItem("female_sex", (!!female).toString());
 		await body;
 		Zoom.scale = 0;
-		var SVG = main.firstElementChild;
+		var SVG = main.lastElementChild;
 		SVG.scrollIntoView({inline: "center"});
 		await helmet;
 		History.track = true;
@@ -685,7 +687,7 @@ var Zoom = new (function () {
 		set scale (value) {
 			if (value <= 0)
 				value = z.value;
-			var SVG = main.firstElementChild;
+			var SVG = main.lastElementChild;
 			SVG.style.height = value + "%";
 		},
 		in: function () {

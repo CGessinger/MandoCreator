@@ -1138,7 +1138,7 @@
 </g>
 <g id="CollarDecals">
 </g>
-<g id="Helmets"></g>
+<g id="Helmets" class="swappable" transform="translate(44.5,-52)"></g>
 <g id="HelmetsDecals"></g>
 <g id="Shoulders">
 	<g id="Left-Shoulder_M">
