@@ -9,7 +9,7 @@ mask-type: alpha;
 stroke: none;
 }
 </style>
-<defs id="Masks" fill="white">
+<defs id="Masks">
 <mask id="HelmetsMask"> <use href="#Helmets" /> </mask>
 <mask id="CollarMask"> <use href="#Collar" /> </mask>
 <mask id="ShouldersMask"> <use href="#Shoulders" /> </mask>
@@ -23,7 +23,7 @@ stroke: none;
 <mask id="ShinsMask"> <use href="#Shins" /> </mask>
 <mask id="FootMask"> <use href="#Foot" /> </mask>
 </defs>
-<g id="Main-Body" fill="currentColor">
+<g id="Main-Body">
 <g id="Extras_Back">
 <g id="Back">
 <path id="Fur-Cape_Back" class="option" d="M47.33,25.95c-0.21-0.24-0.39-0.5-0.51-0.77c-0.13-0.69-0.6-1.61-0.8-1.29

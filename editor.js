@@ -310,7 +310,7 @@ function BuildManager (History, Picker, Decals) {
 	function attachSwapRadio (node, parent) {
 		var radio = find(node.id + "Radio");
 		var s = swapLists;
-		var vault = find("svg_vault");
+		var vault = find("item_vault");
 		radio.onchange = function () {
 			var ch = parent.firstElementChild;
 			vault.appendChild(ch);
@@ -394,6 +394,8 @@ function BuildManager (History, Picker, Decals) {
 	}
 
 	this.setup = function (nodes) {
+		var vault = find("item_vault");
+		vault.innerHTML = "";
 		for (var i = nodes.length-1; i >= 0; i--) {
 			if (nodes[i].hasAttribute("mask")) {
 				if (!variants.hasItem(nodes[i].id))
@@ -409,7 +411,6 @@ function BuildManager (History, Picker, Decals) {
 			if (nodes[i].getAttribute("class") == "swappable") {
 				setupSwapHandler(nodes[i], category);
 
-				var vault = find("svg_vault");
 				var ch = nodes[i].children;
 				while (ch.length > 1)
 					vault.appendChild(ch[1]);
@@ -439,12 +440,11 @@ function SettingsManager (Builder, History, Vault, Decals) {
 			Decals.SVG = svg;
 			var body = svg.lastElementChild;
 			var h = svg.getElementById("Helmets");
-			Builder.setup(body.children);
 			helmet = Vault.getItem("Helmets", function (helmets) {
 				var ch = helmets.children;
 				while (ch.length)
 					h.appendChild(ch[0]);
-				Builder.setup([h], upload);
+				Builder.setup(body.children, upload);
 			});
 		}, main.lastElementChild);
 
@@ -728,11 +728,8 @@ function reset (skipBuild, skipPrompt) {
 }
 
 function setDefaultBackground () {
-	Vault.getItem("Background", function (bck) {
-		Download.Background = {
-			type: "image/svg+xml",
-			data: bck,
-			custom: false
-		};
-	});
+	Download.Background = {
+		data: "images/Background.svg",
+		custom: false
+	};
 }

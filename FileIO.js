@@ -22,17 +22,11 @@ var XML = {
 }
 
 function Uploader (queryString, D) {
-	var svg = XML.SVGNode("svg");
 	var readerBck = new FileReader;
 	var file;
 	readerBck.onload = function() {
 		var data = this.result;
-		if (file.type == "image/svg+xml") {
-			svg.innerHTML = data;
-			data = svg.firstElementChild;
-			svg.innerHTML = "";
-		}
-		D.Background = {type: file.type, data: data, custom: true};
+		D.Background = {data: data, custom: true};
 		file = null;
 	}
 	find("background_upload").addEventListener("change", function() {
@@ -118,14 +112,15 @@ function Uploader (queryString, D) {
 	}
 
 	function dissectSVG () {
+		var svg = XML.SVGNode("svg");
 		svg.innerHTML = this.result;
 		svg = svg.firstElementChild;
 
-		var mando = svg.lastElementChild;
-		var img = svg.firstElementChild;
-
 		reset(true);
+
+		var mando = svg.lastElementChild;
 		parseMando(mando);
+
 		if (mando.id === "Female-Body") {
 			var sex_radio = find("female");
 			sex_radio.checked = true;
@@ -135,18 +130,7 @@ function Uploader (queryString, D) {
 			sex_radio.checked = true;
 			Settings.Sex(false, true);
 		}
-
-		if (img.tagName.toLowerCase() === "svg") {
-			if (img.getAttribute("id") == "Background")
-				setDefaultBackground();
-			else
-				D.Background = { type: "image/svg+xml", data: img, custom: true };
-		} else {
-			var href = img.getAttribute("href");
-			var mime = href.match(/^data:image\/([\w+-.]+)/);
-			if (!mime) return;
-			D.Background = { type: mime[1], data: href, custom: true };
-		}
+		setDefaultBackground();
 	}
 
 	var readerMando = new FileReader();
@@ -216,7 +200,7 @@ function Downloader (Decals) {
 	var reset = find("reset_wrapper");
 	var canvas = find("canvas");
 	var canvasCtx = canvas.getContext('2d');
-	var bckImgURI, bckSVG;
+	var bckImgURI;
 
 	var logoSVG = (function () {
 		var t = find("title");
@@ -262,9 +246,14 @@ function Downloader (Decals) {
 	function SVGFromEditor () {
 		var SVG = find("main").lastElementChild;
 		var copy = SVG.cloneNode(true);
+		var body = copy.lastElementChild;
 
 		var decals = Decals.SVG;
-		copy.appendChild(decals);
+		copy.insertBefore(decals, body);
+
+		var meta = XML.SVGNode("metadata", {}, copy);
+		meta.innerHTML = "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#' xmlns:dc='http://purl.org/dc/elements/1.1/'> <rdf:Description> <dc:creator>MandoCreator</dc:creator> <dc:publisher>https://www.mandocreator.com</dc:publisher> <dc:description>Your Beskar'gam - created by MandoCreator</dc:description> <dc:format>image/svg+xml</dc:format> <dc:type>Image</dc:type> <dc:title>MandoCreator - Ner Berskar'gam</dc:title> <dc:date>" + (new Date).toISOString() + "</dc:date> </rdf:Description> </rdf:RDF>";
+		copy.insertBefore(meta, body);
 
 		return prepareForExport(copy);
 	}
@@ -304,46 +293,12 @@ function Downloader (Decals) {
 	return {
 		set Background (bck) {
 			var width = 0, height = 0;
-			switch (bck.type) {
-				case "image/svg+xml":
-					bckSVG = bck.data;
-					var viewBox = bckSVG.viewBox.baseVal;
-					bckImgURI = svg2img(bckSVG, viewBox.width, viewBox.height);
-					break;
-				default:
-					bckImgURI = bck.data;
-					bckSVG = null;
-			}
+			bckImgURI = bck.data;
 			if (logoSVG)
 				prepareCanvas(bckImgURI);
 			document.body.style.backgroundImage = "url(\"" + bckImgURI + "\")";
 
 			reset.style.display = bck.custom ? "" : "none";
-		},
-		get Background () {
-			var svgMain = XML.SVGNode("svg", {
-				"version": "1.1",
-				"width": canvas.width,
-				"height": canvas.height,
-				"viewBox": [0, 0, canvas.width, canvas.height].join(" ")
-			});
-			if (bckSVG) {
-				svgMain.appendChild(bckSVG);
-			} else {
-				var img = XML.SVGNode("image", {
-					"width": "100%",
-					"height": "100%",
-					"href": bckImgURI
-				}, svgMain);
-			}
-
-			var logo = logoSVG.cloneNode(true);
-			svgMain.appendChild(logo);
-
-			var meta = XML.SVGNode("metadata", {}, svgMain);
-			meta.innerHTML = "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#' xmlns:dc='http://purl.org/dc/elements/1.1/'> <rdf:Description> <dc:creator>MandoCreator</dc:creator> <dc:publisher>https://www.mandocreator.com</dc:publisher> <dc:description>Your Beskar'gam - created by MandoCreator</dc:description> <dc:format>image/svg+xml</dc:format> <dc:type>Image</dc:type> <dc:title>MandoCreator - Ner Berskar'gam</dc:title> <dc:date>" + (new Date).toISOString() + "</dc:date> </rdf:Description> </rdf:RDF>";
-
-			return svgMain;
 		},
 		attach: function (a, type) {
 			var blobURL;
@@ -359,16 +314,22 @@ function Downloader (Decals) {
 			if (type === "image/svg+xml") {
 				var self = this;
 				a.addEventListener("click", function () {
-					var bck = self.Background;
-					bck.appendChild(SVGFromEditor());
-					var str = xml.serializeToString(bck);
-					var noEmptyLines = str.replace(/\n\s*\n/,"");
+					var svg = SVGFromEditor();
+					var str = xml.serializeToString(svg);
+					var noEmptyLines = str.replace(/\n\s*\n/g,"");
 					var document = "<?xml version='1.0' encoding='UTF-8'?>" + noEmptyLines;
 					var blob = new Blob([document], {type: "image/svg+xml"});
 					blobURL = URL.createObjectURL(blob);
 					this.href = blobURL;
 				});
 			} else {
+				function toURL (blob) {
+					console.log(blob);
+					blobURL = URL.createObjectURL(blob);
+					a.href = blobURL;
+					isSetUp = true;
+					a.click();
+				}
 				a.addEventListener("click", function (event) {
 					if (isSetUp) {
 						prepareCanvas(bckImgURI);
@@ -377,12 +338,7 @@ function Downloader (Decals) {
 					event.preventDefault();
 					img.onload = function () {
 						canvasCtx.drawImage(this, 0, 0);
-						canvas.toBlob(function (blob) {
-							blobURL = URL.createObjectURL(blob);
-							a.href = blobURL;
-							isSetUp = true;
-							a.click();
-						}, "image/jpeg");
+						canvas.toBlob(toURL, "image/jpeg");
 					}
 					img.src = svg2img(SVGFromEditor(), canvas.width, canvas.height);
 				});
