@@ -371,6 +371,12 @@ GENERICS
 -----------------------------------------
 */
 
+[disabled] {
+	background: var(--softLight) center / cover no-repeat;
+	background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHN0cm9rZT0ibGlnaHRncmV5IiB2aWV3Qm94PSIwIDAgMjAgMjAiPgoJPGxpbmUgeDE9IjMiIHgyPSIxNyIgeTE9IjMiIHkyPSIxNyIgLz4KCTxsaW5lIHgxPSIzIiB4Mj0iMTciIHkxPSIxNyIgeTI9IjMiIC8+Cjwvc3ZnPgo=");
+	cursor: not-allowed;
+}
+
 a {
 	text-decoration: none;
 	color: white;
@@ -836,6 +842,7 @@ footer > * {
 .detail {
 	font-size: smaller;
 	font-family: Arial, sans-serif;
+	white-space: nowrap;
 }
 
 .checkbox_list {

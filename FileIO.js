@@ -23,20 +23,13 @@ var XML = {
 
 function Uploader (queryString, D) {
 	var readerBck = new FileReader;
-	var file;
 	readerBck.onload = function() {
-		var data = this.result;
-		D.Background = {data: data, custom: true};
-		file = null;
+		D.Background = {data: this.result, custom: true};
 	}
 	find("background_upload").addEventListener("change", function() {
-		file = this.files[0];
+		var file = this.files[0];
 		if (!file) return;
-
-		if (file.type == "image/svg+xml")
-			readerBck.readAsText(file);
-		else
-			readerBck.readAsDataURL(file);
+		readerBck.readAsDataURL(file);
 		this.value = "";
 	});
 
@@ -47,7 +40,6 @@ function Uploader (queryString, D) {
 					return NodeFilter.FILTER_REJECT;
 				node.id = node.id.replace(/_(M|F|Toggle(Off)?|Option)($|_)/g,"$3");
 				if ( !(node.hasAttribute("fill")
-					|| node.hasAttribute("color")
 					|| node.hasAttribute("class")
 					|| node.style.fill) )
 					return NodeFilter.FILTER_SKIP;
@@ -59,9 +51,7 @@ function Uploader (queryString, D) {
 		while (node = iter.nextNode()) {
 			var id = node.id.replace(/_Toggle(Off|On)?|_Option/, "");
 			var bn = id + "Color";
-			if (node.hasAttribute("color")) {
-				colors[bn] = node.getAttribute("color");
-			} else if (node.hasAttribute("fill")) {
+			if (node.hasAttribute("fill")) {
 				colors[bn] = node.getAttribute("fill");
 			} else if (node.style.fill) {
 				colors[bn] = node.style.fill;
@@ -117,6 +107,18 @@ function Uploader (queryString, D) {
 		svg = svg.firstElementChild;
 
 		reset(true);
+
+		var ds = svg.getElementById("Decals")
+		if (ds) {
+			var ch = ds.children;
+			for (var i = 0; i < ch.length; i++) {
+				if (ch[i].id.endsWith("__cd")) {
+					var name = ch[i].id.split("__",1)[0];
+					var data = ch[i].getAttribute("href");
+					Decals.custom(data, name);
+				}
+			}
+		}
 
 		var mando = svg.lastElementChild;
 		parseMando(mando);
@@ -202,13 +204,6 @@ function Downloader (Decals) {
 	var canvasCtx = canvas.getContext('2d');
 	var bckImgURI;
 
-	var logoSVG = (function () {
-		var t = find("title");
-		var d = t.contentDocument;
-		var de = d.documentElement;
-		return de.cloneNode(true);
-	})();
-
 	function prepareForExport (svg) {
 		var iter = document.createNodeIterator(svg, NodeFilter.SHOW_ELEMENT,
 			{ "acceptNode": function (node) {
@@ -282,10 +277,10 @@ function Downloader (Decals) {
 			}
 			canvasCtx.drawImage(this, 0, 0, canvas.width, canvas.height);
 			/* Logo */
-			img.onload = function () {
-				canvasCtx.drawImage(this, 0, 0);
+			this.onload = function () {
+				canvasCtx.drawImage(this, 0, 0, canvas.width, Math.round(canvas.height / 12) );
 			};
-			img.src = svg2img(logoSVG, canvas.width, Math.round(canvas.height / 12) );
+			this.src = "images/Logo.svg";
 		};
 		img.src = href;
 	}
@@ -294,8 +289,7 @@ function Downloader (Decals) {
 		set Background (bck) {
 			var width = 0, height = 0;
 			bckImgURI = bck.data;
-			if (logoSVG)
-				prepareCanvas(bckImgURI);
+			prepareCanvas(bckImgURI);
 			document.body.style.backgroundImage = "url(\"" + bckImgURI + "\")";
 
 			reset.style.display = bck.custom ? "" : "none";
@@ -324,7 +318,6 @@ function Downloader (Decals) {
 				});
 			} else {
 				function toURL (blob) {
-					console.log(blob);
 					blobURL = URL.createObjectURL(blob);
 					a.href = blobURL;
 					isSetUp = true;

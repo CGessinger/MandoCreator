@@ -437,6 +437,7 @@ function SettingsManager (Builder, History, Vault, Decals) {
 		var helmet;
 		var master_file = female ? "Female" : "Male";
 		var body = Vault.getItem(master_file, function (svg) {
+			svg.style.visibility = "hidden"
 			Decals.SVG = svg;
 			var body = svg.lastElementChild;
 			var h = svg.getElementById("Helmets");
@@ -445,6 +446,7 @@ function SettingsManager (Builder, History, Vault, Decals) {
 				while (ch.length)
 					h.appendChild(ch[0]);
 				Builder.setup(body.children, upload);
+				svg.style.visibility = ""
 			});
 		}, main.lastElementChild);
 

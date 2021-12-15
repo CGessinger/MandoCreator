@@ -144,10 +144,13 @@ function DecalFactory (Vault, Picker) {
 	var decals_list, decals_group;
 	var brace = find("brace");
 	var decals_brace = new DecalsBrace(brace);
+	var customs_menu = find("custom_decals_menu");
 
-	var main_svg, target_div, all_decals;
+	var main_svg, target_div, vault;
 
-	Vault.getItem("Decals", function (decals) {all_decals = decals.children;}, find("decal_vault"));
+	var vault = Vault.getItem("Decals", function (decals) {
+		vault = decals;
+	}, find("decal_vault"));
 
 	/* Event Handlers */
 	var decals_menu = find("decals_menu");
@@ -197,12 +200,15 @@ function DecalFactory (Vault, Picker) {
 	});
 
 	/* Construction Functions */
-	function BuildUse (name, id) {
-		return XML.SVGNode("use", {
+	function BuildUse (name, id, ref, data) {
+		var use = XML.SVGNode("use", {
 			class: "decal",
 			href: "#" + name,
 			id: id
 		}, decals_group);
+		SetTransform (use, data);
+		decals_brace.target = use;
+		return use;
 	}
 
 	function BuildControlButtons (div, use) {
@@ -233,6 +239,13 @@ function DecalFactory (Vault, Picker) {
 	}
 
 	function AddDecal (name, id, data) {
+		var display_name = name
+		var d = find(name);
+		if (!d)
+			return;
+		else if (d.hasAttribute("serif:id"))
+			display_name = d.getAttribute("serif:id");
+
 		if (name in count)
 			count[name]++;
 		else
@@ -243,17 +256,21 @@ function DecalFactory (Vault, Picker) {
 		var category = decals_group.id;
 		var cat_short = category.replace("Decals", "");
 
-		var use = BuildUse (name, id);
-		SetTransform (use, data);
-		decals_brace.target = use;
+		var use = BuildUse (name, id, d, data);
 
 		var div = XML.DOMNode("div", {class: "decal_control"});
 		decals_list.insertBefore(div, decals_list.firstElementChild);
-		var display_name = find(name).getAttribute("serif:id") || name;
+
 		var button = Picker.build(use, div, {
 			text: display_name,
-			default: "#000000",
+			default: "#000000"
 		});
+		if (name.endsWith("__cd")) {
+			button.disabled = true;
+			var label = button.parentElement;
+			var text = label.lastElementChild;
+			text.innerText = "No colors available";
+		}
 
 		var close = BuildControlButtons(div, use, button.id);
 		var closed = false;
@@ -328,6 +345,14 @@ function DecalFactory (Vault, Picker) {
 		variants.setItem(target.id, data, "decal", target.parentNode.id);
 	}
 
+	function makeName (str, display) {
+		str = str.split(".", 1)[0];
+		if (display)
+			return str.replaceAll("-", " ");
+		str = str.replace("-", "");
+		return encodeURIComponent(str);
+	}
+
 	return {
 		Add: AddDecal,
 		Recreate: Recreate,
@@ -346,28 +371,60 @@ function DecalFactory (Vault, Picker) {
 			}
 		},
 		get SVG () {
-			var defs = XML.SVGNode("defs");
-			Vault.getItem("Decals", function (svg) {
-				var ch = svg.children;
-				var i = 0;
-				while (i < ch.length) {
-					if (count[ch[i].id] >= 1) {
-						ch[i].removeAttribute("serif:id");
-						defs.appendChild(ch[i]);
-					} else {
-						i++;
-					}
+			var defs = XML.SVGNode("defs", {id: "Decals"});
+			var ch = find("decal_vault").children;
+			var i = 0;
+			while (i < ch.length) {
+				var id = ch[i].id;
+				if (count[id] >= 1) {
+					var n = ch[i].cloneNode(true);
+					n.removeAttribute("serif:id");
+					defs.appendChild(n);
 				}
-			});
+				i++;
+			}
 			return defs;
 		},
 		set SVG (value) {
 			main_svg = value;
 			decals_brace.SVG = value;
 		},
+		custom: function (data, name, parent) {
+			var button = XML.DOMNode("button", {class: "type_button"}, customs_menu);
+			var svg = XML.SVGNode("svg", {viewBox: "-15 -15 130 130", class: "preview_icon"}, button);
+
+			var id = makeName(name, true) + "__cd";
+			var display = makeName(name, true);
+			var decals = XML.SVGNode("image", {
+				href: data,
+				width: 100,
+				height: 100,
+				id: id,
+				"serif:id": display
+			}, vault);
+			XML.SVGNode("use", {href: "#" + id}, svg);
+
+			button.addEventListener("click", function () {
+				Decals.Add(id, null, {});
+			});
+
+			var t = document.createTextNode(display);
+			button.appendChild(t);
+		},
 		reset: function () {
 			nonce = 0;
 			count = {};
 		}
 	};
+}
+
+function addCustomDecal (files) {
+	for (var i = 0; i < files.length; i++) {
+		var reader = new FileReader();
+		let name = files[i].name;
+		reader.onload = function () {
+			Decals.custom(this.result, name);
+		}
+		reader.readAsDataURL(files[i]);
+	}
 }

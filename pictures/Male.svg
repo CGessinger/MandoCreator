@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 26.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Male-Body" xmlns="http://www.w3.org/2000/svg" viewBox="0 -55 169 300" style="fill-rule:evenodd;stroke:black;stroke-width:0.2px;stroke-linejoin:round">
+<svg version="1.1" id="Male-Body" xmlns="http://www.w3.org/2000/svg" viewBox="0 -55 169 300" style="fill-rule:evenodd;stroke-width:0.2px;stroke-linejoin:round">
 <style>
 	mask {
 		mask-type: alpha;
@@ -9,7 +9,7 @@
 		stroke: none;
 	}
 </style>
-<defs id="Masks">
+<defs id="Masks" stroke="none">
 	<mask id="HelmetsMask"> <use href="#Helmets" /> </mask>
 	<mask id="CollarMask"> <use href="#Collar" /> </mask>
 	<mask id="ShouldersMask"> <use href="#Shoulders" /> </mask>
@@ -23,7 +23,7 @@
 	<mask id="ShinsMask"> <use href="#Shins" /> </mask>
 	<mask id="FootMask"> <use href="#Foot" /> </mask>
 </defs>
-<g id="Main-Body">
+<g id="Main-Body" fill="white" stroke="black">
 <g id="Extras_Back">
 	<g id="Back">
 		<path id="Fur-Cape_Back_Option" d="M47.33,25.95c-0.21-0.24-0.39-0.5-0.51-0.77c-0.13-0.69-0.6-1.61-0.8-1.29
