@@ -317,7 +317,12 @@ function PickerFactory (history) {
 		p.innerText = kwargs.text;
 		var c = XML.DOMNode("p", {class: "detail no_collapse"}, label);
 
-		this.attach(b, c, target, kwargs["default"]);
+		if (kwargs.disabled) {
+			b.disabled = true;
+			c.innerText = "No colors available";
+		} else {
+			this.attach(b, c, target, kwargs["default"]);
+		}
 		return b;
 	}
 	this.cache = cache;

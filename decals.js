@@ -181,7 +181,7 @@ function DecalFactory (Vault, Picker) {
 	var ch = previews.getElementsByTagName("button");
 	for (var i = 0; i < ch.length; i++) {
 		ch[i].addEventListener("click", function () {
-			Decals.Add(this.dataset.name, null, {});
+			AddDecal(this.dataset.name, null, {});
 		});
 	}
 
@@ -263,16 +263,11 @@ function DecalFactory (Vault, Picker) {
 
 		var button = Picker.build(use, div, {
 			text: display_name,
-			default: "#000000"
+			default: "#000000",
+			disabled: name.endsWith("__cd")
 		});
-		if (name.endsWith("__cd")) {
-			button.disabled = true;
-			var label = button.parentElement;
-			var text = label.lastElementChild;
-			text.innerText = "No colors available";
-		}
 
-		var close = BuildControlButtons(div, use, button.id);
+		var close = BuildControlButtons(div, use);
 		var closed = false;
 		close.addEventListener("click", function () {
 			closed = true;
@@ -354,14 +349,12 @@ function DecalFactory (Vault, Picker) {
 	}
 
 	return {
-		Add: AddDecal,
 		Recreate: Recreate,
 		Set: SetTransform,
 		set Category (cat) {
 			if (cat == null) {
 				decals_brace.Category = null;
 				decals_group = decals_list = null;
-				return;
 			} else {
 				decals_brace.Category = cat + "Decals";
 
@@ -390,22 +383,23 @@ function DecalFactory (Vault, Picker) {
 			decals_brace.SVG = value;
 		},
 		custom: function (data, name, parent) {
-			var button = XML.DOMNode("button", {class: "type_button"}, customs_menu);
-			var svg = XML.SVGNode("svg", {viewBox: "-15 -15 130 130", class: "preview_icon"}, button);
-
 			var id = makeName(name, true) + "__cd";
 			var display = makeName(name, true);
-			var decals = XML.SVGNode("image", {
+
+			var button = XML.DOMNode("button", {class: "type_button"}, customs_menu);
+			var svg = XML.SVGNode("svg", {viewBox: "-15 -15 130 130", class: "preview_icon"}, button);
+			XML.SVGNode("use", {href: "#" + id}, svg);
+
+			XML.SVGNode("image", {
 				href: data,
 				width: 100,
 				height: 100,
 				id: id,
 				"serif:id": display
 			}, vault);
-			XML.SVGNode("use", {href: "#" + id}, svg);
 
 			button.addEventListener("click", function () {
-				Decals.Add(id, null, {});
+				AddDecal(id, null, {});
 			});
 
 			var t = document.createTextNode(display);

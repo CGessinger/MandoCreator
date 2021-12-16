@@ -218,7 +218,7 @@ function BuildManager (History, Picker, Decals) {
 				input.checked = variants.getItem(id);
 			handler.bind(input)();
 		}
-		return BuildManager(toggle, subslide);
+		return Build(toggle, subslide);
 	}
 
 	function SelectHistoryHandler (pairs, id) {
@@ -258,7 +258,7 @@ function BuildManager (History, Picker, Decals) {
 
 			/* Step 2.2: Build Controls */
 			var subParent = XML.DOMNode("div", {id: o.id + "SubColors"});
-			BuildManager(o, subParent);
+			Build(o, subParent);
 			parent.appendChild(subParent);
 			pairs.push([o,subParent]);
 		}
@@ -297,7 +297,7 @@ function BuildManager (History, Picker, Decals) {
 
 			/* Step 2.2: Build a sublist for all the colors to go in */
 			var sublist = XML.DOMNode("div", {id: o.id+"SubColors"}, parent);
-			BuildManager(o, sublist);
+			Build(o, sublist);
 
 			/* Step 2.3: Attach an event handler to the checkbox */
 			var handler = CheckboxHistoryHandler(id, sublist, o);
@@ -338,7 +338,7 @@ function BuildManager (History, Picker, Decals) {
 		}
 	}
 
-	function BuildManager (node, realParent) {
+	function Build (node, realParent) {
 		/* Step 0.1: Check if the node needs treatment */
 		var ch = node.children;
 		if (!ch.length && node.tagName == "g")
@@ -359,7 +359,7 @@ function BuildManager (History, Picker, Decals) {
 			});
 
 		/* Step 2.1: Node has only named children
-		 * -> map `BuildManager` over `ch`, but filter out .option and .toggle */
+		 * -> map `Build` over `ch`, but filter out .option and .toggle */
 		var parent = document.createDocumentFragment();
 		var options = [], toggles = [];
 		var isSwappable = (node.getAttribute("class") == "swappable");
@@ -370,7 +370,7 @@ function BuildManager (History, Picker, Decals) {
 			else if (cls == "toggle")
 				toggles.push(ch[i]);
 			else
-				BuildManager(ch[i], parent);
+				Build(ch[i], parent);
 			if (isSwappable)
 				attachSwapRadio(ch[i], node);
 		}
@@ -407,7 +407,7 @@ function BuildManager (History, Picker, Decals) {
 			var category = findCategory(nodes[i].id);
 			if (!category)
 				continue;
-			BuildManager(nodes[i]);
+			Build(nodes[i]);
 			if (nodes[i].getAttribute("class") == "swappable") {
 				setupSwapHandler(nodes[i], category);
 
