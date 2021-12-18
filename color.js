@@ -131,6 +131,10 @@ function PickerFactory (history) {
 		var ch = wrapper.children;
 		var colors = ["#F00", "#0085FF", "#FFD600", "#08CB33", "#8B572A", "#A3A3A3", "#000", "#fff"];
 
+		wrapper.addEventListener("click", function (event) {
+			event.stopPropagation();
+		});
+
 		var timer;
 		var pals = wrapper.getElementsByClassName("palette_icon");
 		function save (event) {
@@ -170,7 +174,7 @@ function PickerFactory (history) {
 		var editor = ch[3];
 		on(editor, "input", function() { var s = this.value; _setColor(s.trim(), true); });
 		var Okay = ch[4];
-		on(Okay, "click", function(event) { event.preventDefault(); DOM.parent = null; });
+		on(Okay, "click", function(event) { DOM.parent = null; DOM.display(); });
 
 		setupDragAndClick(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });
 		setupDragAndClick(spectrum, function(s, v) { var c = color.hsv; c[1] = s; c[2] = 1-v; return _setColor(c)});
@@ -192,9 +196,6 @@ function PickerFactory (history) {
 					editor.value = color.hex;
 				}
 			},
-			get parent () {
-				return _parent;
-			},
 			set parent (p) {
 				if (_parent == p)
 					return;
@@ -206,19 +207,19 @@ function PickerFactory (history) {
 				}
 			},
 			display: function () {
-				var p = DOM.parent;
-				if (p == null) {
-					wrapper.style = "display:none";
+				if (_parent == null) {
 					document.body.appendChild(wrapper); /* Move it somewhere else! */
-				} else if (p !== wrapper.parentNode) {
-					p.appendChild(wrapper);
-					wrapper.style = "";
-					var rect = wrapper.getBoundingClientRect();
-					if (rect.bottom > window.innerHeight)
-						wrapper.style.bottom = "0px";
-					if (rect.left < 0)
-						wrapper.style.left = -rect.right + "px";
+					wrapper.style = "display:none";
+					return;
+				} else if (_parent !== wrapper.parentNode) {
+					_parent.appendChild(wrapper);
 				}
+				wrapper.style = "";
+				var rect = wrapper.getBoundingClientRect();
+				if (rect.bottom > window.innerHeight)
+					wrapper.style.bottom = "0px";
+				if (rect.left < 0)
+					wrapper.style.left = -rect.right + "px";
 			}
 		}
 	}
@@ -227,6 +228,9 @@ function PickerFactory (history) {
 		DOM.parent = null;
 	});
 	document.addEventListener("click", function () {
+		DOM.display();
+	});
+	window.addEventListener("resize", function () {
 		DOM.display();
 	});
 
