@@ -109,6 +109,23 @@
 					<rect width="40" height="40" x="30" y="30" style="cursor:nwse-resize"/>
 				</g>
 			</g>
+			<g id="grid" style="visibility:hidden">
+			<defs>
+			<pattern id="lines" viewBox="0 0 5 5" width="5" height="5" stroke-width="0.1" patternUnits="userSpaceOnUse">
+				<line stroke="red"  x1="0" x2="0" y1="0" y2="5" stroke-width="0.2"/>
+				<line stroke="grey" x1="1" x2="1" y1="0" y2="5" />
+				<line stroke="grey" x1="2" x2="2" y1="0" y2="5" />
+				<line stroke="grey" x1="3" x2="3" y1="0" y2="5" />
+				<line stroke="grey" x1="4" x2="4" y1="0" y2="5" />
+				<line stroke="red"  y1="0" y2="0" x1="0" x2="5" stroke-width="0.2"/>
+				<line stroke="grey" y1="1" y2="1" x1="0" x2="5" />
+				<line stroke="grey" y1="2" y2="2" x1="0" x2="5" />
+				<line stroke="grey" y1="3" y2="3" x1="0" x2="5" />
+				<line stroke="grey" y1="4" y2="4" x1="0" x2="5" />
+			</pattern>
+			</defs>
+			<rect width="1500" height="500" x="-665" y="-100" fill="url(#lines)" style="pointer-events:none" />
+			</g>
 			</svg>
 		</div>
 		<main id="main" class="image_column">
@@ -836,6 +853,14 @@
 						</label></details>
 				</div>
 			</details>
+			<div class="no_collapse">
+				<label class="pseudo_checkbox">
+					<span>Snap to grid</span>
+					<input type="checkbox" id="snapping" class="armor_toggle" checked/>
+					<span class="slider right"></span>
+				</label>
+				<hr />
+			</div>
 			<div id="Decal_Lists" class="folder_content">
 				<div id="HelmetsDecalsList" class="slide slide_content"></div>
 				<div id="CollarDecalsList" class="slide slide_content"></div>

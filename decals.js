@@ -1,9 +1,10 @@
 "use strict";
 
-function DecalsBrace (g) {
+function DecalsBrace (g, grid) {
 	var main_svg = XML.SVGNode("svg");
 	var x, y, ax, ay, phi, c, s;
 	var target_id, target_category;
+	var snapping = find("snapping");
 
 	/* Transforms */
 	var target_translate, target_scale, target_rotate;
@@ -49,6 +50,7 @@ function DecalsBrace (g) {
 		var onup = function () {
 			if (!drag) return;
 			drag = false;
+			grid.style.visibility = "hidden";
 			variants.setItem(target_id, {x: x, y: y, ax: ax, ay: ay, phi: phi}, "decal", target_category);
 		}
 
@@ -62,12 +64,15 @@ function DecalsBrace (g) {
 		node.addEventListener("touchend", onup);
 	}
 
-	var hitbox = g.lastElementChild;
-	var ch = hitbox.children;
+	var ch = g.lastElementChild.children;
 	var c = Math.cos(phi), s = Math.sin(phi);
 	setupDragAndDrop(ch[0], function (offset) {
+		if (snapping.checked)
+			grid.style.visibility = "visible";
 		return [offset[0] - x, offset[1] - y];
 	}, function (coord) {
+		if (snapping.checked)
+			coord = coord.map(Math.round);
 		x = coord[0]; y = coord[1];
 		target_translate.setTranslate(x, y);
 		this_translate.setTranslate(x, y);
@@ -107,6 +112,7 @@ function DecalsBrace (g) {
 		set SVG (value) {
 			main_svg = value;
 			var main_body = main_svg.lastElementChild;
+			main_body.appendChild(grid);
 			main_body.appendChild(g);
 		},
 		set target (value) {
@@ -142,8 +148,7 @@ function DecalsBrace (g) {
 function DecalFactory (Vault, Picker) {
 	var count = {}, nonce = 0;
 	var decals_list, decals_group;
-	var brace = find("brace");
-	var decals_brace = new DecalsBrace(brace);
+	var decals_brace = new DecalsBrace(find("brace"), find("grid"));
 	var customs_menu = find("custom_decals_menu");
 
 	var main_svg, target_div, vault;
@@ -185,7 +190,7 @@ function DecalFactory (Vault, Picker) {
 		});
 	}
 
-	var lists = decals_menu.children[3];
+	var lists = decals_menu.lastElementChild;
 	var divs = lists.getElementsByClassName("decal_control");
 	decals_menu.addEventListener("mousedown", function () {
 		target_div = null;
