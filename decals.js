@@ -1,6 +1,6 @@
 "use strict";
 
-function DecalsBrace (g, grid) {
+function DecalsBrace (g, grid, compass) {
 	var main_svg = XML.SVGNode("svg");
 	var x, y, ax, ay, phi, c, s;
 	var target_id, target_category;
@@ -51,6 +51,7 @@ function DecalsBrace (g, grid) {
 			if (!drag) return;
 			drag = false;
 			grid.style.visibility = "hidden";
+			compass.style.visibility = "hidden";
 			variants.setItem(target_id, {x: x, y: y, ax: ax, ay: ay, phi: phi}, "decal", target_category);
 		}
 
@@ -65,7 +66,6 @@ function DecalsBrace (g, grid) {
 	}
 
 	var ch = g.lastElementChild.children;
-	var c = Math.cos(phi), s = Math.sin(phi);
 	setupDragAndDrop(ch[0], function (offset) {
 		if (snapping.checked)
 			grid.style.visibility = "visible";
@@ -78,21 +78,35 @@ function DecalsBrace (g, grid) {
 		this_translate.setTranslate(x, y);
 	});
 	setupDragAndDrop(ch[1], function (offset) {
+		if (snapping.checked) {
+			var a = ay * 1.1;
+			var m = compass.transform.baseVal[0].matrix;
+			m.a = m.d = a;
+			m.e = x - a*60;
+			m.f = y - a*60;
+			compass.style.visibility = "visible";
+		}
 		return [
 			offset[0] - (57.5 * s * ay),
 			offset[1] - (-57.5 * c * ay)
 		];
 	}, function (coord) {
-		c = Math.cos(phi);
-		s = Math.sin(phi);
-
 		coord[0] = coord[0] / (57.5 * ay);
 		coord[1] = coord[1] / (-57.5 * ay);
-		phi = Math.atan2(coord[0], coord[1]);
-		this_rotate.setRotate(phi * 180 / Math.PI, 0, 0);
-		target_rotate.setRotate(phi * 180 / Math.PI, 0, 0);
+
+		phi = Math.atan2(coord[0], coord[1]) * 180 / Math.PI;
+		if (snapping.checked)
+			phi = Math.round(phi);
+		this_rotate.setRotate(phi, 0, 0);
+		target_rotate.setRotate(phi, 0, 0);
+
+		phi = phi * Math.PI / 180;
+		c = Math.cos(phi);
+		s = Math.sin(phi);
 	});
 	setupDragAndDrop(ch[2], function (offset) {
+		if (snapping.checked)
+			grid.style.visibility = "visible";
 		return [
 			offset[0] - 50 * (c * ax - s * ay),
 			offset[1] - 50 * (s * ax + c * ay)
@@ -100,6 +114,10 @@ function DecalsBrace (g, grid) {
 	}, function (coord) {
 		ax = (c * coord[0] + s * coord[1]) / 50;
 		ay = (c * coord[1] - s * coord[0]) / 50;
+		if (snapping.checked) {
+			ax = Math.round(ax * 100) / 100;
+			ay = Math.round(ay * 100) / 100;
+		}
 		target_scale.setScale(ax, ay);
 		this_scale.setScale(ax, ay);
 	});
@@ -113,6 +131,7 @@ function DecalsBrace (g, grid) {
 			main_svg = value;
 			var main_body = main_svg.lastElementChild;
 			main_body.appendChild(grid);
+			main_body.appendChild(compass);
 			main_body.appendChild(g);
 		},
 		set target (value) {
@@ -148,7 +167,7 @@ function DecalsBrace (g, grid) {
 function DecalFactory (Vault, Picker) {
 	var count = {}, nonce = 0;
 	var decals_list, decals_group;
-	var decals_brace = new DecalsBrace(find("brace"), find("grid"));
+	var decals_brace = new DecalsBrace(find("brace"), find("grid"), find("compass"));
 	var customs_menu = find("custom_decals_menu");
 
 	var main_svg, target_div, vault;
