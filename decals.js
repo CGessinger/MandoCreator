@@ -372,8 +372,7 @@ function DecalFactory (Vault, Picker) {
 		str = str.split(".", 1)[0];
 		if (display)
 			return str.replaceAll("-", " ");
-		str = str.replace("-", "");
-		return encodeURIComponent(str);
+		return btoa(str);
 	}
 
 	return {
@@ -411,7 +410,7 @@ function DecalFactory (Vault, Picker) {
 			decals_brace.SVG = value;
 		},
 		custom: function (data, name, parent) {
-			var id = makeName(name, true) + "__cd";
+			var id = makeName(name, false) + "__cd";
 			var display = makeName(name, true);
 
 			var button = XML.DOMNode("button", {class: "type_button"}, customs_menu);

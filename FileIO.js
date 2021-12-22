@@ -274,7 +274,9 @@ function Downloader (Decals) {
 			canvasCtx.drawImage(this, 0, 0, canvas.width, canvas.height);
 			/* Logo */
 			this.onload = function () {
-				canvasCtx.drawImage(this, 0, 0, canvas.width, Math.round(canvas.height / 12) );
+				this.width = Math.round(canvas.width / 3);
+				this.height = Math.round(canvas.width / 18);
+				canvasCtx.drawImage(this, 0, 0);
 			};
 			this.src = "images/Logo.svg";
 		};
