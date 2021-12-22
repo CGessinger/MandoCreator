@@ -597,9 +597,8 @@
 		</g>
 		<g id="Iron-Heart_Legacy">
 			<path id="Heart_Legacy" d="M82.3,42.85v-9.13l2.7-2.1l2.7,2.1v9.13L85,45.56L82.3,42.85z"/>
-			<g id="None_Heart_Legacy_Option">
-			</g>
 			<rect id="Center_Heart_Legacy_Option" x="84.07" y="35.12" width="1.87" height="6.25"/>
+			<g id="None_Heart_Legacy_Option"> </g>
 		</g>
 		<g id="Neck-Armor_Legacy">
 			<path id="Neck-Plate_Legacy" d="M74.29,26.73l-17.53-2.01l1.39-9.65l11.55-3.44c0,0,1.53,2.57,2.64,3.49
@@ -739,8 +738,10 @@
 		</g>
 	</g>
 	<g id="Chest_Gunslinger-MK1">
-		<path id="Abdomen_Gunslinger-MK1" d="M106.68,61.84l-0.22,2.01c0,0-8.95,5.73-12.56,7.81
+		<g id="Abdomen_Gunslinger-MK1">
+			<path id="Abdomen-Plate_Gunslinger_MK1" d="M106.68,61.84l-0.22,2.01c0,0-8.95,5.73-12.56,7.81
 			c-3.35,1.92-5.93,2.31-8.89,2.31s-5.55-0.39-8.89-2.31c-3.61-2.08-12.56-7.81-12.56-7.81l-0.22-2.01H106.68z"/>
+		</g>
 		<g id="Chest-Plates_Gunslinger-MK1">
 			<g id="Left-Chest_Gunslinger-MK1">
 				<g id="Bottom_Left-Chest_Gunslinger-MK1">

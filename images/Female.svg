@@ -468,6 +468,8 @@ l3.7,1.36L42.06,106.79"/>
 </g>
 <g id="Biceps">
 <g id="Left-Biceps">
+<g id="None_Biceps_Left" class="option">
+</g>
 <g id="Full-Band_Biceps_Left" class="option">
 <path id="Main_Full-Band_Biceps_Left" d="M113.29,54.73l-0.74-2.02l-3.43-10.67c0,0,12.7-4.29,16.3-5.51
 c0.52-0.18,1.09,0.09,1.29,0.6c1.1,2.89,4.43,11.57,4.43,11.57L113.29,54.73"/>
@@ -486,10 +488,10 @@ c2.54-1.04,5.95-2.44,7.68-3.15C133.29,55.1,133.58,54.41,133.33,53.8z"/>
 <path id="Trauma-Plate_Basic_Biceps_Left" class="toggle" style="display:none" d="M133.29,53.21l-5.5-13.24l-10.55,4.33l4.84,11.67
 c0.17,0.42,0.5,0.75,0.92,0.92c0.42,0.17,0.89,0.17,1.31,0L133.29,53.21"/>
 </g>
-<g id="None_Biceps_Left" class="option">
-</g>
 </g>
 <g id="Right-Biceps">
+<g id="None_Biceps_Right" class="option">
+</g>
 <g id="Full-Band_Biceps_Right" class="option">
 <path id="Main_Full-Band_Biceps_Right" d="M56.78,54.73l0.74-2.02l3.43-10.67c0,0-12.7-4.29-16.3-5.51
 c-0.52-0.18-1.09,0.09-1.29,0.6c-1.1,2.89-4.43,11.57-4.43,11.57L56.78,54.73"/>
@@ -507,8 +509,6 @@ c-2.54-1.04-5.95-2.44-7.68-3.15C36.78,55.1,36.49,54.41,36.74,53.8z"/>
 <path id="Strap_Basic_Biceps_Right" d="M52.35,49.98l4.71,1.93l-1.11,3.94l-5.16-2.12L52.35,49.98"/>
 <path id="Trauma-Plate_Basic_Biceps_Right" class="toggle" style="display:none" d="M36.78,53.21l5.49-13.24l10.55,4.33l-4.84,11.67
 c-0.17,0.42-0.5,0.75-0.92,0.92c-0.42,0.17-0.89,0.17-1.31,0L36.78,53.21"/>
-</g>
-<g id="None_Biceps_Right" class="option">
 </g>
 </g>
 </g>
@@ -602,8 +602,7 @@ l2.17-2.97h7.68l-2.58-2.37l-0.2-10.21l2.6-2.42L60.45,24.59z"/>
 <g id="Iron-Heart_Legacy">
 <path id="Heart_Legacy" d="M82.56,38.58V30.3l2.45-1.91l2.45,1.91v8.27l-2.45,2.45L82.56,38.58z"/>
 <rect id="Center_Heart_Legacy" class="option" x="84.16" y="31.58" width="1.7" height="5.66"/>
-<g id="None_Heart_Legacy" class="option">
-</g>
+<g id="None_Heart_Legacy" class="option"> </g>
 </g>
 <g id="Neck-Armor_Legacy">
 <path id="Neck-Plate_Legacy" d="M75.29,23.97l-15.93-1.82l1.27-8.74l10.5-3.12c0,0,1.39,2.33,2.4,3.16
@@ -744,8 +743,10 @@ l-3.45,3.42l-0.73-0.18L84.29,43.98z"/>
 </g>
 </g>
 <g id="Chest_Gunslinger-MK1">
-<path id="Abdomen_Gunslinger-MK1" d="M105.83,56.96l-0.22,1.93c0,0-8.6,5.5-12.07,7.5
+<g id="Abdomen_Gunslinger-MK1">
+<path id="Abdomen-Plate_Gunslinger-MK1" d="M105.83,56.96l-0.22,1.93c0,0-8.6,5.5-12.07,7.5
 c-3.21,1.85-5.69,2.22-8.54,2.22s-5.33-0.38-8.54-2.22c-3.47-1.99-12.07-7.5-12.07-7.5l-0.22-1.93H105.83z"/>
+</g>
 <g id="Chest-Plates_Gunslinger-MK1">
 <g id="Left-Chest_Gunslinger-MK1">
 <g id="Bottom_Left-Chest_Gunslinger-MK1">
