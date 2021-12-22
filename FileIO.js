@@ -21,7 +21,7 @@ var XML = {
 	}
 }
 
-function Uploader (queryString, D) {
+function Uploader (queryString, D, History) {
 	var readerBck = new FileReader;
 	readerBck.onload = function() {
 		D.Background = {data: this.result, custom: true};
@@ -121,7 +121,9 @@ function Uploader (queryString, D) {
 		}
 
 		var mando = svg.lastElementChild;
+		History.track = false;
 		parseMando(mando);
+		History.track = true;
 
 		if (mando.id === "Female-Body") {
 			var sex_radio = find("female");
@@ -212,22 +214,16 @@ function Downloader (Decals) {
 				return NodeFilter.FILTER_SKIP;
 			} }
 		);
-		var node, rem;
-		function advance () {
-			if (rem)
-				rem.remove();
-			rem = null;
-			return iter.nextNode();
-		}
-		while (node = advance()) {
+		var node;
+		while (node = iter.nextNode()) {
 			var display = node.style.display;
 			switch (node.getAttribute("class")) {
-				case "brace":
-					rem = node;
+				case "controls":
+					node.remove();
 					break;
 				case "option":
 					if (display !== "inherit")
-						rem = node;
+						node.remove();
 					break;
 				case "toggle":
 					if (display == "none")

@@ -50,8 +50,8 @@ function DecalsBrace (g, grid, compass) {
 		var onup = function () {
 			if (!drag) return;
 			drag = false;
-			grid.style.visibility = "hidden";
-			compass.style.visibility = "hidden";
+			grid.style.visibility = "";
+			compass.style.visibility = "";
 			variants.setItem(target_id, {x: x, y: y, ax: ax, ay: ay, phi: phi}, "decal", target_category);
 		}
 
@@ -79,11 +79,10 @@ function DecalsBrace (g, grid, compass) {
 	});
 	setupDragAndDrop(ch[1], function (offset) {
 		if (snapping.checked) {
-			var a = ay * 1.1;
 			var m = compass.transform.baseVal[0].matrix;
-			m.a = m.d = a;
-			m.e = x - a*60;
-			m.f = y - a*60;
+			m.a = m.d = ay;
+			m.e = x - ay * 60;
+			m.f = y - ay * 60;
 			compass.style.visibility = "visible";
 		}
 		return [
@@ -136,11 +135,11 @@ function DecalsBrace (g, grid, compass) {
 		},
 		set target (value) {
 			if (value == null) {
-				g.style.visibility = "hidden";
+				g.style.visibility = "";
 				target_id = "";
 			} else {
 				target_id = value.id;
-				g.style.visibility = "";
+				g.style.visibility = "visible";
 				var tl = value.transform.baseVal;
 				target_translate = tl[0];
 				target_rotate    = tl[1];
@@ -274,8 +273,13 @@ function DecalFactory (Vault, Picker) {
 			count[name]++;
 		else
 			count[name] = 1;
-		nonce++;
-		if (!id) id = name + "__" + nonce;
+		if (!id) {
+			nonce++;
+			id = name + "__" + nonce;
+		} else {
+			var dec = id.split("__");
+			nonce = Math.max(nonce, +dec[dec.length - 1]);
+		}
 
 		var category = decals_group.id;
 		var cat_short = category.replace("Decals", "");

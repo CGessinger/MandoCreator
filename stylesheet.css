@@ -402,7 +402,7 @@ button, summary {
 
 hr {
 	height: 0;
-	margin: 1em 0 0 0;
+	margin: 0.75em 0 0 0;
 	border-color: var(--softColor);
 	border-style: solid none none none;
 	background: none;
@@ -489,6 +489,11 @@ legend {
 
 #Main-Body {
 	pointer-events: visiblePainted;
+}
+
+.controls {
+	visibility: hidden;
+	pointer-events: none;
 }
 
 .swapslide {
@@ -604,6 +609,7 @@ footer > * {
 	border: none;
 	width: 3em;
 	height: 3em;
+	flex: 0 0 3em;
 	background: none;
 	color: var(--accent);
 }
@@ -616,7 +622,7 @@ footer > * {
 	height: 19em;
 }
 
-.sponsor_title {
+.summary {
 	color: var(--softLight);
 	padding: 0 0 0.5em 3%;
 }
@@ -895,7 +901,7 @@ footer > * {
 	height: 100%;
 	width: 3em;
 	margin-left: 1em;
-	background: var(--highlight);
+	background: var(--softColor);
 	border-radius: 0.75em;
 }
 
@@ -906,19 +912,25 @@ footer > * {
 	height: 100%;
 	width: 50%;
 	left: 0;
-	border: 2px solid var(--highlight);
+	background: var(--highlight);
+	border: 2px solid var(--softColor);
 	border-radius: 50%;
-	background: var(--softColor);
 	box-sizing: border-box;
 	transition: left ease-out .1s;
 }
 
-.armor_toggle:focus + :before {
-	background: var(--accent);
+.armor_toggle:checked + .slider {
+	background-color: var(--highlight);
 }
 
 .armor_toggle:checked + :before {
+	background: var(--softColor);
+	border-color: var(--highlight);
 	left: 50%;
+}
+
+.armor_toggle:focus + :before {
+	background: var(--accent);
 }
 
 .select_wrapper {

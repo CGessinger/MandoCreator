@@ -631,7 +631,7 @@ function onload () {
 	Download.attach(find("download_svg"), "image/svg+xml");
 	Download.attach(find("download_jpeg"), "image/jpeg");
 
-	var Upload = new Uploader(window.location.search, Download);
+	var Upload = new Uploader(window.location.search, Download, History);
 	setDefaultBackground();
 	find("kote").volume = 0.15;
 
