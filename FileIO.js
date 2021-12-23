@@ -49,26 +49,23 @@ function Uploader (queryString, D, History) {
 
 		var node;
 		while (node = iter.nextNode()) {
-			var id = node.id.replace(/_Toggle(Off|On)?|_Option/, "");
-			var bn = id + "Color";
+			var bn = node.id + "Color";
 			if (node.hasAttribute("fill")) {
 				colors[bn] = node.getAttribute("fill");
 			} else if (node.style.fill) {
 				colors[bn] = node.style.fill;
 			}
 			switch (node.getAttribute("class")) {
-				case null:
-					break;
 				case "toggle":
-					variants.setItem(id + "Toggle", node.style.display !== "none");
+					variants.setItem(node.id + "Toggle", node.style.display !== "none");
 					break;
 				case "option":
 					var parent = node.parentNode;
 					if (parent.id.includes("Ear"))
-						variants.setItem(id + "Toggle", true);
+						variants.setItem(node.id + "Toggle", true);
 					else {
 						var parName = parent.id + "Select";
-						variants.setItem(parName, id);
+						variants.setItem(parName, node.id);
 					}
 					break;
 				case "swappable":
@@ -87,15 +84,6 @@ function Uploader (queryString, D, History) {
 						ax: sm.a,
 						ay: sm.d
 					}, "decal", node.parentNode.id);
-				default: /* For backwards compatibility */
-					if (id.endsWith("Current")) {
-						var cls = node.getAttribute("class").replace(/_M|_F/,"");
-						var name = id.replace("_Current","");
-						if (name == "Helmet")
-							variants.setItem("Helmets", "Helmet_" + cls);
-						else if (name == "Chest")
-							variants.setItem("Chest", "Chest_" + cls);
-					}
 			}
 		}
 		localStorage.setItem("colors", JSON.stringify(colors));
@@ -113,7 +101,7 @@ function Uploader (queryString, D, History) {
 			var ch = ds.children;
 			for (var i = 0; i < ch.length; i++) {
 				if (ch[i].id.endsWith("__cd")) {
-					var name = ch[i].id.split("__",1)[0];
+					var name = ch[i].getAttribute("serif:id");
 					var data = ch[i].getAttribute("href");
 					Decals.custom(data, name);
 				}
@@ -243,20 +231,18 @@ function Downloader (Decals) {
 		copy.insertBefore(decals, body);
 
 		var meta = XML.SVGNode("metadata", {}, copy);
-		meta.innerHTML = "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#' xmlns:dc='http://purl.org/dc/elements/1.1/'> <rdf:Description> <dc:creator>MandoCreator</dc:creator> <dc:publisher>https://www.mandocreator.com</dc:publisher> <dc:description>Your Beskar'gam - created by MandoCreator</dc:description> <dc:format>image/svg+xml</dc:format> <dc:type>Image</dc:type> <dc:title>MandoCreator - Ner Berskar'gam</dc:title> <dc:date>" + (new Date).toISOString() + "</dc:date> </rdf:Description> </rdf:RDF>";
+		meta.innerHTML = "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#' xmlns:dc='http://purl.org/dc/elements/1.1/'><rdf:Description><dc:creator>MandoCreator</dc:creator><dc:publisher>https://www.mandocreator.com</dc:publisher><dc:description>Your Beskar'gam - created by MandoCreator</dc:description><dc:format>image/svg+xml</dc:format><dc:type>Image</dc:type><dc:title>MandoCreator - Ner Berskar'gam</dc:title><dc:date>" + (new Date).toISOString() + "</dc:date></rdf:Description></rdf:RDF>";
 		copy.insertBefore(meta, body);
 
 		return prepareForExport(copy);
 	}
 
 	function svg2img(svg, width, height) {
+		svg = svg.cloneNode(true);
 		svg.setAttribute("width", width || 1920);
 		svg.setAttribute("height", height || 1080);
-		var copy = svg.cloneNode(true);
-		var str = xml.serializeToString(copy);
-		var svgEnc = encodeURIComponent(str);
-		var image64 = 'data:image/svg+xml,' + svgEnc;
-		return image64;
+		var str = xml.serializeToString(svg);
+		return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(str);
 	}
 
 	function prepareCanvas (href) {
@@ -285,7 +271,6 @@ function Downloader (Decals) {
 
 	return {
 		set Background (bck) {
-			var width = 0, height = 0;
 			bckImgURI = bck.data;
 			prepareCanvas(bckImgURI);
 			document.body.style.backgroundImage = "url(\"" + bckImgURI + "\")";
@@ -300,6 +285,7 @@ function Downloader (Decals) {
 				setTimeout(function() {
 					URL.revokeObjectURL(blobURL)
 					isSetUp = false;
+					a.href = "";
 				}, 500);
 			});
 			a.type = type;
@@ -310,7 +296,7 @@ function Downloader (Decals) {
 					var str = xml.serializeToString(svg);
 					var noEmptyLines = str.replace(/\n\s*\n/g,"");
 					var document = "<?xml version='1.0' encoding='UTF-8'?>" + noEmptyLines;
-					var blob = new Blob([document], {type: "image/svg+xml"});
+					var blob = new Blob([document], {type: "image/svg+xml;charset=utf-8"});
 					blobURL = URL.createObjectURL(blob);
 					this.href = blobURL;
 				});

@@ -171,7 +171,7 @@ function DecalFactory (Vault, Picker) {
 
 	var main_svg, target_div, vault;
 
-	var vault = Vault.getItem("Decals", function (decals) {
+	Vault.getItem("Decals", function (decals) {
 		vault = decals;
 	}, find("decal_vault"));
 
@@ -392,13 +392,12 @@ function DecalFactory (Vault, Picker) {
 		},
 		get SVG () {
 			var defs = XML.SVGNode("defs", {id: "Decals"});
-			var ch = find("decal_vault").children;
+			var ch = vault.children;
 			var i = 0;
 			while (i < ch.length) {
 				var id = ch[i].id;
 				if (count[id] >= 1) {
 					var n = ch[i].cloneNode(true);
-					n.removeAttribute("serif:id");
 					defs.appendChild(n);
 				}
 				i++;
@@ -412,6 +411,10 @@ function DecalFactory (Vault, Picker) {
 		custom: function (data, name, parent) {
 			var id = makeName(name, false) + "__cd";
 			var display = makeName(name, true);
+			var ch = vault.children;
+			for (var i = 0; i < ch.length; i++)
+				if (ch[i].id == id)
+					return false;
 
 			var button = XML.DOMNode("button", {class: "type_button"}, customs_menu);
 			var svg = XML.SVGNode("svg", {viewBox: "-15 -15 130 130", class: "preview_icon"}, button);
