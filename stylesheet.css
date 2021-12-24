@@ -310,6 +310,7 @@ COLOR PICKER
 	margin: -0.5em;
 	margin-bottom: 0;
 	line-height: 2em;
+	text-align: center;
 }
 
 .palette_icon {
@@ -357,12 +358,12 @@ COLOR PICKER
 .picker_selector {
 	position: absolute;
 	-webkit-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	outline: 2px solid white;
+	border: 2px solid white;
 	border-radius: 50%;
-	height: 0.75em;
-	width: 0.75em;
+	height: 1em;
+	width: 1em;
+	box-sizing: border-box;
 }
 
 /*
@@ -665,6 +666,7 @@ footer > * {
 	background: none;
 	border: none;
 	cursor: pointer;
+	vertical-align: top;
 }
 
 .type_button input {
@@ -848,6 +850,7 @@ footer > * {
 	font-size: smaller;
 	font-family: Arial, sans-serif;
 	white-space: nowrap;
+	color: var(--highlight);
 }
 
 .checkbox_list {

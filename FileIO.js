@@ -96,8 +96,8 @@ function Uploader (queryString, D, History) {
 
 		reset(true);
 
-		var ds = svg.getElementById("Decals")
-		if (ds) {
+		var ds = svg.children[2];
+		if (ds.id == "Decals") {
 			var ch = ds.children;
 			for (var i = 0; i < ch.length; i++) {
 				if (ch[i].id.endsWith("__cd")) {
@@ -238,7 +238,6 @@ function Downloader (Decals) {
 	}
 
 	function svg2img(svg, width, height) {
-		svg = svg.cloneNode(true);
 		svg.setAttribute("width", width || 1920);
 		svg.setAttribute("height", height || 1080);
 		var str = xml.serializeToString(svg);
@@ -250,7 +249,7 @@ function Downloader (Decals) {
 		canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 		img.onload = function () {
 			/* Background Image */
-			if (this.width > 1280) {
+			if (this.width >= 1280) {
 				canvas.width = this.width;
 				canvas.height = this.height;
 			} else {
@@ -260,9 +259,9 @@ function Downloader (Decals) {
 			canvasCtx.drawImage(this, 0, 0, canvas.width, canvas.height);
 			/* Logo */
 			this.onload = function () {
-				this.width = Math.round(canvas.width / 3);
-				this.height = Math.round(canvas.width / 18);
-				canvasCtx.drawImage(this, 0, 0);
+				var width = Math.round(canvas.width / 3);
+				var height = Math.round(canvas.width / 18);
+				canvasCtx.drawImage(this, 0, 0, width, height);
 			};
 			this.src = "images/Logo.svg";
 		};
@@ -283,10 +282,11 @@ function Downloader (Decals) {
 			a.addEventListener("click", function() {
 				if (!isSetUp) return;
 				setTimeout(function() {
+					prepareCanvas(bckImgURI);
 					URL.revokeObjectURL(blobURL)
 					isSetUp = false;
 					a.href = "";
-				}, 500);
+				}, 1000);
 			});
 			a.type = type;
 			if (type === "image/svg+xml") {
@@ -308,10 +308,8 @@ function Downloader (Decals) {
 					a.click();
 				}
 				a.addEventListener("click", function (event) {
-					if (isSetUp) {
-						prepareCanvas(bckImgURI);
+					if (isSetUp)
 						return true;
-					}
 					event.preventDefault();
 					img.onload = function () {
 						canvasCtx.drawImage(this, 0, 0);

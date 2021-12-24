@@ -131,10 +131,6 @@ function PickerFactory (history) {
 		var ch = wrapper.children;
 		var colors = ["#F00", "#0085FF", "#FFD600", "#08CB33", "#8B572A", "#A3A3A3", "#000", "#fff"];
 
-		wrapper.addEventListener("click", function (event) {
-			event.stopPropagation();
-		});
-
 		var timer;
 		var pals = wrapper.getElementsByClassName("palette_icon");
 		function save (event) {
@@ -172,9 +168,9 @@ function PickerFactory (history) {
 		var colorSelector = spectrum.firstElementChild;
 
 		var editor = ch[3];
-		on(editor, "input", function() { var s = this.value; _setColor(s.trim(), true); });
-		var Okay = ch[4];
-		on(Okay, "click", function(event) { DOM.parent = null; DOM.display(); });
+		on(editor, "input", function() { _setColor(this.value, true); });
+		on(ch[4], "click", function() { DOM.parent = null; DOM.display(); }); // "Okay"
+		on(wrapper, "mousedown", function (event) {event.preventDefault();});
 
 		setupDragAndClick(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });
 		setupDragAndClick(spectrum, function(s, v) { var c = color.hsv; c[1] = s; c[2] = 1-v; return _setColor(c)});
@@ -224,13 +220,15 @@ function PickerFactory (history) {
 		}
 	}
 
-	document.addEventListener("mousedown", function () {
+	on(document, "mousedown", function (event) {
+		if (event.defaultPrevented)
+			return;
 		DOM.parent = null;
 	});
-	document.addEventListener("click", function () {
+	on(document, "click", function () {
 		DOM.display();
 	});
-	window.addEventListener("resize", function () {
+	on(window, "resize", function () {
 		DOM.display();
 	});
 
@@ -278,7 +276,7 @@ function PickerFactory (history) {
 	var color = new Color();
 	var DOM = new PickerDOM();
 	var onChange = null;
-	this.attach = function (button, colorText, SVGNode, def_val) {
+	this.attach = function (button, parent, colorText, SVGNode, def_val) {
 		function input (hex) {
 			button.style.backgroundColor = hex;
 			SVGNode.setAttribute("fill", hex);
@@ -289,8 +287,6 @@ function PickerFactory (history) {
 				colors[button.id] = hex;
 		}
 		on(button, "click", function(event) {
-			if (event.defaultPrevented)
-				return;
 			onChange = input;
 
 			var oldValue = this.style.backgroundColor;
@@ -299,7 +295,7 @@ function PickerFactory (history) {
 			latestChange.newValue = latestChange.oldValue;
 
 			if (showPicker)
-				DOM.parent = this;
+				DOM.parent = parent;
 			else
 				DOM.parent = null;
 		});
@@ -312,20 +308,20 @@ function PickerFactory (history) {
 		_setColor(def);
 	}
 	this.build = function (target, parent, kwargs) {
-		var label = XML.DOMNode("label", {class: "color_wrapper"}, parent);
+		var span = XML.DOMNode("span", {class: "color_wrapper"}, parent);
 
 		var buttonID = target.id + "Color";
-		var b = XML.DOMNode("button", {class: "color_picker", id: buttonID}, label);
+		var b = XML.DOMNode("button", {class: "color_picker", id: buttonID}, span);
 
-		var p = XML.DOMNode("span", {class: "soft_text no_collapse"}, label);
-		p.innerText = kwargs.text;
-		var c = XML.DOMNode("p", {class: "detail no_collapse"}, label);
+		var label = XML.DOMNode("label", {class: "soft_text no_collapse", for: buttonID}, span);
+		label.innerText = kwargs.text;
+		var p = XML.DOMNode("p", {class: "detail no_collapse"}, label);
 
 		if (kwargs.disabled) {
 			b.disabled = true;
-			c.innerText = "No colors available";
+			p.innerText = "No colors available";
 		} else {
-			this.attach(b, c, target, kwargs["default"]);
+			this.attach(b, span, p, target, kwargs["default"]);
 		}
 		return b;
 	}
