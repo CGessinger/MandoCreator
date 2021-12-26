@@ -320,6 +320,9 @@ function PickerFactory (history) {
 		if (kwargs.disabled) {
 			b.disabled = true;
 			p.innerText = "No colors available";
+			target.addEventListener("click", function() {
+				span.click();
+			});
 		} else {
 			this.attach(b, span, p, target, kwargs["default"]);
 		}

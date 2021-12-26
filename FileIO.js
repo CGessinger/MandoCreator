@@ -189,6 +189,7 @@ function Uploader (queryString, D, History) {
 function Downloader (Decals) {
 	var xml = new XMLSerializer();
 	var img = new Image();
+	img.decoding = "sync";
 	var reset = find("reset_wrapper");
 	var canvas = find("canvas");
 	var canvasCtx = canvas.getContext('2d');
@@ -222,26 +223,25 @@ function Downloader (Decals) {
 		return svg;
 	}
 
-	function SVGFromEditor () {
-		var SVG = find("main").lastElementChild;
-		var copy = SVG.cloneNode(true);
-		var body = copy.lastElementChild;
+	function SVGFromEditor (width, height) {
+		var svg = find("main").lastElementChild;
+		svg =  svg.cloneNode(true);
+		var body = svg.lastElementChild;
+		prepareForExport(body);
 
 		var decals = Decals.SVG;
-		copy.insertBefore(decals, body);
+		svg.insertBefore(decals, body);
 
-		var meta = XML.SVGNode("metadata", {}, copy);
+		var meta = XML.SVGNode("metadata", {}, svg);
 		meta.innerHTML = "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#' xmlns:dc='http://purl.org/dc/elements/1.1/'><rdf:Description><dc:creator>MandoCreator</dc:creator><dc:publisher>https://www.mandocreator.com</dc:publisher><dc:description>Your Beskar'gam - created by MandoCreator</dc:description><dc:format>image/svg+xml</dc:format><dc:type>Image</dc:type><dc:title>MandoCreator - Ner Berskar'gam</dc:title><dc:date>" + (new Date).toISOString() + "</dc:date></rdf:Description></rdf:RDF>";
-		copy.insertBefore(meta, body);
+		svg.insertBefore(meta, body);
 
-		return prepareForExport(copy);
-	}
+		svg.setAttribute("width", width);
+		svg.setAttribute("height", height);
+		svg.style.height = "";
 
-	function svg2img(svg, width, height) {
-		svg.setAttribute("width", width || 1920);
-		svg.setAttribute("height", height || 1080);
 		var str = xml.serializeToString(svg);
-		return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(str);
+		return str.replace(/\n\s*\n/g, "");
 	}
 
 	function prepareCanvas (href) {
@@ -279,7 +279,7 @@ function Downloader (Decals) {
 		attach: function (a, type) {
 			var blobURL;
 			var isSetUp = false;
-			a.addEventListener("click", function() {
+			a.addEventListener("click", function(event) {
 				if (!isSetUp) return;
 				setTimeout(function() {
 					prepareCanvas(bckImgURI);
@@ -292,10 +292,8 @@ function Downloader (Decals) {
 			if (type === "image/svg+xml") {
 				var self = this;
 				a.addEventListener("click", function () {
-					var svg = SVGFromEditor();
-					var str = xml.serializeToString(svg);
-					var noEmptyLines = str.replace(/\n\s*\n/g,"");
-					var document = "<?xml version='1.0' encoding='UTF-8'?>" + noEmptyLines;
+					var str = SVGFromEditor(170, 300);
+					var document = "<?xml version='1.0' encoding='UTF-8'?>\n" + str;
 					var blob = new Blob([document], {type: "image/svg+xml;charset=utf-8"});
 					blobURL = URL.createObjectURL(blob);
 					this.href = blobURL;
@@ -315,7 +313,8 @@ function Downloader (Decals) {
 						canvasCtx.drawImage(this, 0, 0);
 						canvas.toBlob(toURL, "image/jpeg");
 					}
-					img.src = svg2img(SVGFromEditor(), canvas.width, canvas.height);
+					var s = SVGFromEditor(canvas.width, canvas.height);
+					img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
 				});
 			}
 		}

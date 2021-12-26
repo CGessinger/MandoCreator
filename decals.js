@@ -369,9 +369,14 @@ function DecalFactory (Vault, Picker) {
 	}
 
 	function makeName (str, display) {
-		str = str.split(".", 1)[0];
-		if (display)
-			return str.replaceAll("-", " ");
+		str = str
+			.slice(0, 15)
+			.split(".", 1)[0];
+		if (display) {
+			return str
+				.replaceAll("-", " ")
+				.split("_", 1)[0];
+		}
 		return btoa(str);
 	}
 
@@ -392,15 +397,11 @@ function DecalFactory (Vault, Picker) {
 		},
 		get SVG () {
 			var defs = XML.SVGNode("defs", {id: "Decals"});
-			var ch = vault.children;
-			var i = 0;
-			while (i < ch.length) {
-				var id = ch[i].id;
-				if (count[id] >= 1) {
-					var n = ch[i].cloneNode(true);
-					defs.appendChild(n);
-				}
-				i++;
+			for (var n in count) {
+				if (count[n] < 1)
+					continue;
+				var d = vault.getElementById(n);
+				defs.appendChild(d.cloneNode(true));
 			}
 			return defs;
 		},
