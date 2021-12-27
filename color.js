@@ -169,8 +169,7 @@ function PickerFactory (history) {
 
 		var editor = ch[3];
 		on(editor, "input", function() { _setColor(this.value, true); });
-		on(ch[4], "click", function() { DOM.parent = null; DOM.display(); }); // "Okay"
-		on(wrapper, "mousedown", function (event) {event.preventDefault();});
+		on(ch[4], "click", function() { DOM.parent = null; update_display(); }); // "Okay"
 
 		setupDragAndClick(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });
 		setupDragAndClick(spectrum, function(s, v) { var c = color.hsv; c[1] = s; c[2] = 1-v; return _setColor(c)});
@@ -179,6 +178,35 @@ function PickerFactory (history) {
 			t.style[key] = 100 * f + "%";
 		}
 		var _parent = null;
+		function update_display () {
+			if (_parent == null) {
+				document.body.appendChild(wrapper); /* Move it somewhere else! */
+				wrapper.style = "display:none";
+				return;
+			} else if (_parent !== wrapper.parentNode) {
+				_parent.appendChild(wrapper);
+			}
+			wrapper.style = "";
+			var rect = wrapper.getBoundingClientRect();
+			if (rect.bottom > window.innerHeight)
+				wrapper.style.bottom = "0px";
+			if (rect.left < 0)
+				wrapper.style.left = -rect.right + "px";
+		}
+		on(wrapper, "mousedown", function() {
+			this.cursor = true;
+		});
+		on(document, "mousedown", function () {
+			if (!("cursor" in wrapper) )
+				DOM.parent = null;
+			delete wrapper.cursor;
+		});
+		on(document, "click", function() {
+			update_display();
+		});
+		on(window, "resize", function() {
+			update_display();
+		});
 		return {
 			update: function (fromEditor) {
 				var hsvColor = color.hsv;
@@ -202,35 +230,8 @@ function PickerFactory (history) {
 					cache();
 				}
 			},
-			display: function () {
-				if (_parent == null) {
-					document.body.appendChild(wrapper); /* Move it somewhere else! */
-					wrapper.style = "display:none";
-					return;
-				} else if (_parent !== wrapper.parentNode) {
-					_parent.appendChild(wrapper);
-				}
-				wrapper.style = "";
-				var rect = wrapper.getBoundingClientRect();
-				if (rect.bottom > window.innerHeight)
-					wrapper.style.bottom = "0px";
-				if (rect.left < 0)
-					wrapper.style.left = -rect.right + "px";
-			}
 		}
 	}
-
-	on(document, "mousedown", function (event) {
-		if (event.defaultPrevented)
-			return;
-		DOM.parent = null;
-	});
-	on(document, "click", function () {
-		DOM.display();
-	});
-	on(window, "resize", function () {
-		DOM.display();
-	});
 
 	function parseColorString (s) {
 		if (/[^#A-Fa-f0-9]/.test(s)) {
@@ -289,8 +290,8 @@ function PickerFactory (history) {
 		on(button, "click", function(event) {
 			onChange = input;
 
-			var oldValue = this.style.backgroundColor;
-			latestChange = history.format("color", oldValue, "", button.id);
+			var oldValue = colors[this.id] || "#FFFFFF";
+			latestChange = history.format("color", oldValue, "", this.id);
 			_setColor(oldValue);
 			latestChange.newValue = latestChange.oldValue;
 

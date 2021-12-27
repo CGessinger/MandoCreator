@@ -104,9 +104,9 @@ function BuildManager (History, Picker, Decals) {
 					continue;
 				switch (node.getAttribute("class")) {
 					case "color_picker":
-						newValue = node.style.backgroundColor;
-						c = History.format("color", mirrorImage.style.backgroundColor, newValue, mirrorImageName)
-						mirrorImage.style.backgroundColor = newValue;
+						newValue = colors[node.id] || "#FFFFFF";
+						c = History.format("color", colors[mirrorImageName] || "#FFFFFF", newValue, mirrorImageName)
+						colors[mirrorImageName] = newValue;
 						mirrorImage.click();
 						break;
 					case "component_select":
