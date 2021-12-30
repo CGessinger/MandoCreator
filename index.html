@@ -8,10 +8,10 @@
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-182105390-1"></script>
 		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){if(window.location.hostname!=="mandocreator.com")return;dataLayer.push(arguments);}
-		  gtag('js', new Date());
-		  gtag('config', 'UA-182105390-1');
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){if(window.location.hostname!=="mandocreator.com")return;dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-182105390-1');
 		</script>
 		<!-- End Google Analytics -->
 		<meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -73,7 +73,7 @@
 		}
 		</script>
 	</head>
-	<body onload="onload()">
+	<body style="background-image:url(images/Background.svg)">
 		<div class="picker_wrapper" id="picker" style="visibility: hidden;">
 			<div id="info"> to save a color</div>
 			<div id="picker_hue">
@@ -84,18 +84,18 @@
 			</div>
 			<input type="text" id="picker_editor" aria_label="Type a color name or hexadecimal code" />
 			<button id="picker_done">Okay</button>
-			<button class="palette_icon"></button> <button class="palette_icon"></button>
-			<button class="palette_icon"></button> <button class="palette_icon"></button>
-			<button class="palette_icon"></button> <button class="palette_icon"></button>
-			<button class="palette_icon"></button> <button class="palette_icon"></button>
+			<button class="palette_icon"></button><button class="palette_icon"></button>
+			<button class="palette_icon"></button><button class="palette_icon"></button>
+			<button class="palette_icon"></button><button class="palette_icon"></button>
+			<button class="palette_icon"></button><button class="palette_icon"></button>
 			<span class="icon-keyboard_arrow_down" style="grid-column:1;grid-row:1;font-size:smaller"></span>
 		</div>
 		<div style="display:none">
 			<canvas id="canvas" height="1080" width="1920"></canvas>
-			<audio id="kote" autoplay></audio>
+			<audio id="kote" onloadstart="this.volume=0.15" autoplay></audio>
 			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" id="svg_vault">
 			<g id="item_vault"></g>
-			<g id="decal_vault"></g>
+			<g id="decal_vault"><g id="MandoCreator"></g><g serif:id="Mytho Skull" id="Mytho-Skull"></g><path serif:id="Jaig Eyes" id="Jaig-Eyes"/><path id="Deathwatch"/><path serif:id="Beskar'ta" id="Beskar-ta"/><path serif:id="Beskar'ta (Hollow)" id="Beskar-ta--Hollow-"/><path serif:id="Stripe 1" id="Stripe-1"/><path serif:id="Stripe 2" id="Stripe-2"/><path serif:id="Stripe 3" id="Stripe-3"/><circle id="Circle" cx="50" cy="50" r="48.32"/><path serif:id="Circle (Hollow)" id="Circle--Hollow-"/><path id="Square"/><path serif:id="Square (Hollow)" id="Square--Hollow-"/><path id="Triangle"/><path serif:id="Triangle (Hollow)" id="Triangle--Hollow-"/><path serif:id="Star (3)" id="Star--3-"/><path serif:id="Star (4)" id="Star--4-"/><path serif:id="Star (5)" id="Star--5-"/><path serif:id="Star (6)" id="Star--6-"/><path serif:id="Star (7)" id="Star--7-"/><path serif:id="Star (8)" id="Star--8-"/><path serif:id="Mando'a 1" id="Mando-a-1"/><g serif:id="Mando'a 2" id="Mando-a-2"></g><path serif:id="Claw Marks" id="Claw-Marks"/><g id="Scratches"></g><g serif:id="Medium Weathering" id="Medium-Weathering"></g><g serif:id="Heavy Weathering" id="Heavy-Weathering"></g><g id="Mandoa-Text"><path id="A"/><path id="B"/><path id="C"/><path id="D"/><path id="E"/><path id="F"/><path id="G"/><path id="H"/><path id="I"/><path id="J"/><path id="K"/><path id="L"/><path id="M"/><path id="N"/><path id="O"/><path id="P"/><path id="Q"/><path id="R"/><path id="S"/><path id="T"/><path id="U"/><path id="V"/><path id="W"/><path id="X"/><path id="Y"/><path id="Z"/><path id="Beten"/></g><g serif:id="Jev Eyes" id="Jev-Eyes"></g><path id="Rebels"/><path id="Empire"/><path serif:id="Black Sun" id="Black-Sun"/><path id="Crusader"/><path serif:id="True Mandalorians" id="True-Mandalorians"/><g id="Fett"></g><g id="Mudhorn"></g><path serif:id="Wampa Paw" id="Wampa-Paw"/><path id="Starbird"/></g>
 			<g id="brace" class="controls" >
 				<g style="fill:white;stroke:white;stroke-width:0.5px;filter:drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)">
 					<rect width="100" height="100" rx="1" x="-50" y="-50" style="fill:none;stroke-width:1.5px" vector-effect="non-scaling-stroke"/>
@@ -104,7 +104,7 @@
 					<circle r="3.5" cx="50" cy="50" />
 				</g>
 				<g style="fill:transparent;stroke:none;pointer-events:visible">
-					<rect width="100" height="100" rx="1" x="-50" y="-50"  style="cursor:move" />
+					<rect width="100" height="100" rx="1" x="-50" y="-50" style="cursor:move" />
 					<rect width="40" height="40" x="-20" y="-75" style="cursor:grab"/>
 					<rect width="40" height="40" x="30" y="30" style="cursor:nwse-resize"/>
 				</g>
@@ -192,7 +192,7 @@
 					><span class="zoom_icon" onclick="Zoom.in()">&#xe917;</span>
 			</div>
 		</footer>
-		<div id="armor_menu" class="menu_column menu_collapsed">
+		<div id="armor_menu" class="menu_column">
 			<button id="menu_toggle" class="menu_toggle" title="Toggle Controls Menu">&#xE900;</button>
 			<div id="HelmetOptions" class="folder">
 				<div class="no_collapse">
@@ -654,7 +654,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="decals_menu" class="menu_column menu_collapsed folder" data-nosnippet="">
+		<div id="decals_menu" class="menu_column folder" data-nosnippet="">
 			<button id="decals_toggle" class="menu_toggle" title="Toggle Decals Menu">&#xE900;</button>
 			<button class="slide_toggle no_collapse" onclick="Decals.Category=null">
 				<p class="soft_text">Detailing</p>
@@ -665,207 +665,207 @@
 				<div id="Decal_Previews" class="styles_preview">
 					<details open>
 						<summary class="summary">Sigils and Emblems</summary>
-						<button class="type_button" data-name="Mytho-Skull">
+						<button class="type_button" onclick="Decals.Add('Mytho-Skull')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Mytho-Skull"/></svg>
 							Mythosaur
-						</button><button class="type_button" data-name="Beskar-ta">
+						</button><button class="type_button" onclick="Decals.Add('Beskar-ta')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Beskar-ta"/></svg>
 							Beskar'ta
-						</button><button class="type_button" data-name="Beskar-ta--Hollow-">
+						</button><button class="type_button" onclick="Decals.Add('Beskar-ta--Hollow-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Beskar-ta--Hollow-"/></svg>
 							Beskar'ta (2)
-						</button><button class="type_button" data-name="Fett">
+						</button><button class="type_button" onclick="Decals.Add('Fett')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Fett"/></svg>
 							Fett
-						</button><button class="type_button" data-name="Mudhorn">
+						</button><button class="type_button" onclick="Decals.Add('Mudhorn')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Mudhorn"/></svg>
 							Mudhorn
-						</button><button class="type_button" data-name="Starbird">
+						</button><button class="type_button" onclick="Decals.Add('Starbird')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Starbird"/></svg>
 							Starbird
-						</button><button class="type_button" data-name="True-Mandalorians">
+						</button><button class="type_button" onclick="Decals.Add('True-Mandalorians')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#True-Mandalorians"/></svg>
 							True Mando'ade
-						</button><button class="type_button" data-name="Crusader">
+						</button><button class="type_button" onclick="Decals.Add('Crusader')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Crusader"/></svg>
 							Crusaders
-						</button><button class="type_button" data-name="Deathwatch">
+						</button><button class="type_button" onclick="Decals.Add('Deathwatch')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Deathwatch"/></svg>
 							Deathwatch
-						</button><button class="type_button" data-name="Jaig-Eyes">
+						</button><button class="type_button" onclick="Decals.Add('Jaig-Eyes')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Jaig-Eyes"/></svg>
 							Jaig Eyes
-						</button><button class="type_button" data-name="Rebels">
+						</button><button class="type_button" onclick="Decals.Add('Rebels')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Rebels"/></svg>
 							Rebels
-						</button><button class="type_button" data-name="Empire">
+						</button><button class="type_button" onclick="Decals.Add('Empire')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Empire"/></svg>
 							Empire
-						</button><button class="type_button" data-name="Black-Sun">
+						</button><button class="type_button" onclick="Decals.Add('Black-Sun')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Black-Sun"/></svg>
 							Black Sun
-						</button><button class="type_button" data-name="Jev-Eyes">
+						</button><button class="type_button" onclick="Decals.Add('Jev-Eyes')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Jev-Eyes"/></svg>
 							Jev Eyes
-						</button><button class="type_button" data-name="MandoCreator">
+						</button><button class="type_button" onclick="Decals.Add('MandoCreator')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#MandoCreator"/></svg>
 							MandoCreator
 						</button>
 					</details>
 					<details open>
 						<summary class="summary">Basic Shapes</summary>
-						<button class="type_button" data-name="Stripe-1">
+						<button class="type_button" onclick="Decals.Add('Stripe-1')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Stripe-1"/></svg>
 							Stripe (1)
-						</button><button class="type_button" data-name="Stripe-2">
+						</button><button class="type_button" onclick="Decals.Add('Stripe-2')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Stripe-2"/></svg>
 							Stripe (2)
-						</button><button class="type_button" data-name="Stripe-3">
+						</button><button class="type_button" onclick="Decals.Add('Stripe-3')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Stripe-3"/></svg>
 							Stripe (3)
-						</button><button class="type_button" data-name="Circle">
+						</button><button class="type_button" onclick="Decals.Add('Circle')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Circle"/></svg>
 							Circle
-						</button><button class="type_button" data-name="Square">
+						</button><button class="type_button" onclick="Decals.Add('Square')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Square"/></svg>
 							Square
-						</button><button class="type_button" data-name="Triangle">
+						</button><button class="type_button" onclick="Decals.Add('Triangle')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Triangle"/></svg>
 							Triangle
-						</button><button class="type_button" data-name="Circle--Hollow-">
+						</button><button class="type_button" onclick="Decals.Add('Circle--Hollow-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Circle--Hollow-"/></svg>
 							Circle 2
-						</button><button class="type_button" data-name="Square--Hollow-">
+						</button><button class="type_button" onclick="Decals.Add('Square--Hollow-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Square--Hollow-"/></svg>
 							Square 2
-						</button><button class="type_button" data-name="Triangle--Hollow-">
+						</button><button class="type_button" onclick="Decals.Add('Triangle--Hollow-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Triangle--Hollow-"/></svg>
 							Triangle 2
-						</button><button class="type_button" data-name="Star--3-">
+						</button><button class="type_button" onclick="Decals.Add('Star--3-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--3-"/></svg>
 							Star (3)
-						</button><button class="type_button" data-name="Star--4-">
+						</button><button class="type_button" onclick="Decals.Add('Star--4-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--4-"/></svg>
 							Star (4)
-						</button><button class="type_button" data-name="Star--5-">
+						</button><button class="type_button" onclick="Decals.Add('Star--5-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--5-"/></svg>
 							Star (5)
-						</button><button class="type_button" data-name="Star--6-">
+						</button><button class="type_button" onclick="Decals.Add('Star--6-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--6-"/></svg>
 							Star (6)
-						</button><button class="type_button" data-name="Star--7-">
+						</button><button class="type_button" onclick="Decals.Add('Star--7-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--7-"/></svg>
 							Star (7)
-						</button><button class="type_button" data-name="Star--8-">
+						</button><button class="type_button" onclick="Decals.Add('Star--8-')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--8-"/></svg>
 							Star (8)
 						</button>
 					</details>
 					<details open>
 						<summary class="summary">Text</summary>
-						<button class="type_button" data-name="A">
+						<button class="type_button" onclick="Decals.Add('A')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#A"/></svg>
 							A
-						</button><button class="type_button" data-name="B">
+						</button><button class="type_button" onclick="Decals.Add('B')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#B"/></svg>
 							B
-						</button><button class="type_button" data-name="C">
+						</button><button class="type_button" onclick="Decals.Add('C')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#C"/></svg>
 							C
-						</button><button class="type_button" data-name="D">
+						</button><button class="type_button" onclick="Decals.Add('D')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#D"/></svg>
 							D
-						</button><button class="type_button" data-name="E">
+						</button><button class="type_button" onclick="Decals.Add('E')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#E"/></svg>
 							E
-						</button><button class="type_button" data-name="F">
+						</button><button class="type_button" onclick="Decals.Add('F')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#F"/></svg>
 							F
-						</button><button class="type_button" data-name="G">
+						</button><button class="type_button" onclick="Decals.Add('G')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#G"/></svg>
 							G
-						</button><button class="type_button" data-name="H">
+						</button><button class="type_button" onclick="Decals.Add('H')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#H"/></svg>
 							H
-						</button><button class="type_button" data-name="I">
+						</button><button class="type_button" onclick="Decals.Add('I')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#I"/></svg>
 							I
-						</button><button class="type_button" data-name="J">
+						</button><button class="type_button" onclick="Decals.Add('J')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#J"/></svg>
 							J
-						</button><button class="type_button" data-name="K">
+						</button><button class="type_button" onclick="Decals.Add('K')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#K"/></svg>
 							K
-						</button><button class="type_button" data-name="L">
+						</button><button class="type_button" onclick="Decals.Add('L')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#L"/></svg>
 							L
-						</button><button class="type_button" data-name="M">
+						</button><button class="type_button" onclick="Decals.Add('M')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#M"/></svg>
 							M
-						</button><button class="type_button" data-name="N">
+						</button><button class="type_button" onclick="Decals.Add('N')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#N"/></svg>
 							N
-						</button><button class="type_button" data-name="O">
+						</button><button class="type_button" onclick="Decals.Add('O')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#O"/></svg>
 							O
-						</button><button class="type_button" data-name="P">
+						</button><button class="type_button" onclick="Decals.Add('P')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#P"/></svg>
 							P
-						</button><button class="type_button" data-name="Q">
+						</button><button class="type_button" onclick="Decals.Add('Q')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Q"/></svg>
 							Q
-						</button><button class="type_button" data-name="R">
+						</button><button class="type_button" onclick="Decals.Add('R')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#R"/></svg>
 							R
-						</button><button class="type_button" data-name="S">
+						</button><button class="type_button" onclick="Decals.Add('S')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#S"/></svg>
 							S
-						</button><button class="type_button" data-name="T">
+						</button><button class="type_button" onclick="Decals.Add('T')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#T"/></svg>
 							T
-						</button><button class="type_button" data-name="U">
+						</button><button class="type_button" onclick="Decals.Add('U')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#U"/></svg>
 							U
-						</button><button class="type_button" data-name="V">
+						</button><button class="type_button" onclick="Decals.Add('V')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#V"/></svg>
 							V
-						</button><button class="type_button" data-name="W">
+						</button><button class="type_button" onclick="Decals.Add('W')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#W"/></svg>
 							W
-						</button><button class="type_button" data-name="X">
+						</button><button class="type_button" onclick="Decals.Add('X')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#X"/></svg>
 							X
-						</button><button class="type_button" data-name="Y">
+						</button><button class="type_button" onclick="Decals.Add('Y')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Y"/></svg>
 							Y
-						</button><button class="type_button" data-name="Z">
+						</button><button class="type_button" onclick="Decals.Add('Z')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Z"/></svg>
 							Z
-						</button><button class="type_button" data-name="Beten">
+						</button><button class="type_button" onclick="Decals.Add('Beten')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Beten"/></svg>
 							Beten
-						</button><button class="type_button" data-name="Mando-a-1">
+						</button><button class="type_button" onclick="Decals.Add('Mando-a-1')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Mando-a-1"/></svg>
 							Mando'a (1)
-						</button><button class="type_button" data-name="Mando-a-2">
+						</button><button class="type_button" onclick="Decals.Add('Mando-a-2')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Mando-a-2"/></svg>
 							Mando'a (2)
 					</details>
 					<details open>
 						<summary class="summary">Weathering</summary>
-						<button class="type_button" data-name="Claw-Marks">
+						<button class="type_button" onclick="Decals.Add('Claw-Marks')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Claw-Marks"/></svg>
 							Claw-Marks
-						</button><button class="type_button" data-name="Scratches">
+						</button><button class="type_button" onclick="Decals.Add('Scratches')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Scratches"/></svg>
 							Scratches
-						</button><button class="type_button" data-name="Medium-Weathering">
+						</button><button class="type_button" onclick="Decals.Add('Medium-Weathering')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Medium-Weathering"/></svg>
 							Weathering (M)
-						</button><button class="type_button" data-name="Heavy-Weathering">
+						</button><button class="type_button" onclick="Decals.Add('Heavy-Weathering')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Heavy-Weathering"/></svg>
 							Weathering (H)
-						</button><button class="type_button" data-name="Wampa-Paw">
+						</button><button class="type_button" onclick="Decals.Add('Wampa-Paw')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Wampa-Paw"/></svg>
 							Wampa Paw
 						</button>
@@ -919,5 +919,23 @@
 		<script src="FileIO.js"></script>
 		<script src="decals.js"></script>
 		<script src="editor.js"></script>
+		<script>
+		var nsw = navigator.serviceWorker;
+		if (nsw) {
+			nsw.onmessage = function (event) {
+				var v = localStorage.getItem("version");
+				if (v == event.data)
+					return;
+				localStorage.setItem("version", event.data);
+				var form = find("reload");
+				form.style.display = "";
+			};
+			nsw.register("sw.js");
+		}
+		if (document.readyState === "loading")
+			document.addEventListener("DOMContentLoaded", MandoCreator)
+		else
+			MandoCreator()
+		</script>
 	</body>
 </html>

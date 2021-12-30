@@ -1,17 +1,13 @@
 'use strict';
 
 var showPicker = true;
-function PickerFactory (history) {
+function PickerFactory () {
 	var latestChange = {};
 
 	function cache() {
 		if (!colors)
 			return;
 		localStorage.setItem("colors", JSON.stringify(colors));
-	}
-
-	function on(elem, event, func) {
-		elem.addEventListener(event, func);
 	}
 
 	function setupDragAndClick(o, done) {
@@ -35,16 +31,16 @@ function PickerFactory (history) {
 			done(clamp(s, 0, 1), clamp(l, 0, 1));
 		}
 
-		on(o, "mousedown", function (event) {
+		o.addEventListener("mousedown", function (event) {
 			rect = o.getBoundingClientRect();
 			touch(event);
 		});
-		on(o, "touchstart", function (event) {
+		o.addEventListener("touchstart", function (event) {
 			rect = o.getBoundingClientRect();
 			touch(event);
 		});
-		on(o, "mousemove", touch);
-		on(o, "touchmove", touch);
+		o.addEventListener("mousemove", touch);
+		o.addEventListener("touchmove", touch);
 	}
 
 	function Color () {
@@ -157,10 +153,10 @@ function PickerFactory (history) {
 				style: "background-color:" + colors[i],
 				title: "Right-click to save the current color"
 			});
-			on(pal, "click", function() { _setColor(this.style.backgroundColor); });
-			on(pal, "contextmenu", save);
-			on(pal, "touchstart", startTimer);
-			on(pal, "touchend", stopTimer);
+			pal.addEventListener("click", function() { _setColor(this.style.backgroundColor); });
+			pal.addEventListener("contextmenu", save);
+			pal.addEventListener("touchstart", startTimer);
+			pal.addEventListener("touchend", stopTimer);
 		}
 
 		var hue = ch[1], spectrum = ch[2];
@@ -168,8 +164,8 @@ function PickerFactory (history) {
 		var colorSelector = spectrum.firstElementChild;
 
 		var editor = ch[3];
-		on(editor, "input", function() { _setColor(this.value, true); });
-		on(ch[4], "click", function() { DOM.parent = null; update_display(); }); // "Okay"
+		editor.addEventListener("input", function() { _setColor(this.value, true); });
+		ch[4].addEventListener("click", function() { DOM.parent = null; update_display(); }); // "Okay"
 
 		setupDragAndClick(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });
 		setupDragAndClick(spectrum, function(s, v) { var c = color.hsv; c[1] = s; c[2] = 1-v; return _setColor(c)});
@@ -193,18 +189,18 @@ function PickerFactory (history) {
 			if (rect.left < 0)
 				wrapper.style.left = -rect.right + "px";
 		}
-		on(wrapper, "mousedown", function() {
+		wrapper.addEventListener("mousedown", function() {
 			this.cursor = true;
 		});
-		on(document, "mousedown", function () {
+		document.addEventListener("mousedown", function () {
 			if (!("cursor" in wrapper) )
 				DOM.parent = null;
 			delete wrapper.cursor;
 		});
-		on(document, "click", function() {
+		document.addEventListener("click", function() {
 			update_display();
 		});
-		on(window, "resize", function() {
+		window.addEventListener("resize", function() {
 			update_display();
 		});
 		return {
@@ -225,7 +221,7 @@ function PickerFactory (history) {
 					return;
 				_parent = p;
 				if (!p) {
-					history.push(latestChange);
+					History.push(latestChange);
 					latestChange = {};
 					cache();
 				}
@@ -270,13 +266,9 @@ function PickerFactory (history) {
 			return colors[id];
 		if (SVGNode.hasAttribute("fill"))
 			return SVGNode.getAttribute("fill");
-		if (SVGNode.hasAttribute("color"))
-			return SVGNode.getAttribute("color");
 	}
 
-	var color = new Color();
-	var DOM = new PickerDOM();
-	var onChange = null;
+	var color, DOM, onChange;
 	this.attach = function (button, parent, colorText, SVGNode, def_val) {
 		function input (hex) {
 			button.style.backgroundColor = hex;
@@ -287,11 +279,11 @@ function PickerFactory (history) {
 			else
 				colors[button.id] = hex;
 		}
-		on(button, "click", function(event) {
+		button.addEventListener("click", function(event) {
 			onChange = input;
 
-			var oldValue = colors[this.id] || "#FFFFFF";
-			latestChange = history.format("color", oldValue, "", this.id);
+			var oldValue = colors[this.id] || def_val;
+			latestChange = History.format("color", oldValue, "", this.id);
 			_setColor(oldValue);
 			latestChange.newValue = latestChange.oldValue;
 
@@ -305,8 +297,8 @@ function PickerFactory (history) {
 		});
 		var def = getDefaultColor(button.id, SVGNode);
 		if (!def) def = def_val;
-		onChange = input;
-		_setColor(def);
+		if (def != "#FFFFFF")
+			input(def);
 	}
 	this.build = function (target, parent, kwargs) {
 		var span = XML.DOMNode("span", {class: "color_wrapper"}, parent);
@@ -317,6 +309,7 @@ function PickerFactory (history) {
 		var label = XML.DOMNode("label", {class: "soft_text no_collapse", for: buttonID}, span);
 		label.innerText = kwargs.text;
 		var p = XML.DOMNode("p", {class: "detail no_collapse"}, label);
+		p.innerText = "#FFFFFF";
 
 		if (kwargs.disabled) {
 			b.disabled = true;
@@ -328,6 +321,10 @@ function PickerFactory (history) {
 			this.attach(b, span, p, target, kwargs["default"]);
 		}
 		return b;
+	}
+	this.finishUp = function () {
+		color = new Color();
+		DOM = new PickerDOM();
 	}
 	this.cache = cache;
 }
@@ -341,24 +338,34 @@ function HistoryTracker () {
 		if (type == "variant") /* Manual Override */
 			targetID = value + "Radio";
 		var target = find(targetID);
-		if (!target) return false;
+		if (!target) {
+			if (type == "decal") {
+				var bare_name = targetID.match(/(.+)__\d+/)[1];
+				Decals.Add(bare_name, targetID, value);
+			}
+			return;
+		}
 		switch (type) {
 			case "color":
-				target.style.backgroundColor = value;
+				colors[targetID] = value;
 				break;
 			case "variant":
 				target.checked = false;
 				break;
+			case "decal":
+				if (!value) {
+					target = find(targetID + "Delete");
+					break;
+				} else {
+					Decals.Set(target, value);
+					return;
+				}
 			case "select":
 				target.value = value;
 				target.dispatchEvent(new Event("change"));
-				return true;
-			case "decal":
-				Decals.Set(target, value);
-				return true;
+				return;
 		}
 		target.click();
-		return true;
 	}
 
 	this.format = function (type, oldVal, newVal, target) {
@@ -383,8 +390,7 @@ function HistoryTracker () {
 			to = redos;
 			key = "oldValue";
 		}
-		showPicker = false;
-		self.track = false;
+		showPicker = self.track = false;
 		var change = from.pop();
 		if (!change) {
 			showPicker = self.track = true;
@@ -398,8 +404,7 @@ function HistoryTracker () {
 			}
 		}
 		to.push(change);
-		showPicker = true;
-		self.track = true;
+		showPicker = self.track = true;
 	}
 	function isValid (c) {
 		return (!!c) && (!!c.target) && (c.oldValue != c.newValue);
@@ -407,21 +412,15 @@ function HistoryTracker () {
 	this.push = function (C) {
 		if (!self.track || !C)
 			return;
-		var d = [];
-		if (!C.length && isValid(C))
-			d = [C];
-		while (C.length) {
-			var c = C.pop();
-			if (!isValid(c))
-				continue;
-			d.push(c);
+		if (isValid(C)) {
+			changes.push(C);
+		} else if ("filter" in C) {
+			var d = C.filter(isValid);
+			if (d.length == 0)
+				return;
+			else
+				changes.push(d);
 		}
-		if (d.length == 0)
-			return;
-		else if (d.length == 1)
-			changes.push(d[0]);
-		else
-			changes.push(d);
 		redos = [];
 	}
 	this.track = false;

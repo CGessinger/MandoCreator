@@ -17,22 +17,25 @@
 
 		<meta name="keywords" content="MandoCreator,Mando,Creator,Beskar'gam,Armor,Mandalorian,Design,Beskar,Gallery" />
 		<meta name="author" content="Foilrose Studio, Cin Vhetin" />
-		<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
-		<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
-		<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
-		<link rel="manifest" href="../mandocreator.webmanifest" />
-		<link rel="mask-icon" href="../assets/safari-pinned-tab.svg" color="#ab1f1f" />
+		<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
+		<link rel="manifest" href="mandocreator.webmanifest" />
+		<link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#ab1f1f" />
 		<meta name="msapplication-TileColor" content="#b91d47" />
 		<meta name="theme-color" content="#ffffff" />
+		<link rel="prefetch" href="images/Helmets.svg" />
+		<link rel="prefetch" href="images/Female.svg" />
+		<link rel="prefetch" href="images/Male.svg" />
 		<title>MandoCreator Gallery</title>
 		<style>
 			@font-face {
 				font-family: 'icomoon';
-				src: url('../fonts/icomoon.eot');
-				src: url('../fonts/icomoon.eot#iefix') format('embedded-opentype'),
-				     url('../fonts/icomoon.ttf') format('truetype'),
-				     url('../fonts/icomoon.woff') format('woff'),
-				     url('../fonts/icomoon.svg#icomoon') format('svg');
+				src: url('fonts/icomoon.eot');
+				src: url('fonts/icomoon.eot#iefix') format('embedded-opentype'),
+				     url('fonts/icomoon.ttf') format('truetype'),
+				     url('fonts/icomoon.woff') format('woff'),
+				     url('fonts/icomoon.svg#icomoon') format('svg');
 				font-weight: normal;
 				font-style: normal;
 				font-display: block;
@@ -40,7 +43,7 @@
 			@font-face {
 				font-family: 'Raleway';
 				src:	local("Raleway"),
-					url('../fonts/Raleway.ttf') format('truetype');
+					url('fonts/Raleway.ttf') format('truetype');
 				font-weight: normal;
 				font-style: normal;
 				font-display: block;
@@ -52,7 +55,7 @@
 			body {
 				height: 100%;
 				margin: 0;
-				background: #222 url(../images/Background.svg) center / cover no-repeat;
+				background: #222 url(images/Background.svg) center / cover no-repeat;
 				font-family: 'icomoon', 'Raleway', Verdana, sans-serif;
 				color: #DDD;
 			}
@@ -150,56 +153,56 @@
 			var nsw = navigator.serviceWorker;
 			if (!nsw)
 				return;
-			nsw.register("../sw.js");
+			nsw.register("sw.js");
 		}
 	</script>
 	<body onload="loadSW()">
 		<nav>
-			<img width="100%" src="../images/Logo.svg" alt="MandoCreator Logo"/>
+			<img width="100%" src="images/Logo.svg" alt="MandoCreator Logo"/>
 			<button class="red_button" style="padding-left:0.5em">
-				<a class="return" href="../index.html">&#xE90B; Go Back</a>
+				<a class="return" href="index.html">&#xE90B; Go Back</a>
 			</button>
 		</nav>
 		<main id="gallery">
-			<svg viewBox="0 -55 169 300" title="Ara"><use alt="Ara" href="wrapper_male.svg#Ara.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Beskar_Akaan" class="primary"><use alt="Beskar_Akaan" href="./wrapper_male.svg#Beskar_Akaan.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Boba"><use alt="Boba" href="./wrapper_male.svg#Boba.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="BoldOne"><use alt="BoldOne" href="./wrapper_male.svg#BoldOne.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Cardboardalorian"><use alt="Cardboardalorian" href="./wrapper_male.svg#Cardboardalorian.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Commando"><use alt="Commando" href="./wrapper_male.svg#Commando.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Din"><use alt="Din" href="./wrapper_male.svg#Din.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Eao"><use alt="Eao" href="./wrapper_male.svg#Eao.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Freyatos"><use alt="Freyatos" href="./wrapper_male.svg#Freyatos.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Glorious"><use alt="Glorious" href="./wrapper_male.svg#Glorious.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Hunter"><use alt="Hunter" href="./wrapper_male.svg#Hunter.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Iluv-1"><use alt="Iluv-1" href="./wrapper_male.svg#Iluv-1.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Iluv-2"><use alt="Iluv-2" href="./wrapper_male.svg#Iluv-2.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Jango"><use alt="Jango" href="./wrapper_male.svg#Jango.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Krix"><use alt="Krix" href="./wrapper_male.svg#Krix.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Lear"><use alt="Lear" href="./wrapper_male.svg#Lear.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Marine"><use alt="Marine" href="./wrapper_male.svg#Marine.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Maritime"><use alt="Maritime" href="./wrapper_male.svg#Maritime.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="McQ"><use alt="McQ" href="./wrapper_male.svg#McQ.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Miit"><use alt="Miit" href="./wrapper_male.svg#Miit.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Mirshko"><use alt="Mirshko" href="./wrapper_male.svg#Mirshko.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Neo"><use alt="Neo" href="./wrapper_male.svg#Neo.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Nih"><use alt="Nih" href="./wrapper_male.svg#Nih.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Niner"><use alt="Niner" href="./wrapper_male.svg#Niner.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Ornate"><use alt="Ornate" href="./wrapper_male.svg#Ornate.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Pilot-1"><use alt="Pilot-1" href="./wrapper_male.svg#Pilot-1.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Pilot-2"><use alt="Pilot-2" href="./wrapper_male.svg#Pilot-2.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Portal"><use alt="Portal" href="./wrapper_male.svg#Portal.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Prudii"><use alt="Prudii" href="./wrapper_male.svg#Prudii.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Quarrie"><use alt="Quarrie" href="./wrapper_male.svg#Quarrie.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Rae"><use alt="Rae" href="./wrapper_male.svg#Rae.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Razda_Ruur"><use alt="Razda_Ruur" href="./wrapper_male.svg#Razda_Ruur.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Shrek"><use alt="Shrek" href="./wrapper_male.svg#Shrek.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Sr2z"><use alt="Sr2z" href="./wrapper_male.svg#Sr2z.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Teal"><use alt="Teal" href="./wrapper_male.svg#Teal.svg"></use>
-			</svg><svg viewBox="0 -55 169 300" title="Xeno"><use alt="Xeno" href="./wrapper_male.svg#Xeno.svg"></use></svg>
+			<svg viewBox="0 -55 169 300" title="Ara"><use alt="Ara" href="gallery/wrapper_male.svg#Ara.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Beskar_Akaan" class="primary"><use alt="Beskar_Akaan" href="gallery/wrapper_male.svg#Beskar_Akaan.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Boba"><use alt="Boba" href="gallery/wrapper_male.svg#Boba.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="BoldOne"><use alt="BoldOne" href="gallery/wrapper_male.svg#BoldOne.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Cardboardalorian"><use alt="Cardboardalorian" href="gallery/wrapper_male.svg#Cardboardalorian.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Commando"><use alt="Commando" href="gallery/wrapper_male.svg#Commando.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Din"><use alt="Din" href="gallery/wrapper_male.svg#Din.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Eao"><use alt="Eao" href="gallery/wrapper_male.svg#Eao.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Freyatos"><use alt="Freyatos" href="gallery/wrapper_male.svg#Freyatos.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Glorious"><use alt="Glorious" href="gallery/wrapper_male.svg#Glorious.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Hunter"><use alt="Hunter" href="gallery/wrapper_male.svg#Hunter.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Iluv-1"><use alt="Iluv-1" href="gallery/wrapper_male.svg#Iluv-1.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Iluv-2"><use alt="Iluv-2" href="gallery/wrapper_male.svg#Iluv-2.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Jango"><use alt="Jango" href="gallery/wrapper_male.svg#Jango.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Krix"><use alt="Krix" href="gallery/wrapper_male.svg#Krix.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Lear"><use alt="Lear" href="gallery/wrapper_male.svg#Lear.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Marine"><use alt="Marine" href="gallery/wrapper_male.svg#Marine.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Maritime"><use alt="Maritime" href="gallery/wrapper_male.svg#Maritime.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="McQ"><use alt="McQ" href="gallery/wrapper_male.svg#McQ.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Miit"><use alt="Miit" href="gallery/wrapper_male.svg#Miit.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Mirshko"><use alt="Mirshko" href="gallery/wrapper_male.svg#Mirshko.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Neo"><use alt="Neo" href="gallery/wrapper_male.svg#Neo.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Nih"><use alt="Nih" href="gallery/wrapper_male.svg#Nih.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Niner"><use alt="Niner" href="gallery/wrapper_male.svg#Niner.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Ornate"><use alt="Ornate" href="gallery/wrapper_male.svg#Ornate.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Pilot-1"><use alt="Pilot-1" href="gallery/wrapper_male.svg#Pilot-1.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Pilot-2"><use alt="Pilot-2" href="gallery/wrapper_male.svg#Pilot-2.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Portal"><use alt="Portal" href="gallery/wrapper_male.svg#Portal.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Prudii"><use alt="Prudii" href="gallery/wrapper_male.svg#Prudii.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Quarrie"><use alt="Quarrie" href="gallery/wrapper_male.svg#Quarrie.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Rae"><use alt="Rae" href="gallery/wrapper_male.svg#Rae.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Razda_Ruur"><use alt="Razda_Ruur" href="gallery/wrapper_male.svg#Razda_Ruur.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Shrek"><use alt="Shrek" href="gallery/wrapper_male.svg#Shrek.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Sr2z"><use alt="Sr2z" href="gallery/wrapper_male.svg#Sr2z.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Teal"><use alt="Teal" href="gallery/wrapper_male.svg#Teal.svg"></use>
+			</svg><svg viewBox="0 -55 169 300" title="Xeno"><use alt="Xeno" href="gallery/wrapper_male.svg#Xeno.svg"></use></svg>
 		</main>
 		<footer>
-			<form action="../index.html" method="GET">
+			<form action="index.html" method="GET">
 				<input type="text" id="preset" name="preset" style="display:none" />
 				<div>
 					<input type="radio" id="male" class="toggle_sex" name="sex" value="0" checked onchange="Gallery.sex = false"

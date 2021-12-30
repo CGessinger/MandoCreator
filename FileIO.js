@@ -21,19 +21,8 @@ var XML = {
 	}
 }
 
-function Uploader (queryString, D, History) {
-	var readerBck = new FileReader;
-	readerBck.onload = function() {
-		D.Background = {data: this.result, custom: true};
-	}
-	find("background_upload").addEventListener("change", function() {
-		var file = this.files[0];
-		if (!file) return;
-		readerBck.readAsDataURL(file);
-		this.value = "";
-	});
-
-	function parseMando (svg) {
+var Uploader = {
+	parseMando: function (svg) {
 		var iter = document.createNodeIterator(svg, NodeFilter.SHOW_ELEMENT,
 			{ acceptNode: function (node) {
 				if (!node.id)
@@ -87,11 +76,10 @@ function Uploader (queryString, D, History) {
 			}
 		}
 		localStorage.setItem("colors", JSON.stringify(colors));
-	}
-
-	function dissectSVG () {
+	},
+	dissectSVG: function (data) {
 		var svg = XML.SVGNode("svg");
-		svg.innerHTML = this.result;
+		svg.innerHTML = data;
 		svg = svg.firstElementChild;
 
 		reset(true);
@@ -110,7 +98,7 @@ function Uploader (queryString, D, History) {
 
 		var mando = svg.lastElementChild;
 		History.track = false;
-		parseMando(mando);
+		this.parseMando(mando);
 		History.track = true;
 
 		if (mando.id === "Female-Body") {
@@ -122,68 +110,29 @@ function Uploader (queryString, D, History) {
 			sex_radio.checked = true;
 			Settings.Sex(false, true);
 		}
-		setDefaultBackground();
-	}
-
-	var readerMando = new FileReader();
-	readerMando.onload = dissectSVG;
-	find("reupload").addEventListener("change", function() {
-		readerMando.readAsText(this.files[0]);
-		this.value = "";
-	});
-
-	function readQueryString (st) {
-		var options = {};
-		var regex = /(\w+)=([^&]*)&?/g;
-		var matches;
-		while (matches = regex.exec(st)) {
-			options[matches[1]] = unescape(matches[2]);
-		}
-		return options;
-	}
-
-	function loadPreset (preset, female) {
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", preset);
-		xhr.setRequestHeader("Cache-Control", "no-cache, max-age=10800");
-		xhr.onload = function () {
-			var xml = this.responseXML;
-			if (this.status !== 200 || !xml)
-				return Settings.Sex(female, false);
-			var svg = xml.documentElement;
-			find("female").checked = female;
-			reset(true, true);
-			parseMando(svg);
-			Settings.Sex(female, true);
-		};
-		xhr.onerror = function () {
-			Settings.Sex(female, false);
-		};
-		xhr.send();
-	}
-
-	var female;
-	var options = readQueryString(queryString);
-	if ("sex" in options)
-		female = options["sex"] == "1";
-	else
-		female = (localStorage.getItem("female_sex") == "true");
-
-	if ("preset" in options) {
-		loadPreset(options["preset"], female);
-	} else {
-		if (!female) {
-			var sex_radio = find("male");
-			sex_radio.checked = true;
+	},
+	attach: function (target, type) {
+		var reader = new FileReader;
+		var self = this;
+		if (type == "armor") {
+			reader.onload = function () {
+				self.dissectSVG(this.result);
+			};
+			target.addEventListener("change", function() {
+				reader.readAsText(this.files[0]);
+				this.value = "";
+			});
 		} else {
-			var sex_radio = find("female");
-			sex_radio.checked = true;
+			reader.onload = function() {
+				Download.Background = {data: this.result, custom: true}
+			}
+			target.addEventListener("change", function() {
+				reader.readAsDataURL(this.files[0]);
+				this.value = "";
+			});
 		}
-		Settings.Sex(female);
+
 	}
-	if (queryString)
-		history.replaceState(null, document.title, "?");
-	return parseMando;
 }
 
 function Downloader (Decals) {

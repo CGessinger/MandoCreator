@@ -1,15 +1,15 @@
 /* MandoCreator */
 "use strict";
-var Download, History, Vault, Builder, Settings, Decals;
+var Download, History, Settings, Decals;
 var colors, variants;
 
 function find (st) {
 	return document.getElementById(st);
 }
 
-function SVGVault () {
-	var vault = {};
-	function finishUp (svg, onload, replace) {
+var Vault = {
+	vault: {},
+	finishUp: function (svg, onload, replace) {
 		svg = svg.cloneNode(true);
 		if (replace && (replace != svg)) {
 			var par = replace.parentNode;
@@ -18,33 +18,31 @@ function SVGVault () {
 		if (onload)
 			onload(svg);
 		return svg;
-	}
-	this.getItem = function (name, onload, replace) {
-		if (name in vault)
-			return finishUp(vault[name], onload, replace);
+	},
+	getItem: function (name, onload, replace) {
+		if (name in this.vault)
+			return this.finishUp(this.vault[name], onload, replace);
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "images/" + name + ".svg");
+		xhr.open("GET", name);
 		xhr.setRequestHeader("Cache-Control", "no-cache, max-age=10800");
 		xhr.responseType = 'document';
-		return new Promise(function (resolve) {
-			xhr.onload = function () {
-				var xml = xhr.responseXML;
-				if (xhr.status !== 200 || !xml) {
-					resolve(null);
-				} else {
-					var svg = xml.documentElement;
-					vault[name] = svg;
-					finishUp(svg, onload, replace);
-					resolve(svg);
-				}
-			};
-			xhr.send();
-		});
+		var self = this;
+		xhr.onload = function () {
+			var xml = this.responseXML;
+			if (this.status !== 200 || !xml) {
+				return;
+			} else {
+				var svg = xml.documentElement;
+				self.vault[name] = svg;
+				return self.finishUp(svg, onload, replace);
+			}
+		};
+		xhr.send();
 	}
 }
 
-function BuildManager (History, Picker, Decals) {
+function BuildManager (Picker) {
 	var swapLists = [];
 	var icons = {
 		"Range Finder":	"icon-range-finder",
@@ -70,22 +68,12 @@ function BuildManager (History, Picker, Decals) {
 		return "";
 	}
 
-	var hax = { /* Store the location for all those parts, where it isn't apparent from the name */
-		"Vest": "Suit",
-	}
-	var swapFilter = document.createTreeWalker(document, NodeFilter.SHOW_ELEMENT,
-		{ acceptNode: function (node) {
-			if (node.getAttribute("class") == "swappable")
-				return NodeFilter.FILTER_ACCEPT;
-			return NodeFilter.FILTER_REJECT;
-		} }
-	);
 	function BuildMirrorButton (headline, parent, thisSide) {
 		var b = XML.DOMNode("button", {class: "mirror_button right", title:"Mirror Settings"}, headline);
 		b.innerText = "\uE915";
 		var walker = document.createTreeWalker(parent, NodeFilter.SHOW_ELEMENT,
 			{ acceptNode: function (node) {
-				if (node.hasAttribute("class") && (node.id !== ""))
+				if (node.hasAttribute("class") && node.id !== "")
 					return NodeFilter.FILTER_ACCEPT;
 				return NodeFilter.FILTER_SKIP;
 			} }
@@ -128,19 +116,32 @@ function BuildManager (History, Picker, Decals) {
 			showPicker = History.track = true;
 			if (changes.length > 0)
 				History.push(changes);
+			Picker.cache();
 		});
 	}
-	var armor_menu = find("armor_menu")
-	var possibleParents = armor_menu.getElementsByClassName("slide_content");
+
+	function isSwapNode (p) {
+		if (p.getAttribute("class") == "swappable")
+			return true;
+		p = p.parentNode;
+		if (p && p.getAttribute("class") == "swappable")
+			return true;
+		p = p.parentNode;
+		if (p && p.getAttribute("class") == "swappable")
+			return true;
+		return false;
+	}
+	var possibleParents = find("armor_menu").getElementsByClassName("slide_content");
+	var l = possibleParents.length;
 	function DOMParent (node) {
 		/* Step 1: Find the parent in the DOM */
 		var id = node.id;
-		var san = id.split("_",1)[0];
-		if (san in hax)
-			id = san = hax[san];
+		var san = id.split("_", 1)[0];
+		if (san == "Vest")
+			id = san = "Suit";
 		san += "Colors";
 		var parent = null;
-		for (var i = 0; i < possibleParents.length; i++) {
+		for (var i = 0; i < l; i++) {
 			if (possibleParents[i].id == san) {
 				parent = possibleParents[i];
 				break;
@@ -148,8 +149,7 @@ function BuildManager (History, Picker, Decals) {
 		}
 		if (!parent) return;
 		/* Step 2: Check for swappable armor pieces */
-		swapFilter.currentNode = node;
-		if (swapFilter.parentNode()) {
+		if (isSwapNode(node.parentElement)) {
 			parent = XML.DOMNode("details", {class: "swapslide", open: true}, parent);
 			swapLists.push(parent);
 		}
@@ -169,8 +169,7 @@ function BuildManager (History, Picker, Decals) {
 	}
 
 	function prettify (str) {
-		var components = str.split("_", 1)[0];
-		return components.replace(/-/g, " ");
+		return str.split("_", 1)[0].replaceAll("-", " ");
 	}
 
 	function BuildToggle (toggle, parent) {
@@ -396,6 +395,7 @@ function BuildManager (History, Picker, Decals) {
 	this.setup = function (nodes) {
 		var vault = find("item_vault");
 		vault.innerHTML = "";
+		showPicker = History.track = false;
 		for (var i = nodes.length-1; i >= 0; i--) {
 			if (nodes[i].hasAttribute("mask")) {
 				if (!variants.hasItem(nodes[i].id))
@@ -421,42 +421,36 @@ function BuildManager (History, Picker, Decals) {
 				radio.click();
 			}
 		}
+		showPicker = History.track = true;
 		Picker.cache()
 	}
 }
 
-function SettingsManager (Builder, History, Vault, Decals) {
+function SettingsManager (Picker) {
 	var slides = document.getElementsByClassName("slide_content");
 	var main = find("main");
+	var Builder = new BuildManager(Picker);
 
-	this.Sex = async function (female, upload) {
+	this.Sex = function (female, upload) {
 		for (var i = 0; i < slides.length; i++)
 			slides[i].innerHTML = "";
 
-		History.track = false; /* Do not track any changes during setup */
-		var helmet;
-		var master_file = female ? "Female" : "Male";
-		var body = Vault.getItem(master_file, function (svg) {
-			svg.style.visibility = "hidden"
+		var master_file = female ? "images/Female.svg" : "images/Male.svg";
+		Vault.getItem(master_file, function (svg) {
+			svg.style.visibility = "hidden";
+			svg.scrollIntoView({inline: "center"});
+			Zoom.scale = 0;
 			Decals.SVG = svg;
-			var body = svg.lastElementChild;
 			var h = svg.getElementById("Helmets");
-			helmet = Vault.getItem("Helmets", function (helmets) {
+			Vault.getItem("images/Helmets.svg", function (helmets) {
 				var ch = helmets.children;
 				while (ch.length)
 					h.appendChild(ch[0]);
-				Builder.setup(body.children, upload);
-				svg.style.visibility = ""
+				Builder.setup(svg.lastElementChild.children, upload);
+				svg.style.visibility = "";
 			});
 		}, main.lastElementChild);
-
 		localStorage.setItem("female_sex", (!!female).toString());
-		await body;
-		Zoom.scale = 0;
-		var SVG = main.lastElementChild;
-		SVG.scrollIntoView({inline: "center"});
-		await helmet;
-		History.track = true;
 	}
 }
 
@@ -514,13 +508,74 @@ function VariantsVault (asString, History) {
 			return;
 		delete v[key];
 
-		var c = History.format(type, v[key], undefined, key); // TODO
+		var c = History.format(type, v[key], undefined, key);
 		History.push(c);
 		cache();
 	}
 	this.toString = function () {
 		return JSON.stringify(__vars);
 	}
+}
+
+function MandoCreator () {
+	var female = (localStorage.getItem("female_sex") == "true");
+	Vault.getItem("images/Helmets.svg");
+	History = new HistoryTracker;
+
+	var Picker = new PickerFactory;
+	Decals = new DecalFactory(Picker);
+
+	Settings = new SettingsManager(Picker);
+	variants = new VariantsVault(localStorage.getItem("variants"), History);
+	colors = resetColorCache(true);
+
+	function readQueryString (st) {
+		if (!st) return {};
+		var options = {};
+		var regex = /(\w+)=([^&]*)&?/g;
+		var matches;
+		while (matches = regex.exec(st)) {
+			options[matches[1]] = unescape(matches[2]);
+		}
+		history.replaceState(null, document.title, "?");
+		return options;
+	}
+
+	/* ---------- Pre-Setup ---------- */
+	var opt = readQueryString(window.location.search);
+	if ("sex" in opt)
+		female = (opt.sex == "1");
+	if (female) {
+		var sex_radio = find("female");
+		sex_radio.checked = true;
+	} else {
+		var sex_radio = find("male");
+		sex_radio.checked = true;
+	}
+	/* ---------- Main Setup ---------- */
+	if ("preset" in opt) {
+		Vault.getItem(opt.preset, function (svg) {
+			reset(true, true);
+			Uploader.parseMando(svg);
+			Settings.Sex(female, true);
+		});
+	} else {
+		Settings.Sex(female, false);
+	}
+	/* ---------- Post-Setup ---------- */
+	Picker.finishUp();
+	Decals.finishUp();
+
+	Download = new Downloader (Decals);
+	Download.attach(find("download_svg"), "image/svg+xml");
+	Download.attach(find("download_jpeg"), "image/jpeg");
+
+	Uploader.attach(find("background_upload"), "background");
+	Uploader.attach(find("reupload"), "armor");
+
+	setupControlMenu(find("armor_menu"), find("decals_menu"));
+
+	setDefaultBackground();
 }
 
 function openFolder (folder) {
@@ -595,47 +650,10 @@ function setupControlMenu (armor_menu, decals_menu) {
 		decals_menu.classList.toggle("menu_collapsed");
 	});
 
-	if (window.innerWidth > 786) {
-		armor_menu.classList.remove("menu_collapsed");
-		decals_menu.classList.remove("menu_collapsed");
+	if (window.innerWidth < 786) {
+		armor_menu.classList.add("menu_collapsed");
+		decals_menu.classList.add("menu_collapsed");
 	}
-}
-
-function onload () {
-	var nsw = navigator.serviceWorker;
-	if (nsw) {
-		nsw.onmessage = function (event) {
-			var v = localStorage.getItem("version");
-			if (v == event.data)
-				return;
-			localStorage.clear();
-			localStorage.setItem("version", event.data);
-			var form = find("reload");
-			form.style.display = "";
-		};
-		nsw.register("sw.js");
-	}
-
-	History = new HistoryTracker;
-	Vault = new SVGVault;
-
-	var Picker = new PickerFactory(History);
-	Decals = new DecalFactory(Vault, Picker);
-	Builder = new BuildManager(History, Picker, Decals);
-
-	Settings = new SettingsManager(Builder, History, Vault, Decals);
-	variants = new VariantsVault(localStorage.getItem("variants"), History);
-	colors = resetColorCache(true);
-
-	Download = new Downloader (Decals);
-	Download.attach(find("download_svg"), "image/svg+xml");
-	Download.attach(find("download_jpeg"), "image/jpeg");
-
-	var Upload = new Uploader(window.location.search, Download, History);
-	setDefaultBackground();
-	find("kote").volume = 0.15;
-
-	setupControlMenu(find("armor_menu"), find("decals_menu"));
 }
 
 function setSponsor (sponsor, href) {

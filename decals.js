@@ -163,64 +163,51 @@ function DecalsBrace (g, grid, compass) {
 	}
 }
 
-function DecalFactory (Vault, Picker) {
+function DecalFactory (Picker) {
 	var count = {}, nonce = 0;
 	var decals_list, decals_group;
-	var decals_brace = new DecalsBrace(find("brace"), find("grid"), find("compass"));
+	var decals_brace = {};
 	var customs_menu = find("custom_decals_menu");
 
 	var main_svg, target_div, vault;
 
-	Vault.getItem("Decals", function (decals) {
-		vault = decals;
-	}, find("decal_vault"));
-
 	/* Event Handlers */
-	var decals_menu = find("decals_menu");
-	var armor_menu = find("armor_menu");
-	decals_menu.addEventListener("click", folder_opener);
-	var slides = decals_menu.getElementsByClassName("slide");
-	var opener = slide_opener(decals_menu, slides);
-	for (var j = 0; j < slides.length; j++) {
-		slides[j].addEventListener("click", opener);
-	}
+	function initializeEventHandlers () {
+		var decals_menu = find("decals_menu");
+		var armor_menu = find("armor_menu");
+		decals_menu.addEventListener("click", folder_opener);
+		var slides = decals_menu.getElementsByClassName("slide");
+		var opener = slide_opener(decals_menu, slides);
+		for (var j = 0; j < slides.length; j++) {
+			slides[j].addEventListener("click", opener);
+		}
 
-	decals_menu.children[0].addEventListener("click", function (event) {
-		armor_menu.classList.toggle("menu_collapsed");
-		decals_menu.classList.toggle("menu_collapsed");
-	});
+		decals_menu.children[0].addEventListener("click", function (event) {
+			armor_menu.classList.toggle("menu_collapsed");
+			decals_menu.classList.toggle("menu_collapsed");
+		});
 
-	decals_menu.children[1].addEventListener("click", function (event) {
-		event.preventDefault();
-		decals_menu.classList.remove("selected");
-		armor_menu.style.visibility = "visible";
-		decals_brace.target = null;
-	});
-	armor_menu.addEventListener("click", function (event) {
-		decals_brace.target = null;
-	});
+		decals_menu.children[1].addEventListener("click", function (event) {
+			event.preventDefault(); /* The default is opening the decal-folder */
+			decals_menu.classList.remove("selected");
+			armor_menu.style.visibility = "visible";
+		});
+		armor_menu.addEventListener("click", function (event) {
+			decals_brace.target = null;
+		});
 
-	var previews = find("Decal_Previews");
-	var ch = previews.getElementsByTagName("button");
-	for (var i = 0; i < ch.length; i++) {
-		ch[i].addEventListener("click", function () {
-			AddDecal(this.dataset.name, null, {});
+		var lists = decals_menu.lastElementChild;
+		var divs = lists.getElementsByClassName("decal_control");
+		decals_menu.addEventListener("click", function (event) {
+			if (event.target == decals_menu.children[0]) return;
+			for (var i = 0; i < divs.length; i++)
+				divs[i].classList.remove("selected");
+			if (!target_div)
+				return decals_brace.target = null;
+			target_div.classList.add("selected");
+			target_div = null;
 		});
 	}
-
-	var lists = decals_menu.lastElementChild;
-	var divs = lists.getElementsByClassName("decal_control");
-	decals_menu.addEventListener("mousedown", function () {
-		target_div = null;
-	});
-	decals_menu.addEventListener("click", function (event) {
-		if (event.target == decals_menu.children[0]) return;
-		for (var i = 0; i < divs.length; i++)
-			divs[i].classList.remove("selected");
-		if (!target_div)
-			return decals_brace.target = null;
-		target_div.classList.add("selected");
-	});
 
 	/* Construction Functions */
 	function BuildUse (name, id, ref, data) {
@@ -256,7 +243,7 @@ function DecalFactory (Vault, Picker) {
 			div.parentNode.insertBefore(next, div);
 		});
 
-		var close = XML.DOMNode("button", {class: "remove"}, controls);
+		var close = XML.DOMNode("button", {class: "remove", id: use.id + "Delete"}, controls);
 		close.innerText = "x";
 		return close;
 	}
@@ -273,6 +260,7 @@ function DecalFactory (Vault, Picker) {
 			count[name]++;
 		else
 			count[name] = 1;
+
 		if (!id) {
 			nonce++;
 			id = name + "__" + nonce;
@@ -284,7 +272,7 @@ function DecalFactory (Vault, Picker) {
 		var category = decals_group.id;
 		var cat_short = category.replace("Decals", "");
 
-		var use = BuildUse (name, id, d, data);
+		var use = BuildUse(name, id, d, data);
 
 		var div = XML.DOMNode("div", {class: "decal_control"});
 		decals_list.insertBefore(div, decals_list.firstElementChild);
@@ -306,19 +294,15 @@ function DecalFactory (Vault, Picker) {
 			count[name]--;
 		});
 
-		var html_ch = decals_list.children;
-		div.addEventListener("click", function () {
-			if (closed) {
-				decals_brace.target = null;
-				return;
-			}
+		var handler = function () {
+			if (closed)
+				return decals_brace.target = null;
 			Decals.Category = cat_short;
 			decals_brace.target = use;
 			target_div = this;
-		});
-
-		div.click();
-		return div;
+		}
+		div.addEventListener("click", handler);
+		handler.bind(div)();
 	}
 
 	function Recreate (node, decals) {
@@ -335,17 +319,13 @@ function DecalFactory (Vault, Picker) {
 
 	function SetTransform (target, data) {
 		var tl = target.transform.baseVal;
-		var coords = decals_brace.coordinates(window.innerWidth/2, window.innerHeight/2);
-		var scale = decals_brace.coordinates(window.innerWidth, window.innerHeight);
-		scale[0] = (scale[0] - coords[0]) / 150;
-		scale[1] = (scale[1] - coords[1]) / 150;
-		scale = Math.min(scale[0], scale[1]);
-		data = {
-			x: data.x || coords[0],
-			y: data.y || coords[1],
-			ax: data.ax || scale,
-			ay: data.ay || scale,
-			phi: data.phi || 0
+		if (!data) {
+			var coords = decals_brace.coordinates(window.innerWidth/2, window.innerHeight/2);
+			var scale = decals_brace.coordinates(window.innerWidth, window.innerHeight);
+			scale[0] = (scale[0] - coords[0]) / 150;
+			scale[1] = (scale[1] - coords[1]) / 150;
+			scale = Math.min(scale[0], scale[1]);
+			data = { x: coords[0], y: coords[1], ax: scale, ay: scale, phi: 0 };
 		}
 
 		var translate = main_svg.createSVGTransform();
@@ -369,18 +349,14 @@ function DecalFactory (Vault, Picker) {
 	}
 
 	function makeName (str, display) {
-		str = str
-			.slice(0, 15)
-			.split(".", 1)[0];
-		if (display) {
-			return str
-				.replaceAll("-", " ")
-				.split("_", 1)[0];
-		}
+		str = str.slice(0, 15).split(".", 1)[0];
+		if (display)
+			return str.replaceAll("-", " ").split("_", 1)[0];
 		return btoa(str);
 	}
 
 	return {
+		Add: AddDecal,
 		Recreate: Recreate,
 		Set: SetTransform,
 		set Category (cat) {
@@ -430,7 +406,7 @@ function DecalFactory (Vault, Picker) {
 			}, vault);
 
 			button.addEventListener("click", function () {
-				AddDecal(id, null, {});
+				AddDecal(id);
 			});
 
 			var t = document.createTextNode(display);
@@ -439,6 +415,13 @@ function DecalFactory (Vault, Picker) {
 		reset: function () {
 			nonce = 0;
 			count = {};
+		},
+		finishUp: function () {
+			decals_brace = new DecalsBrace(find("brace"), find("grid"), find("compass"));
+			Vault.getItem("images/Decals.svg", function (decals) {
+				vault = decals;
+			}, find("decal_vault"));
+			initializeEventHandlers();
 		}
 	};
 }
