@@ -175,7 +175,10 @@ function DecalFactory (Picker) {
 	function initializeEventHandlers () {
 		var decals_menu = find("decals_menu");
 		var armor_menu = find("armor_menu");
-		decals_menu.addEventListener("click", folder_opener);
+		decals_menu.addEventListener("click", function (event) {
+			if (event.defaultPrevented) return;
+			openFolder(this);
+		});
 		var slides = decals_menu.getElementsByClassName("slide");
 		var opener = slide_opener(decals_menu, slides);
 		for (var j = 0; j < slides.length; j++) {
@@ -274,7 +277,7 @@ function DecalFactory (Picker) {
 
 		var use = BuildUse(name, id, d, data);
 
-		var div = XML.DOMNode("div", {class: "decal_control"});
+		var div = XML.DOMNode("div", {class: "decal_control selected"});
 		decals_list.insertBefore(div, decals_list.firstElementChild);
 
 		var button = Picker.build(use, div, {
@@ -299,10 +302,11 @@ function DecalFactory (Picker) {
 				return decals_brace.target = null;
 			Decals.Category = cat_short;
 			decals_brace.target = use;
-			target_div = this;
+			target_div = div;
 		}
 		div.addEventListener("click", handler);
-		handler.bind(div)();
+		target_div = div;
+		decals_brace.target = use;
 	}
 
 	function Recreate (node, decals) {
@@ -364,10 +368,10 @@ function DecalFactory (Picker) {
 				decals_brace.Category = null;
 				decals_group = decals_list = null;
 			} else {
-				decals_brace.Category = cat + "Decals";
-
-				decals_group = find(cat + "Decals");
-				decals_list = find(cat + "DecalsList");
+				var name = cat + "Decals";
+				decals_brace.Category = name;
+				decals_group = find(name);
+				decals_list = find(name + "List");
 				decals_list.click();
 			}
 		},

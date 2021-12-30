@@ -1,6 +1,6 @@
 'use strict';
 
-var showPicker = true;
+var interactive = true;
 function PickerFactory () {
 	var latestChange = {};
 
@@ -257,7 +257,7 @@ function PickerFactory () {
 			color.hex = v;
 		}
 		DOM.update(fromEditor);
-		latestChange["newValue"] = color.hex;
+		latestChange.newValue = color.hex;
 		onChange(color.hex);
 	}
 
@@ -285,9 +285,9 @@ function PickerFactory () {
 			var oldValue = colors[this.id] || def_val;
 			latestChange = History.format("color", oldValue, "", this.id);
 			_setColor(oldValue);
-			latestChange.newValue = latestChange.oldValue;
+			latestChange.newValue = oldValue;
 
-			if (showPicker)
+			if (interactive)
 				DOM.parent = parent;
 			else
 				DOM.parent = null;
@@ -340,6 +340,7 @@ function HistoryTracker () {
 		var target = find(targetID);
 		if (!target) {
 			if (type == "decal") {
+				Decals.Category = value.cat.replace("Decals", "");
 				var bare_name = targetID.match(/(.+)__\d+/)[1];
 				Decals.Add(bare_name, targetID, value);
 			}
@@ -390,12 +391,11 @@ function HistoryTracker () {
 			to = redos;
 			key = "oldValue";
 		}
-		showPicker = self.track = false;
-		var change = from.pop();
-		if (!change) {
-			showPicker = self.track = true;
+		if (from.length == 0)
 			return;
-		} else if ("target" in change) {
+		interactive = false;
+		var change = from.pop();
+		if ("target" in change) {
 			undoSingleChange(change["type"], change["target"], change[key]);
 		} else {
 			for (var c in change) {
@@ -404,24 +404,23 @@ function HistoryTracker () {
 			}
 		}
 		to.push(change);
-		showPicker = self.track = true;
+		interactive = true;
 	}
 	function isValid (c) {
 		return (!!c) && (!!c.target) && (c.oldValue != c.newValue);
 	}
 	this.push = function (C) {
-		if (!self.track || !C)
+		if (!interactive || !C)
 			return;
 		if (isValid(C)) {
 			changes.push(C);
+			redos = [];
 		} else if ("filter" in C) {
 			var d = C.filter(isValid);
-			if (d.length == 0)
-				return;
-			else
+			if (d.length > 0) {
 				changes.push(d);
+				redos = [];
+			}
 		}
-		redos = [];
 	}
-	this.track = false;
 }

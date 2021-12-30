@@ -35,7 +35,7 @@ images/%.svg: pictures/%.svg | images
 		s|_Option|\" class=\"option|; \
 		s|(\w+)Decals|&\" mask=\"url(#\1Mask)|; \
 		/Visor/ { \
-			s| | color=\"#000\" |; \
+			s| | fill=\"#000\" |; \
 		}; \
 		/\"Chest\"/ { \
 			s/ / class=\"swappable\" /; \

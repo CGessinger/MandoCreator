@@ -30,13 +30,11 @@ var Vault = {
 		var self = this;
 		xhr.onload = function () {
 			var xml = this.responseXML;
-			if (this.status !== 200 || !xml) {
+			if (this.status !== 200 || !xml)
 				return;
-			} else {
-				var svg = xml.documentElement;
-				self.vault[name] = svg;
-				return self.finishUp(svg, onload, replace);
-			}
+			var svg = xml.documentElement;
+			self.vault[name] = svg;
+			self.finishUp(svg, onload, replace);
 		};
 		xhr.send();
 	}
@@ -83,7 +81,7 @@ function BuildManager (Picker) {
 		b.addEventListener("click", function () {
 			var changes = [];
 			walker.currentNode = parent;
-			showPicker = History.track = false;
+			interactive = false;
 			while (node = walker.nextNode()) {
 				var c, newValue;
 				var mirrorImageName = node.id.replace(thisSide, otherSide);
@@ -113,7 +111,7 @@ function BuildManager (Picker) {
 				}
 				if ("target" in c) changes.push(c);
 			}
-			showPicker = History.track = true;
+			interactive = true;
 			if (changes.length > 0)
 				History.push(changes);
 			Picker.cache();
@@ -395,7 +393,7 @@ function BuildManager (Picker) {
 	this.setup = function (nodes) {
 		var vault = find("item_vault");
 		vault.innerHTML = "";
-		showPicker = History.track = false;
+		interactive = false;
 		for (var i = nodes.length-1; i >= 0; i--) {
 			if (nodes[i].hasAttribute("mask")) {
 				if (!variants.hasItem(nodes[i].id))
@@ -421,7 +419,7 @@ function BuildManager (Picker) {
 				radio.click();
 			}
 		}
-		showPicker = History.track = true;
+		interactive = true;
 		Picker.cache()
 	}
 }
@@ -438,7 +436,6 @@ function SettingsManager (Picker) {
 		var master_file = female ? "images/Female.svg" : "images/Male.svg";
 		Vault.getItem(master_file, function (svg) {
 			svg.style.visibility = "hidden";
-			svg.scrollIntoView({inline: "center"});
 			Zoom.scale = 0;
 			Decals.SVG = svg;
 			var h = svg.getElementById("Helmets");
@@ -448,13 +445,14 @@ function SettingsManager (Picker) {
 					h.appendChild(ch[0]);
 				Builder.setup(svg.lastElementChild.children, upload);
 				svg.style.visibility = "";
+				svg.scrollIntoView({inline: "center"});
 			});
 		}, main.lastElementChild);
 		localStorage.setItem("female_sex", (!!female).toString());
 	}
 }
 
-function VariantsVault (asString, History) {
+function VariantsVault (asString) {
 	var __vars = {
 		"Helmets": "Helmet_Classic",
 		"Chest": "Chest_Classic"
@@ -506,10 +504,11 @@ function VariantsVault (asString, History) {
 		}
 		if ( !(key in v) )
 			return;
-		delete v[key];
-
-		var c = History.format(type, v[key], undefined, key);
+		var o = v[key];
+		if (category) o.cat = category;
+		var c = History.format(type, o, undefined, key);
 		History.push(c);
+		delete v[key];
 		cache();
 	}
 	this.toString = function () {
@@ -526,7 +525,7 @@ function MandoCreator () {
 	Decals = new DecalFactory(Picker);
 
 	Settings = new SettingsManager(Picker);
-	variants = new VariantsVault(localStorage.getItem("variants"), History);
+	variants = new VariantsVault(localStorage.getItem("variants"));
 	colors = resetColorCache(true);
 
 	function readQueryString (st) {
@@ -579,14 +578,6 @@ function MandoCreator () {
 }
 
 function openFolder (folder) {
-	if (typeof folder == "string") {
-		Decals.Category = null;
-		folder = find(folder + "Options");
-	} else if (folder.id.includes("Options")) {
-		var radioName = folder.id.replace("Options", "Radio");
-		var radio = find(radioName);
-		radio.checked = true;
-	}
 	var parent = folder.parentNode;
 	var folders = parent.children;
 	for (var i = 0; i < folders.length; i++)
@@ -594,10 +585,6 @@ function openFolder (folder) {
 	folder.classList.add("selected");
 }
 
-function folder_opener (event) {
-	if (event.defaultPrevented) return;
-	openFolder(this);
-}
 function slide_opener (f, slides) {
 	return function (event) {
 		if (event.defaultPrevented) return;
@@ -620,7 +607,13 @@ function setupControlMenu (armor_menu, decals_menu) {
 	var folders = armor_menu.getElementsByClassName("folder");
 	for (var i = 0; i < folders.length; i++) {
 		var slides = folders[i].getElementsByClassName("slide");
-		folders[i].addEventListener("click", folder_opener);
+		var radioName = folders[i].id.replace("Options", "Radio");
+		let radio = find(radioName);
+		folders[i].addEventListener("click", function(event) {
+			if (event.defaultPrevented) return;
+			radio.checked = true;
+			openFolder(this);
+		});
 		var opener = slide_opener(folders[i], slides);
 		var closer = slide_closer(folders[i]);
 		for (var j = 0; j < slides.length; j++) {
@@ -631,12 +624,13 @@ function setupControlMenu (armor_menu, decals_menu) {
 	}
 
 	var decal_toggles = armor_menu.getElementsByClassName("decals_toggle");
+	var handler = function (event) {
+		event.preventDefault();
+		Decals.Category = this.dataset.category;
+		armor_menu.style.visibility = "hidden";
+	}
 	for (var i = 0; i < decal_toggles.length; i++)
-		decal_toggles[i].addEventListener("click", function (event) {
-			event.preventDefault();
-			Decals.Category = this.dataset.category;
-			armor_menu.style.visibility = "hidden";
-		});
+		decal_toggles[i].addEventListener("click", handler);
 
 	armor_menu.addEventListener("click", function (event) {
 		if (event.defaultPrevented)
@@ -738,7 +732,7 @@ function playKote () {
 function reset (skipBuild, skipPrompt) {
 	var conf = skipPrompt || confirm("This will erase all settings, such as colors and armor pieces. Do you want to proceed? This cannot be undone.\n\nSave or save not. There is no undo.");
 	if (!conf) return;
-	variants = new VariantsVault(null, History);
+	variants = new VariantsVault(null);
 	colors = resetColorCache(false);
 	Decals.reset();
 	if (skipBuild)

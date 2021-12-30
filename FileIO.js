@@ -97,9 +97,9 @@ var Uploader = {
 		}
 
 		var mando = svg.lastElementChild;
-		History.track = false;
+		interactive = false;
 		this.parseMando(mando);
-		History.track = true;
+		interactive = true;
 
 		if (mando.id === "Female-Body") {
 			var sex_radio = find("female");
