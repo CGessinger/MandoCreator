@@ -313,6 +313,7 @@ function PickerFactory () {
 
 		if (kwargs.disabled) {
 			b.disabled = true;
+			b.innerHTML = "<svg stroke='#ddd' viewBox='0 0 20 20'><path d='m3 3 14 14M3 17 17 3'/></svg>"
 			p.innerText = "No colors available";
 			target.addEventListener("click", function() {
 				span.click();

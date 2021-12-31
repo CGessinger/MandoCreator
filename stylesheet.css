@@ -372,12 +372,6 @@ GENERICS
 -----------------------------------------
 */
 
-[disabled] {
-	background: black center / cover no-repeat;
-	background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHN0cm9rZT0ibGlnaHRncmV5IiB2aWV3Qm94PSIwIDAgMjAgMjAiPgoJPGxpbmUgeDE9IjMiIHgyPSIxNyIgeTE9IjMiIHkyPSIxNyIgLz4KCTxsaW5lIHgxPSIzIiB4Mj0iMTciIHkxPSIxNyIgeTI9IjMiIC8+Cjwvc3ZnPgo=");
-	cursor: not-allowed;
-}
-
 a {
 	text-decoration: none;
 	color: white;
@@ -694,6 +688,7 @@ footer > * {
 	fill-rule: evenodd;
 	stroke: black;
 	stroke-width: 0.3px;
+	stroke-linecap: round;
 }
 
 :checked + .preview_icon {
@@ -837,6 +832,10 @@ footer > * {
 	background-color: white;
 }
 
+[disabled] {
+	background: black center / cover no-repeat;
+	cursor: not-allowed;
+}
 
 .soft_text {
 	color: var(--softLight);

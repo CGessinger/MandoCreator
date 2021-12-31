@@ -254,11 +254,18 @@ function Downloader (Decals) {
 					isSetUp = true;
 					a.click();
 				}
+				var supportsDecoding = ("decoding" in XML.SVGNode("image"));
 				a.addEventListener("click", function (event) {
 					if (isSetUp)
 						return true;
 					event.preventDefault();
-					img.onload = function () {
+					var first = !supportsDecoding;
+					img.onload = async function () {
+						await this.decode();
+						if (first) {
+							this.src = this.src;
+							return first = false;
+						}
 						canvasCtx.drawImage(this, 0, 0);
 						canvas.toBlob(toURL, "image/jpeg");
 					}

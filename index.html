@@ -873,8 +873,8 @@
 					<details id="custom_decals_menu" open>
 						<summary class="summary">Custom</summary>
 						<label class="type_button">
-							<input id="reupload" type="file" accept="image/*" hidden multiple onchange="addCustomDecal(this.files)"/>
-							<svg viewBox="-50 -50 100 100" class="preview_icon" style="stroke:white;stroke-width:3px;stroke-linecap:round"><line x1="-30" x2="30" /><line y1="-30" y2="30" /></svg>
+							<input type="file" accept="image/*" hidden onchange="addCustomDecal(this.files[0])"/>
+							<svg class="preview_icon" viewBox="0 0 100 100"><path stroke="#fff" stroke-width="3" d="M20 50h60M50 20v60"/></svg>
 							Upload
 						</label></details>
 				</div>

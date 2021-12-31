@@ -430,13 +430,10 @@ function DecalFactory (Picker) {
 	};
 }
 
-function addCustomDecal (files) {
-	for (var i = 0; i < files.length; i++) {
-		var reader = new FileReader();
-		let name = files[i].name;
-		reader.onload = function () {
-			Decals.custom(this.result, name);
-		}
-		reader.readAsDataURL(files[i]);
+function addCustomDecal (file) {
+	var reader = new FileReader();
+	reader.onload = function () {
+		Decals.custom(this.result, file.name);
 	}
+	reader.readAsDataURL(file);
 }
