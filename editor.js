@@ -115,6 +115,7 @@ function BuildManager (Picker) {
 			if (changes.length > 0)
 				History.push(changes);
 			Picker.cache();
+			variants.cache();
 		});
 	}
 
@@ -421,6 +422,7 @@ function BuildManager (Picker) {
 		}
 		interactive = true;
 		Picker.cache()
+		variants.cache();
 	}
 }
 
@@ -459,10 +461,11 @@ function VariantsVault (asString) {
 	};
 	if (asString)
 		__vars = JSON.parse(asString);
-	function cache () {
+	this.cache = function () {
+		if (!interactive) return;
 		localStorage.setItem("variants", JSON.stringify(__vars));
 	}
-	cache();
+	this.cache();
 
 	this.hasItem = function (key, category) {
 		var v = __vars;
@@ -487,7 +490,7 @@ function VariantsVault (asString) {
 			__vars[category] = v;
 
 		History.push(c);
-		cache();
+		this.cache();
 	}
 	this.getItem = function (key, category) {
 		var v = __vars;
@@ -504,21 +507,20 @@ function VariantsVault (asString) {
 		}
 		if ( !(key in v) )
 			return;
+
 		var o = v[key];
 		if (category) o.cat = category;
 		var c = History.format(type, o, undefined, key);
-		History.push(c);
 		delete v[key];
-		cache();
-	}
-	this.toString = function () {
-		return JSON.stringify(__vars);
+
+		History.push(c);
+		this.cache();
 	}
 }
 
 function MandoCreator () {
 	var female = (localStorage.getItem("female_sex") == "true");
-	Vault.getItem("images/Helmets.svg");
+	Vault.getItem("images/Helmets.svg"); /* Prefetch */
 	History = new HistoryTracker;
 
 	var Picker = new PickerFactory;

@@ -52,10 +52,8 @@ var Uploader = {
 					var parent = node.parentNode;
 					if (parent.id.includes("Ear"))
 						variants.setItem(node.id + "Toggle", true);
-					else {
-						var parName = parent.id + "Select";
-						variants.setItem(parName, node.id);
-					}
+					else
+						variants.setItem(parent.id + "Select", node.id);
 					break;
 				case "swappable":
 					var ch = node.firstElementChild;
@@ -75,7 +73,6 @@ var Uploader = {
 					}, "decal", node.parentNode.id);
 			}
 		}
-		localStorage.setItem("colors", JSON.stringify(colors));
 	},
 	dissectSVG: function (data) {
 		var svg = XML.SVGNode("svg");
