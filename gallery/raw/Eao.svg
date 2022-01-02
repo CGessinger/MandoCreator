@@ -1,267 +1,278 @@
-<?xml version='1.0' encoding='UTF-8'?><svg version='1.1' xmlns='http://www.w3.org/2000/svg'><metadata><rdf:rdf xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/"> <rdf:description> <dc:creator>MandoCreator</dc:creator> <dc:publisher>https://www.mandocreator.com</dc:publisher> <dc:description>Your Beskar'gam - created by MandoCreator</dc:description> <dc:format>image/svg+xml</dc:format> <dc:type>Image</dc:type> <dc:title>MandoCreator - Ner Berskar'gam</dc:title> <dc:date>2021-10-08T17:03:40.885Z</dc:date> </rdf:description> </rdf:rdf></metadata><svg version="1.1" id="Male" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 -55 169 300" style="fill: white; fill-rule: evenodd; stroke: black; stroke-width: 0.2px; pointer-events: none; position: relative; height: 100%;">
+<?xml version='1.0' encoding='UTF-8'?>
+<svg version="1.1" id="Male-Body" xmlns="http://www.w3.org/2000/svg" xmlns:serif="http://www.serif.com/" viewBox="0 -55 170 300" style="stroke-width: 0.2px; fill-rule: evenodd; stroke-linejoin: round;" width="170" height="300">
+<style>
+mask {
+mask-type: alpha;
+}
+.decal {
+stroke: none;
+}
+</style>
+<defs id="Masks" stroke="none">
+<mask id="HelmetsMask"> <use href="#Helmets"/> </mask>
+<mask id="CollarMask"> <use href="#Collar"/> </mask>
+<mask id="ShouldersMask"> <use href="#Shoulders"/> </mask>
+<mask id="ChestMask"> <use href="#Chest"/> </mask>
+<mask id="BicepsMask"> <use href="#Biceps"/> </mask>
+<mask id="GauntletsMask"> <use href="#Gauntlets"/> </mask>
+<mask id="WaistMask"> <use href="#Waist"/> </mask>
+<mask id="GroinMask"> <use href="#Groin"/> </mask>
+<mask id="ThighsMask"> <use href="#Thighs"/> </mask>
+<mask id="KneesMask"> <use href="#Knees"/> </mask>
+<mask id="ShinsMask"> <use href="#Shins"/> </mask>
+<mask id="FootMask"> <use href="#Foot"/> </mask>
+</defs>
+<defs id="Decals"/><metadata><rdf:rdf xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:description><dc:creator>MandoCreator</dc:creator><dc:publisher>https://www.mandocreator.com</dc:publisher><dc:description>Your Beskar'gam - created by MandoCreator</dc:description><dc:format>image/svg+xml</dc:format><dc:type>Image</dc:type><dc:title>MandoCreator - Ner Berskar'gam</dc:title><dc:date>2022-01-02T16:20:44.600Z</dc:date></rdf:description></rdf:rdf></metadata><g id="Main-Body" fill="white" stroke="black">
 <g id="Extras_Back">
 <g id="Back"><g id="NO-CAPES_Back" class="option" style="display: inherit;">
 </g>
 </g>
 </g>
+<g id="Extras-BackDecals" mask="url(#BackMask)">
+</g>
 <g id="Suit">
-<g id="Neck-Seal">
-<g id="Standard-Neck-Seal" class="option" style="fill: rgb(0, 0, 0); display: inherit;">
+<g id="Neck-Seal"><g id="Standard-Neck-Seal" class="option" fill="rgb(0, 0, 0)" style="display: inherit;">
 </g>
 </g>
-<g id="Flight-Suit" style="fill: rgb(43, 43, 49);">
+<g id="Flight-Suit" fill="rgb(43, 43, 49)">
 <g>
 </g>
 </g>
-<g id="Sleeves" class="toggle" style="fill: rgb(255, 255, 255); display: none;"/>
+<g id="Sleeves" class="toggle" style="display: none;" fill="rgb(255, 255, 255)"/>
 </g>
 <g id="Boots">
 <g id="Tall_Boots" class="option" style="display: inherit;">
-<g id="Bottom_Tall-Boot" style="fill: rgb(11, 11, 11);">
+<g id="Bottom_Tall-Boot" fill="rgb(11, 11, 11)">
 </g>
-<g id="Main_Tall-Boot" style="fill: rgb(15, 15, 15);">
+<g id="Main_Tall-Boot" fill="rgb(15, 15, 15)">
 </g>
-</g>
-</g>
+</g></g>
 <g id="Gloves">
 <g id="Left-Glove">
 <g id="Fingerless_Left_Glove" class="option" style="display: inherit;">
-<g id="Fingers_Fingerless_Left_Glove" style="fill: rgb(97, 8, 25);">
+<g id="Fingers_Fingerless_Left_Glove" fill="rgb(97, 8, 25)">
 </g>
-<path id="Glove_Fingerless_Left_Glove" style="fill: rgb(0, 0, 0);"/>
-</g>
-</g>
+<path id="Glove_Fingerless_Left_Glove" fill="rgb(0, 0, 0)"/>
+</g></g>
 <g id="Right-Glove">
 <g id="Fingerless_Right_Glove" class="option" style="display: inherit;">
-<g id="Fingers_Fingerless_Right_Glove" style="fill: rgb(97, 8, 25);">
+<g id="Fingers_Fingerless_Right_Glove" fill="rgb(97, 8, 25)">
 </g>
-<path id="Glove_Fingerless_Right_Glove" style="fill: rgb(0, 0, 0);"/>
-</g>
-</g>
+<path id="Glove_Fingerless_Right_Glove" fill="rgb(0, 0, 0)"/>
+</g></g>
 </g>
 <g id="Biceps">
 <g id="Left-Biceps">
 <g id="None_Biceps_Left" class="option" style="display: inherit;">
-</g>
-</g>
+</g></g>
 <g id="Right-Biceps">
 <g id="None_Biceps_Right" class="option" style="display: inherit;">
+</g></g>
 </g>
+<g id="BicepsDecals" mask="url(#BicepsMask)">
 </g>
+<path id="Vest" fill="rgb(0, 0, 0)"/>
+<g id="SuitDecals" mask="url(#SuitMask)">
 </g>
-<g id="Vest" style="fill: rgb(0, 0, 0);">
-</g>
-<g class="swappable" id="Chest">
-<g id="Chest_Classic" style="visibility: visible;">
+<g class="swappable" id="Chest"><g id="Chest_Classic">
 <g id="Abdomen_Classic">
-<path id="Abdomen-Plate_Classic" style="fill: rgb(91, 24, 28);"/>
-<path id="Trauma-Plate_Abdomen_Classic" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<path id="Abdomen-Plate_Classic" fill="rgb(91, 24, 28)"/>
+<path id="Trauma-Plate_Abdomen_Classic" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
 </g>
 <g id="Iron-Heart_Classic">
-<path id="Heart_Classic" style="fill: rgb(91, 24, 28);"/>
-<path id="Center_Heart_Classic" class="option" style="fill: rgb(186, 24, 41); display: inherit;"/>
+<path id="Heart_Classic" fill="rgb(91, 24, 28)"/><rect id="Center_Heart_Classic" class="option" x="84.07" y="35.31" width="1.87" height="6.25" fill="rgb(186, 24, 41)" style="display: inherit;"/>
 </g>
 <g id="Chest-Plates_Classic">
 <g id="Left-Chest_Classic">
-<path id="Chest_Left_Classic" style="fill: rgb(91, 24, 28);"/>
-<path id="Trauma-Plating_Left-Chest_Classic" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<path id="Chest_Left_Classic" fill="rgb(91, 24, 28)"/>
+<path id="Trauma-Plating_Left-Chest_Classic" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
 </g>
 <g id="Right-Chest_Classic">
-<path id="Chest_Right_Classic" style="fill: rgb(91, 24, 28);"/>
-<path id="Trauma-Plating_Right-Chest_Classic" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<path id="Chest_Right_Classic" fill="rgb(91, 24, 28)"/>
+<path id="Trauma-Plating_Right-Chest_Classic" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
 </g>
 </g>
 <g id="Neck-Armor_Classic">
-<path id="Neck-Plate_Classic" style="fill: rgb(91, 24, 28);"/>
-<path id="Trauma-Plates_Neck_Classic" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<path id="Neck-Plate_Classic" fill="rgb(91, 24, 28)"/>
+<path id="Trauma-Plates_Neck_Classic" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
+</g>
+</g></g>
+<g id="ChestDecals" mask="url(#ChestMask)">
+</g>
+<g id="Chest-Attachments"><g id="No-Device_Accessories_Chest" class="option" style="display: inherit;">
 </g>
 </g>
-</g>
-<g id="Chest-Attachments">
-<g id="No-Device_Accessories_Chest" class="option" style="display: inherit;">
+<g id="Collar"><g id="None_Collar" class="option" style="display: inherit;">
 </g>
 </g>
-<g id="Collar">
-<g id="None_Collar" class="option" style="display: inherit;">
+<g id="CollarDecals" mask="url(#CollarMask)">
+</g>
+<g id="Helmets" class="swappable" transform="translate(45,-52)"><g id="Helmet_Classic">
+<g id="Left-Earcap_Classic" class="toggle"><path id="Ear-Cap_Left_Classic" fill="rgb(246, 160, 0)"/>
+</g>
+<g id="Right-Earcap_Classic" class="toggle"><g id="Range-Finder_Right_Classic" class="option" style="display: inherit;">
+<path id="Shaft_Right_Range-Finder_Classic" fill="rgb(0, 80, 137)"/>
+<path id="Finder_Right_Range-Finder_Classic" fill="rgb(12, 12, 10)"/>
+<g id="Cover_Right_Range-Finder_Classic" fill="rgb(12, 12, 10)">
 </g>
 </g>
-<svg version="1.1" id="Helmets" xmlns="http://www.w3.org/2000/svg" y="-54px" height="85px" viewBox="0 0 80 80" class="swappable">
-<g id="Helmet_Classic" style="visibility: visible;">
-<g id="Left-Earcap_Classic" class="toggle">
-<path id="Ear-Cap_Left_Classic" style="fill: rgb(246, 160, 0);"/>
-</g>
-<g id="Right-Earcap_Classic" class="toggle">
-<g id="Range-Finder_Right_Classic" class="option" style="display: inherit;">
-<path id="Shaft_Right_Range-Finder_Classic" style="fill: rgb(0, 80, 137);"/>
-<path id="Finder_Right_Range-Finder_Classic" style="fill: rgb(12, 12, 10);"/>
-<g id="Cover_Right_Range-Finder_Classic" style="fill: rgb(12, 12, 10);">
-</g>
-</g>
-<path id="Ear-Cap_Right_Classic" style="fill: rgb(246, 160, 0);"/>
+<path id="Ear-Cap_Right_Classic" fill="rgb(246, 160, 0)"/>
 </g>
 <g id="Helmet_Pieces_Classic">
-<g id="Face_Classic" style="fill: rgb(91, 24, 28);">
+<g id="Face_Classic" fill="rgb(91, 24, 28)">
 </g>
-<g id="Cheeks_Classic" style="fill: rgb(12, 12, 10);">
+<g id="Cheeks_Classic" fill="rgb(12, 12, 10)">
 </g>
-<path id="Eyes_Classic" style="fill: rgb(0, 80, 137);"/>
-<g id="Visors_Classic">
-<path id="Basic_Visor_Classic" class="option" style="fill: rgb(0, 0, 0); display: inherit;"/>
+<path id="Eyes_Classic" fill="rgb(0, 80, 137)"/>
+<g fill="#000000" id="Visors_Classic"><path fill="rgb(0, 0, 0)" id="Basic_Visor_Classic" class="option" style="display: inherit;"/>
 </g>
-<path id="Dome_Classic" style="fill: rgb(91, 24, 28);"/>
+<path id="Dome_Classic" fill="rgb(91, 24, 28)"/>
 </g>
-</g>
-</svg>
+</g></g>
+<g id="HelmetsDecals" mask="url(#HelmetsMask)"/>
 <g id="Shoulders">
-<g id="Left-Shoulder">
-<g id="Classic_Shoulder_Left" class="option" style="display: inherit;">
-<path id="Main_Shoulder_Classic_Left" style="fill: rgb(246, 160, 0);"/>
-<path id="Trauma-Plates_Shoulder_Classic_Left" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<g id="Left-Shoulder"><g id="Classic_Shoulder_Left" class="option" style="display: inherit;">
+<path id="Main_Shoulder_Classic_Left" fill="rgb(246, 160, 0)"/>
+<path id="Trauma-Plates_Shoulder_Classic_Left" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
 </g>
 </g>
-<g id="Right-Shoulder">
-<g id="Classic_Shoulder_Right" class="option" style="display: inherit;">
-<path id="Main_Shoulder_Classic_Right" style="fill: rgb(91, 24, 28);"/>
-<path id="Trauma-Plates_Shoulder_Classic_Right" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<g id="Right-Shoulder"><g id="Classic_Shoulder_Right" class="option" style="display: inherit;">
+<path id="Main_Shoulder_Classic_Right" fill="rgb(91, 24, 28)"/>
+<path id="Trauma-Plates_Shoulder_Classic_Right" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
 </g>
 </g>
+</g>
+<g id="ShouldersDecals" mask="url(#ShouldersMask)">
 </g>
 <g id="Gauntlets">
-<g id="Left-Gauntlets">
-<g id="Basic_Gauntlet_Left" class="option" style="display: inherit;">
-<path id="Top-2_Basic_Gauntlet_Left" style="fill: rgb(91, 24, 28);"/>
-<path id="Top-1_Basic_Gauntlet_Left" style="fill: rgb(246, 160, 0);"/>
-<g id="Accent-Bottom_Basic_Gauntlet_Left" style="fill: rgb(91, 24, 28);">
+<g id="Left-Gauntlets"><g id="Basic_Gauntlet_Left" class="option" style="display: inherit;">
+<path id="Top-2_Basic_Gauntlet_Left" fill="rgb(91, 24, 28)"/>
+<path id="Top-1_Basic_Gauntlet_Left" fill="rgb(246, 160, 0)"/>
+<g id="Accent-Bottom_Basic_Gauntlet_Left" fill="rgb(91, 24, 28)">
 </g>
-<path id="Bottom_Basic_Gauntlet_Left" style="fill: rgb(91, 24, 28);"/>
-<g id="Flamethrower_Attachment_Basic_Gauntlet_Left" class="option" style="display: inherit;">
-<g id="Tubes_Flamethrower_Attachment_Basic_Gauntlet_Left" style="fill: rgb(155, 155, 155);">
+<path id="Bottom_Basic_Gauntlet_Left" fill="rgb(91, 24, 28)"/><g id="Flamethrower_Attachment_Basic_Gauntlet_Left" class="option" style="display: inherit;">
+<g id="Tubes_Flamethrower_Attachment_Basic_Gauntlet_Left" fill="rgb(155, 155, 155)">
 </g>
-<g id="Main_Flamethrower_Attachment_Basic_Gauntlet_Left" style="fill: rgb(155, 155, 155);">
+<g id="Main_Flamethrower_Attachment_Basic_Gauntlet_Left" fill="rgb(155, 155, 155)">
 </g>
-<g id="Accent_Flamethrower_Attachment_Basic_Gauntlet_Left" style="fill: rgb(155, 155, 155);">
+<g id="Accent_Flamethrower_Attachment_Basic_Gauntlet_Left" fill="rgb(155, 155, 155)">
 </g>
-<path id="Base_Flamethrower_Attachment_Basic_Gauntlet_Left" style="fill: rgb(91, 24, 28);"/>
+<path id="Base_Flamethrower_Attachment_Basic_Gauntlet_Left" fill="rgb(91, 24, 28)"/>
+</g></g>
 </g>
+<g id="Right-Gauntlets"><g id="Basic_Gauntlet_Right" class="option" style="display: inherit;">
+<path id="Top-2_Basic_Gauntlet_Right" fill="rgb(0, 80, 137)"/>
+<path id="Top-1_Basic_Gauntlet_Right" fill="rgb(91, 24, 28)"/>
+<g id="Accent-Bottom_Basic_Gauntlet_Right" fill="rgb(91, 24, 28)">
 </g>
-</g>
-<g id="Right-Gauntlets">
-<g id="Basic_Gauntlet_Right" class="option" style="display: inherit;">
-<path id="Top-2_Basic_Gauntlet_Right" style="fill: rgb(0, 80, 137);"/>
-<path id="Top-1_Basic_Gauntlet_Right" style="fill: rgb(91, 24, 28);"/>
-<g id="Accent-Bottom_Basic_Gauntlet_Right" style="fill: rgb(91, 24, 28);">
-</g>
-<path id="Bottom_Basic_Gauntlet_Right" style="fill: rgb(91, 24, 28);"/>
-<g id="No-Device_Attachment_Basic_Gauntlet_Right" class="option" style="display: inherit;">
+<path id="Bottom_Basic_Gauntlet_Right" fill="rgb(91, 24, 28)"/><g id="No-Device_Attachment_Basic_Gauntlet_Right" class="option" style="display: inherit;">
 </g>
 </g>
 </g>
+</g>
+<g id="GauntletsDecals" mask="url(#GauntletsMask)">
 </g>
 <g id="Shins">
-<g id="Left-Shin">
-<g id="Basic_Shin_Left" class="option" style="display: inherit;">
-<path id="Shin_Basic-Shin_Left" style="fill: rgb(246, 160, 0);"/>
-<path id="Trauma-Plating_Basic-Shin_Left" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
-<g id="Ridge_Basic-Shin_Left" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<g id="Left-Shin"><g id="Basic_Shin_Left" class="option" style="display: inherit;">
+<path id="Shin_Basic-Shin_Left" fill="rgb(246, 160, 0)"/>
+<path id="Trauma-Plating_Basic-Shin_Left" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
+<g id="Ridge_Basic-Shin_Left" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
 </g>
 </g>
-<g id="Right-Shin">
-<g id="Basic_Shin_Right" class="option" style="display: inherit;">
-<path id="Shin_Basic-Shin_Right" style="fill: rgb(91, 24, 28);"/>
-<path id="Trauma-Plating_Basic-Shin_Right" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
-<g id="Ridge_Basic-Shin_Right" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
+<g id="Right-Shin"><g id="Basic_Shin_Right" class="option" style="display: inherit;">
+<path id="Shin_Basic-Shin_Right" fill="rgb(91, 24, 28)"/>
+<path id="Trauma-Plating_Basic-Shin_Right" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
+<g id="Ridge_Basic-Shin_Right" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
 </g>
 </g>
+</g>
+<g id="ShinsDecals" mask="url(#ShinsMask)">
 </g>
 <g id="Foot">
 <g id="Left-Ankle">
 <g id="None_Ankle_Left" class="option" style="display: inherit;">
-</g>
-</g>
-<g id="Left-Toe">
-<g id="None_Toe_Left" class="option" style="display: inherit;">
+</g></g>
+<g id="Left-Toe"><g id="None_Toe_Left" class="option" style="display: inherit;">
 </g>
 </g>
 <g id="Right-Ankle">
 <g id="None_Ankle_Right" class="option" style="display: inherit;">
+</g></g>
+<g id="Right-Toe"><g id="None_Toe_Right" class="option" style="display: inherit;">
 </g>
 </g>
-<g id="Right-Toe">
-<g id="None_Toe_Right" class="option" style="display: inherit;">
 </g>
-</g>
+<g id="FootDecals" mask="url(#FootMask)">
 </g>
 <g id="Knees">
-<g id="Left-Knee">
-<g id="Basic_Knee_Left" class="option" style="display: inherit;">
+<g id="Left-Knee"><g id="Basic_Knee_Left" class="option" style="display: inherit;">
 <g id="Missiles_Basic-Knee_Left" class="toggle" style="display:none"/>
-<g id="Knee_Basic-Knee_Left" style="fill: rgb(91, 24, 28);">
+<g id="Knee_Basic-Knee_Left" fill="rgb(91, 24, 28)">
 </g>
 </g>
 </g>
-<g id="Right-Knee">
-<g id="Basic_Knee_Right" class="option" style="display: inherit;">
+<g id="Right-Knee"><g id="Basic_Knee_Right" class="option" style="display: inherit;">
 <g id="Missiles_Basic-Knee_Right" class="toggle" style="display:none"/>
-<g id="Knee_Basic-Knee_Right" style="fill: rgb(0, 80, 137);">
+<g id="Knee_Basic-Knee_Right" fill="rgb(0, 80, 137)">
 </g>
 </g>
 </g>
+</g>
+<g id="KneesDecals" mask="url(#KneesMask)">
 </g>
 <g id="Thighs">
 <g id="Left-Thigh">
 <g id="None_Thigh_Left" class="option" style="display: inherit;">
+</g></g>
+<g id="Right-Thigh"><g id="Basic_Thigh_Right" class="option" style="display: inherit;">
+<path id="Thigh_Basic-Thigh_Right" fill="rgb(0, 80, 137)"/>
+<path id="Trauma-Plate_Basic-Thigh_Right" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
+<g id="Ridge_Basic-Thigh_Right" class="toggle" style="display:none" fill="rgb(255, 255, 255)"/>
 </g>
 </g>
-<g id="Right-Thigh">
-<g id="Basic_Thigh_Right" class="option" style="display: inherit;">
-<path id="Thigh_Basic-Thigh_Right" style="fill: rgb(0, 80, 137);"/>
-<path id="Trauma-Plate_Basic-Thigh_Right" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
-<g id="Ridge_Basic-Thigh_Right" class="toggle" style="display: none; fill: rgb(255, 255, 255);"/>
 </g>
-</g>
+<g id="ThighsDecals" mask="url(#ThighsMask)">
 </g>
 <g id="Groin">
 <g id="None_Groin" class="option" style="display: inherit;">
-</g>
+</g></g>
+<g id="GroinDecals" mask="url(#GroinMask)">
 </g>
 <g id="Waist">
 <g id="Accessories_Waist">
 <g id="Kama" class="toggle" style="">
 <g id="Clean_Kama" class="option" style="display: inherit;">
-<g id="Trim_Kama-Clean" style="fill: rgb(91, 24, 28);">
+<g id="Trim_Kama-Clean" fill="rgb(91, 24, 28)">
 </g>
-<g id="Main_Kama-Clean" style="fill: rgb(60, 60, 60);">
+<g id="Main_Kama-Clean" fill="rgb(60, 60, 60)">
 </g>
-</g>
-</g>
+</g></g>
 <g id="Loin-Cloth" class="toggle" style="">
 <g id="Clean_Loin-Cloth" class="option" style="display: inherit;">
-<path id="Trim_Loin-Cloth-Clean" style="fill: rgb(91, 24, 28);"/>
-<path id="Main_Loin-Cloth-Clean" style="fill: rgb(60, 60, 60);"/>
-</g>
-</g>
+<path id="Trim_Loin-Cloth-Clean" fill="rgb(91, 24, 28)"/>
+<path id="Main_Loin-Cloth-Clean" fill="rgb(60, 60, 60)"/>
+</g></g>
 <g id="Left-Holster" class="toggle" style="display:none"/>
-<g id="Right-Holster" class="toggle" style="">
-<g id="Belt-Holster_Right" class="option" style="display: inherit;">
+<g id="Right-Holster" class="toggle" style=""><g id="Belt-Holster_Right" class="option" style="display: inherit;">
 <g id="Weapon_Belt-Holster-Right">
-<g id="Main_Weapon_Belt-Holster-Right" style="fill: rgb(119, 119, 119);">
+<g id="Main_Weapon_Belt-Holster-Right" fill="rgb(119, 119, 119)">
 </g>
-<g id="Accent_Weapon_Belt-Holster-Right" style="fill: rgb(0, 0, 0);">
-</g>
-</g>
-<path id="Holster_Belt-Holster-Right" style="fill: rgb(68, 40, 16);"/>
+<g id="Accent_Weapon_Belt-Holster-Right" fill="rgb(0, 0, 0)">
 </g>
 </g>
+<path id="Holster_Belt-Holster-Right" fill="rgb(68, 40, 16)"/>
+</g>
+</g>
+<g id="Left-Trophy" class="toggle" style="display:none"/>
+<g id="Right-Trophy" class="toggle" style="display:none"/>
 </g>
 <g id="Under-Belt">
-<g id="Sash" class="option" style="fill: rgb(91, 24, 28); display: inherit;">
-</g>
-</g>
-<g id="Belt">
-<g id="Pouch-Belt-4" class="option" style="display: inherit;">
-<path id="Main_Pouch-Belt-4" style="fill: rgb(80, 49, 22);"/>
-<rect id="Buckle_Pouch-Belt-4" x="78.8" y="86.6" width="11.2" height="9.2" style="fill: rgb(80, 49, 22);"/>
-<g id="Pouches_Pouch-Belt-4" style="fill: rgb(70, 37, 8);">
+<g id="Sash" class="option" fill="rgb(91, 24, 28)" style="display: inherit;">
+</g></g>
+<g id="Belt"><g id="Pouch-Belt-4" class="option" style="display: inherit;">
+<path id="Main_Pouch-Belt-4" fill="rgb(80, 49, 22)"/>
+<rect id="Buckle_Pouch-Belt-4" x="79.37" y="87.01" width="11.28" height="9.21" fill="rgb(80, 49, 22)"/>
+<g id="Pouches_Pouch-Belt-4" fill="rgb(70, 37, 8)">
 <g>
 <g>
 </g>
@@ -275,13 +286,16 @@
 <g>
 </g>
 </g>
+</g></g>
 </g>
-</g>
+<g id="WaistDecals" mask="url(#WaistMask)">
 </g>
 <g id="Extras_Front">
-<g id="Front">
-<g id="None_Front" class="option" style="display: inherit;">
+<g id="Front"><g id="None_Front" class="option" style="display: inherit;">
 </g>
 </g>
 </g>
-</svg></svg>
+<g id="Extras-FrontDecals" mask="url(#FrontMask)">
+</g>
+</g>
+</svg>

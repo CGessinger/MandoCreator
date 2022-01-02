@@ -739,7 +739,7 @@ l-3.93,3.91L85,47.98L84.17,48.19z"/>
 </g>
 <g id="Chest_Gunslinger-MK1">
 <g id="Abdomen_Gunslinger-MK1">
-<path id="Abdomen-Plate_GunslingerK1" d="M106.68,61.84l-0.22,2.01c0,0-8.95,5.73-12.56,7.81
+<path id="Abdomen-Plate_Gunslinger-MK1" d="M106.68,61.84l-0.22,2.01c0,0-8.95,5.73-12.56,7.81
 c-3.35,1.92-5.93,2.31-8.89,2.31s-5.55-0.39-8.89-2.31c-3.61-2.08-12.56-7.81-12.56-7.81l-0.22-2.01H106.68z"/>
 </g>
 <g id="Chest-Plates_Gunslinger-MK1">
@@ -1409,8 +1409,8 @@ c0.01,0.07,0.02,0.14,0.02,0.21L145.57,95.09z"/>
 <path id="Base_Flamethrower_Attachment_Heavy_Gauntlet_Left" d="M141.98,87l-1.39-7.85l1.01,0.21l2.35,13.27
 l-0.87,0.59l-0.59-3.32l0.54-0.11l-0.51-2.89L141.98,87z"/>
 </g>
-<g id="Missle_Attachment_Heavy_Gauntlet_Left" class="option">
-<g id="Head_Missle_Attachment_Heavy_Gauntlet_Left">
+<g id="Missile_Attachment_Heavy_Gauntlet_Left" class="option">
+<g id="Head_Missile_Attachment_Heavy_Gauntlet_Left">
 <path d="M146,97.59l-2.64-4.07l3.71-0.75L146,97.59z"/>
 <path d="M144.69,93.66c0.08-0.02,0.18,0.15,0.22,0.36c0.04,0.22,0,0.4-0.08,0.42c-0.08,0.02-0.18-0.14-0.22-0.36
 S144.61,93.68,144.69,93.66z"/>
@@ -1438,7 +1438,7 @@ C145.59,95.91,145.62,95.77,145.68,95.75z"/>
 L146.55,95.13z M144.47,95.22c-0.03-0.17,0-0.32,0.06-0.33c0.07-0.01,0.14,0.12,0.17,0.29c0.03,0.16,0.01,0.3-0.05,0.33
 L144.47,95.22z"/>
 </g>
-<g id="Main_Missle_Attachment_Heavy_Gauntlet_Left">
+<g id="Main_Missile_Attachment_Heavy_Gauntlet_Left">
 <path d="M146.51,92.25l-2.81,0.57l0.11,0.61l2.81-0.57L146.51,92.25z"/>
 <path d="M144.23,79.28l-2.81,0.57l0.11,0.61l2.81-0.57L144.23,79.28z"/>
 <path d="M143.26,77.14l-1.65,0.33l0.11,0.61l1.65-0.33L143.26,77.14z"/>
@@ -1446,7 +1446,7 @@ L144.47,95.22z"/>
 <path d="M144.6,79.84l-3.32,0.67l2.17,12.35l3.32-0.67L144.6,79.84z"/>
 <path d="M142.55,87.02l-0.54,0.11l0.51,2.9l0.54-0.11L142.55,87.02z"/>
 </g>
-<g id="Accent_Missle_Attachment_Heavy_Gauntlet_Left">
+<g id="Accent_Missile_Attachment_Heavy_Gauntlet_Left">
 <path d="M146.14,98.38l-0.54-1.04l0.69-0.14L146.14,98.38z"/>
 <path d="M146.17,96.93l-0.55,0.11l-0.02,0.29l0.69-0.14L146.17,96.93z"/>
 <path d="M143.29,76.24l-2.02,0.41l0.15,0.86l2.02-0.41L143.29,76.24z"/>
@@ -1457,7 +1457,7 @@ L144.47,95.22z"/>
 <path d="M144.36,79.89L143.8,80l2.17,12.36l0.56-0.11L144.36,79.89z"/>
 <path d="M142.07,80.35l-0.35,0.07l2.17,12.36l0.35-0.07L142.07,80.35z"/>
 </g>
-<path id="Base_Missle_Attachment_Heavy_Gauntlet_Left" d="M141.63,79.49l-1.01-0.21l2.48,14.07l0.87-0.59
+<path id="Base_Missile_Attachment_Heavy_Gauntlet_Left" d="M141.63,79.49l-1.01-0.21l2.48,14.07l0.87-0.59
 L141.63,79.49z M142.55,87.02l-0.54,0.11l0.51,2.9l0.54-0.11L142.55,87.02z"/>
 </g>
 <g id="No-Device_Attachment_Heavy_Gauntlet_Left" class="option">
@@ -1532,8 +1532,8 @@ c0.12-0.01,0.24,0.24,0.27,0.56c0.01,0.07,0.01,0.14,0,0.21L144.87,97.55z"/>
 <path id="Base_Flamethrower_Attachment_Gunslinger_Gauntlet_Left" d="M141.92,88.72l-0.68-7.94l0.98,0.29
 l1.15,13.43l-0.92,0.51l-0.29-3.36l0.55-0.06l-0.25-2.93L141.92,88.72z"/>
 </g>
-<g id="Missle_Attachment_Gunslinger_Gauntlet_Left" class="option">
-<g id="Head_Missle_Attachment_Gunslinger_Gauntlet_Left">
+<g id="Missile_Attachment_Gunslinger_Gauntlet_Left" class="option">
+<g id="Head_Missile_Attachment_Gunslinger_Gauntlet_Left">
 <path d="M145,99.64l-2.27-4.28l3.76-0.42L145,99.64z"/>
 <path d="M144.04,95.61c0.08-0.01,0.16,0.16,0.18,0.38c0.02,0.22-0.03,0.4-0.12,0.41
 c-0.08,0.01-0.16-0.16-0.18-0.38C143.91,95.81,143.96,95.62,144.04,95.61z"/>
@@ -1561,7 +1561,7 @@ C144.74,97.93,144.78,97.79,144.84,97.79z"/>
 c0.07-0.01,0.13,0.12,0.15,0.29L145.77,97.24z M143.68,97.15c-0.01-0.17,0.03-0.31,0.09-0.32c0.07-0.01,0.13,0.13,0.15,0.3
 c0.01,0.16-0.02,0.3-0.08,0.33L143.68,97.15z"/>
 </g>
-<g id="Main_Missle_Attachment_Gunslinger_Gauntlet_Left">
+<g id="Main_Missile_Attachment_Gunslinger_Gauntlet_Left">
 <path d="M145.99,94.36l-2.84,0.32l0.05,0.62l2.85-0.32L145.99,94.36z"/>
 <path d="M144.86,81.25l-2.84,0.32l0.05,0.62l2.85-0.32L144.86,81.25z"/>
 <path d="M144.08,79.03l-1.68,0.19l0.05,0.62l1.68-0.19L144.08,79.03z"/>
@@ -1569,7 +1569,7 @@ c0.01,0.16-0.02,0.3-0.08,0.33L143.68,97.15z"/>
 <path d="M145.17,81.84l-3.36,0.38l1.07,12.5l3.36-0.38L145.17,81.84z"/>
 <path d="M142.5,88.81l-0.55,0.06l0.25,2.93l0.55-0.06L142.5,88.81z"/>
 </g>
-<g id="Accent_Missle_Attachment_Gunslinger_Gauntlet_Left">
+<g id="Accent_Missile_Attachment_Gunslinger_Gauntlet_Left">
 <path d="M145.07,100.43l-0.45-1.08l0.7-0.08L145.07,100.43z"/>
 <path d="M145.23,99l-0.56,0.06l-0.04,0.29l0.7-0.08L145.23,99z"/>
 <path d="M144.19,78.14l-2.05,0.23l0.07,0.87l2.05-0.23L144.19,78.14z"/>
@@ -1580,7 +1580,7 @@ c0.01,0.16-0.02,0.3-0.08,0.33L143.68,97.15z"/>
 <path d="M144.94,81.86l-0.57,0.07l1.07,12.5l0.57-0.06L144.94,81.86z"/>
 <path d="M142.61,82.13l-0.35,0.04l1.07,12.5l0.35-0.04L142.61,82.13z"/>
 </g>
-<path id="Base_Missle_Attachment_Gunslinger_Gauntlet_Left" d="M142.25,81.23l-0.98-0.29l1.22,14.23l0.91-0.51
+<path id="Base_Missile_Attachment_Gunslinger_Gauntlet_Left" d="M142.25,81.23l-0.98-0.29l1.22,14.23l0.91-0.51
 L142.25,81.23z M142.5,88.81l-0.55,0.06l0.25,2.93l0.55-0.06L142.5,88.81z"/>
 </g>
 <g id="No-Device_Attachment_Gunslinger_Gauntlet_Left" class="option">
@@ -1653,8 +1653,8 @@ c0.12-0.03,0.27,0.21,0.33,0.52c0.02,0.07,0.02,0.14,0.03,0.21L147.51,100.08z"/>
 <path id="Base_Flamethrower_Attachment_Basic_Gauntlet_Left" d="M143.5,91.67l-1.65-7.8l1.01,0.17l2.79,13.19
 l-0.85,0.61l-0.7-3.3l0.54-0.13l-0.61-2.88L143.5,91.67z"/>
 </g>
-<g id="Missle_Attachment_Basic_Gauntlet_Left" class="option">
-<g id="Head_Missle_Attachment_Basic_Gauntlet_Left">
+<g id="Missile_Attachment_Basic_Gauntlet_Left" class="option">
+<g id="Head_Missile_Attachment_Basic_Gauntlet_Left">
 <path d="M147.9,102.14l-2.78-3.97l3.68-0.88L147.9,102.14z"/>
 <path d="M146.45,98.26c0.08-0.02,0.18,0.14,0.23,0.35c0.04,0.21,0.02,0.4-0.06,0.42
 c-0.08,0.02-0.18-0.14-0.23-0.35C146.34,98.47,146.37,98.28,146.45,98.26z"/>
@@ -1682,7 +1682,7 @@ C147.43,100.47,147.45,100.33,147.51,100.32z"/>
 c0.06-0.02,0.14,0.11,0.18,0.27L148.36,99.66z M146.28,99.82c-0.03-0.17-0.01-0.31,0.05-0.33c0.07-0.02,0.15,0.11,0.18,0.28
 c0.03,0.16,0.02,0.3-0.04,0.33L146.28,99.82z"/>
 </g>
-<g id="Main_Missle_Attachment_Basic_Gauntlet_Left">
+<g id="Main_Missile_Attachment_Basic_Gauntlet_Left">
 <path d="M148.22,96.78l-2.78,0.66l0.13,0.61l2.79-0.66L148.22,96.78z"/>
 <path d="M145.49,83.9l-2.79,0.66l0.13,0.61l2.78-0.66L145.49,83.9z"/>
 <path d="M144.44,81.79l-1.64,0.39l0.13,0.61l1.64-0.39L144.44,81.79z"/>
@@ -1690,7 +1690,7 @@ c0.03,0.16,0.02,0.3-0.04,0.33L146.28,99.82z"/>
 <path d="M145.87,84.45l-3.29,0.78l2.6,12.27l3.29-0.78L145.87,84.45z"/>
 <path d="M144.08,91.7l-0.54,0.13l0.61,2.88l0.54-0.13L144.08,91.7z"/>
 </g>
-<g id="Accent_Missle_Attachment_Basic_Gauntlet_Left">
+<g id="Accent_Missile_Attachment_Basic_Gauntlet_Left">
 <path d="M148.06,102.92l-0.58-1.02l0.69-0.16L148.06,102.92z"/>
 <path d="M148.04,101.47l-0.55,0.13l-0.01,0.29l0.69-0.16L148.04,101.47z"/>
 <path d="M144.45,80.89l-2.01,0.48l0.18,0.85l2.01-0.48L144.45,80.89z"/>
@@ -1701,7 +1701,7 @@ c0.03,0.16,0.02,0.3-0.04,0.33L146.28,99.82z"/>
 <path d="M145.65,84.5l-0.56,0.13l2.6,12.27l0.56-0.13L145.65,84.5z"/>
 <path d="M143.37,85.04l-0.35,0.08l2.6,12.27l0.34-0.08L143.37,85.04z"/>
 </g>
-<path id="Base_Missle_Attachment_Basic_Gauntlet_Left" d="M142.9,84.2l-1.01-0.17L144.85,98l0.85-0.61L142.9,84.2
+<path id="Base_Missile_Attachment_Basic_Gauntlet_Left" d="M142.9,84.2l-1.01-0.17L144.85,98l0.85-0.61L142.9,84.2
 z M144.08,91.7l-0.54,0.13l0.61,2.88l0.54-0.13L144.08,91.7z"/>
 </g>
 <g id="No-Device_Attachment_Basic_Gauntlet_Left" class="option">
@@ -1817,8 +1817,8 @@ c-0.01,0.07-0.02,0.14-0.02,0.21L24.61,95.09z"/>
 <path id="Base_Flamethrower_Attachment_Heavy_Gauntlet_Right" d="M28.2,87l1.39-7.85l-1.01,0.21l-2.35,13.27
 l0.87,0.59l0.59-3.32l-0.54-0.11l0.51-2.89L28.2,87z"/>
 </g>
-<g id="Missle_Attachment_Heavy_Gauntlet_Right" class="option">
-<g id="Head_Missle_Attachment_Heavy_Gauntlet_Right">
+<g id="Missile_Attachment_Heavy_Gauntlet_Right" class="option">
+<g id="Head_Missile_Attachment_Heavy_Gauntlet_Right">
 <path d="M24.18,97.59l2.64-4.07l-3.71-0.75L24.18,97.59z"/>
 <path d="M25.49,93.66c-0.08-0.02-0.18,0.15-0.22,0.36c-0.04,0.22,0,0.4,0.08,0.42c0.08,0.02,0.18-0.14,0.22-0.36
 S25.58,93.68,25.49,93.66z"/>
@@ -1846,7 +1846,7 @@ C24.59,95.91,24.56,95.77,24.5,95.75z"/>
 L23.63,95.13z M25.72,95.22c0.03-0.17,0-0.32-0.06-0.33c-0.07-0.01-0.14,0.12-0.17,0.29c-0.03,0.16-0.01,0.3,0.05,0.33
 L25.72,95.22z"/>
 </g>
-<g id="Main_Missle_Attachment_Heavy_Gauntlet_Right">
+<g id="Main_Missile_Attachment_Heavy_Gauntlet_Right">
 <path d="M23.67,92.25l2.81,0.57l-0.11,0.61l-2.81-0.57L23.67,92.25z"/>
 <path d="M25.95,79.28l2.81,0.57l-0.11,0.61l-2.81-0.57L25.95,79.28z"/>
 <path d="M26.92,77.14l1.65,0.33l-0.11,0.61l-1.65-0.33L26.92,77.14z"/>
@@ -1854,7 +1854,7 @@ L25.72,95.22z"/>
 <path d="M25.59,79.84l3.32,0.67l-2.17,12.35l-3.32-0.67L25.59,79.84z"/>
 <path d="M27.63,87.02l0.54,0.11l-0.51,2.9l-0.54-0.11L27.63,87.02z"/>
 </g>
-<g id="Accent_Missle_Attachment_Heavy_Gauntlet_Right">
+<g id="Accent_Missile_Attachment_Heavy_Gauntlet_Right">
 <path d="M24.04,98.38l0.54-1.04l-0.69-0.14L24.04,98.38z"/>
 <path d="M24.01,96.93l0.55,0.11l0.02,0.29l-0.69-0.14L24.01,96.93z"/>
 <path d="M26.89,76.24l2.02,0.41l-0.15,0.86l-2.02-0.41L26.89,76.24z"/>
@@ -1865,7 +1865,7 @@ L25.72,95.22z"/>
 <path d="M25.82,79.89L26.38,80l-2.17,12.36l-0.56-0.11L25.82,79.89z"/>
 <path d="M28.11,80.35l0.35,0.07l-2.17,12.36l-0.35-0.07L28.11,80.35z"/>
 </g>
-<path id="Base_Missle_Attachment_Heavy_Gauntlet_Right" d="M28.55,79.49l1.01-0.21l-2.48,14.07l-0.87-0.59
+<path id="Base_Missile_Attachment_Heavy_Gauntlet_Right" d="M28.55,79.49l1.01-0.21l-2.48,14.07l-0.87-0.59
 L28.55,79.49z M27.63,87.02l0.54,0.11l-0.51,2.9l-0.54-0.11L27.63,87.02z"/>
 </g>
 <g id="No-Device_Attachment_Heavy_Gauntlet_Right" class="option">
@@ -1940,8 +1940,8 @@ c-0.01,0.07-0.01,0.14,0,0.21L25.24,97.55z"/>
 <path id="Base_Flamethrower_Attachment_Gunslinger_Gauntlet_Right" d="M28.19,88.72l0.68-7.94l-0.98,0.29
 L26.74,94.5l0.91,0.51l0.29-3.36l-0.55-0.06l0.25-2.93L28.19,88.72z"/>
 </g>
-<g id="Missle_Attachment_Gunslinger_Gauntlet_Right" class="option">
-<g id="Head_Missle_Attachment_Gunslinger_Gauntlet_Right">
+<g id="Missile_Attachment_Gunslinger_Gauntlet_Right" class="option">
+<g id="Head_Missile_Attachment_Gunslinger_Gauntlet_Right">
 <path d="M25.11,99.64l2.27-4.28l-3.76-0.42L25.11,99.64z"/>
 <path d="M26.07,95.61c-0.08-0.01-0.16,0.16-0.18,0.38c-0.02,0.22,0.03,0.4,0.11,0.41
 c0.08,0.01,0.16-0.16,0.18-0.38C26.2,95.81,26.15,95.62,26.07,95.61z"/>
@@ -1969,7 +1969,7 @@ C25.37,97.93,25.33,97.79,25.27,97.79z"/>
 L24.34,97.24z M26.43,97.15c0.01-0.17-0.03-0.31-0.09-0.32c-0.07-0.01-0.13,0.13-0.15,0.3c-0.01,0.16,0.02,0.3,0.08,0.33
 L26.43,97.15z"/>
 </g>
-<g id="Main_Missle_Attachment_Gunslinger_Gauntlet_Right">
+<g id="Main_Missile_Attachment_Gunslinger_Gauntlet_Right">
 <path d="M24.12,94.36l2.84,0.32l-0.05,0.62l-2.84-0.32L24.12,94.36z"/>
 <path d="M25.25,81.25l2.84,0.32l-0.05,0.62l-2.85-0.32L25.25,81.25z"/>
 <path d="M26.03,79.03l1.67,0.19l-0.05,0.62l-1.68-0.19L26.03,79.03z"/>
@@ -1977,7 +1977,7 @@ L26.43,97.15z"/>
 <path d="M24.94,81.84l3.36,0.38l-1.07,12.5l-3.36-0.38L24.94,81.84z"/>
 <path d="M27.61,88.81l0.55,0.06l-0.25,2.93l-0.55-0.06L27.61,88.81z"/>
 </g>
-<g id="Accent_Missle_Attachment_Gunslinger_Gauntlet_Right">
+<g id="Accent_Missile_Attachment_Gunslinger_Gauntlet_Right">
 <path d="M25.04,100.43l0.45-1.08l-0.7-0.08L25.04,100.43z"/>
 <path d="M24.88,99l0.56,0.06l0.05,0.29l-0.7-0.08L24.88,99z"/>
 <path d="M25.92,78.14l2.05,0.23l-0.07,0.87L25.84,79L25.92,78.14z"/>
@@ -1988,7 +1988,7 @@ L26.43,97.15z"/>
 <path d="M25.17,81.86l0.57,0.07l-1.07,12.5l-0.57-0.06L25.17,81.86z"/>
 <path d="M27.5,82.13l0.35,0.04l-1.07,12.5l-0.35-0.04L27.5,82.13z"/>
 </g>
-<path id="Base_Missle_Attachment_Gunslinger_Gauntlet_Right" d="M27.86,81.23l0.98-0.29l-1.22,14.23l-0.92-0.51
+<path id="Base_Missile_Attachment_Gunslinger_Gauntlet_Right" d="M27.86,81.23l0.98-0.29l-1.22,14.23l-0.92-0.51
 L27.86,81.23z M27.61,88.81l0.55,0.06l-0.25,2.93l-0.55-0.06L27.61,88.81z"/>
 </g>
 <g id="No-Device_Attachment_Gunslinger_Gauntlet_Right" class="option">
@@ -2061,8 +2061,8 @@ c-0.02,0.07-0.02,0.14-0.03,0.21L22.45,100.08z"/>
 <path id="Base_Flamethrower_Attachment_Basic_Gauntlet_Right" d="M26.46,91.67l1.65-7.8l-1.01,0.17l-2.79,13.19
 l0.84,0.61l0.7-3.3l-0.54-0.13l0.61-2.88L26.46,91.67z"/>
 </g>
-<g id="Missle_Attachment_Basic_Gauntlet_Right" class="option">
-<g id="Head_Missle_Attachment_Basic_Gauntlet_Right">
+<g id="Missile_Attachment_Basic_Gauntlet_Right" class="option">
+<g id="Head_Missile_Attachment_Basic_Gauntlet_Right">
 <path d="M22.06,102.14l2.78-3.97l-3.68-0.88L22.06,102.14z"/>
 <path d="M23.51,98.26c-0.08-0.02-0.18,0.14-0.23,0.35c-0.05,0.21-0.02,0.4,0.06,0.42
 c0.08,0.02,0.18-0.14,0.23-0.35C23.62,98.47,23.59,98.28,23.51,98.26z"/>
@@ -2090,7 +2090,7 @@ C22.53,100.47,22.51,100.33,22.45,100.32z"/>
 L21.6,99.66z M23.68,99.82c0.03-0.17,0.01-0.31-0.05-0.33c-0.06-0.02-0.15,0.11-0.18,0.28c-0.03,0.16-0.02,0.3,0.04,0.33
 L23.68,99.82z"/>
 </g>
-<g id="Main_Missle_Attachment_Basic_Gauntlet_Right">
+<g id="Main_Missile_Attachment_Basic_Gauntlet_Right">
 <path d="M21.74,96.78l2.78,0.66l-0.13,0.61l-2.78-0.66L21.74,96.78z"/>
 <path d="M24.47,83.9l2.78,0.66l-0.13,0.61l-2.78-0.66L24.47,83.9z"/>
 <path d="M25.51,81.79l1.64,0.39l-0.13,0.61l-1.64-0.39L25.51,81.79z"/>
@@ -2098,7 +2098,7 @@ L23.68,99.82z"/>
 <path d="M24.08,84.45l3.29,0.78l-2.6,12.27l-3.29-0.78L24.08,84.45z"/>
 <path d="M25.88,91.7l0.54,0.13l-0.61,2.88l-0.54-0.13L25.88,91.7z"/>
 </g>
-<g id="Accent_Missle_Attachment_Basic_Gauntlet_Right">
+<g id="Accent_Missile_Attachment_Basic_Gauntlet_Right">
 <path d="M21.9,102.92l0.58-1.02l-0.68-0.16L21.9,102.92z"/>
 <path d="M21.91,101.47l0.55,0.13l0.01,0.29l-0.68-0.16L21.91,101.47z"/>
 <path d="M25.51,80.89l2.01,0.48l-0.18,0.85l-2.01-0.48L25.51,80.89z"/>
@@ -2109,7 +2109,7 @@ L23.68,99.82z"/>
 <path d="M24.31,84.5l0.56,0.13l-2.6,12.27l-0.56-0.13L24.31,84.5z"/>
 <path d="M26.59,85.04l0.34,0.08l-2.6,12.27l-0.34-0.08L26.59,85.04z"/>
 </g>
-<path id="Base_Missle_Attachment_Basic_Gauntlet_Right" d="M27.06,84.2l1.01-0.17L25.11,98l-0.84-0.61L27.06,84.2
+<path id="Base_Missile_Attachment_Basic_Gauntlet_Right" d="M27.06,84.2l1.01-0.17L25.11,98l-0.84-0.61L27.06,84.2
 z M25.88,91.7l0.54,0.13l-0.61,2.88l-0.54-0.13L25.88,91.7z"/>
 </g>
 <g id="No-Device_Attachment_Basic_Gauntlet_Right" class="option">

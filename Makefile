@@ -48,32 +48,11 @@ MALE=$(wildcard gallery/male/*.svg)
 FEMALE=$(wildcard gallery/female/*.svg)
 RAW=$(patsubst gallery/male/%,gallery/raw/%,$(MALE))
 
-gallery: $(RAW) gallery/wrapper_male.svg gallery/wrapper_female.svg
+gallery: $(RAW)
 	touch $@;
-
-wrapper_%.svg: $(RAW)
-	echo $@;
-	echo "<?xml version='1.0' encoding='UTF-8' standalone='no'?><!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg version='1.1' xmlns='http://www.w3.org/2000/svg'>" > $@;
-	for i in $(notdir $(wildcard $*/*)); do \
-		sed " \
-			s|[[:space:]]id=\"[^\"]*\"||g; \
-			1s|.*|<g id='$$i'>|; \
-			$$ s|/svg></svg>|/g>|; \
-		" $*/$$i | tr -d '\n' >> $@; done;
-	echo "</svg>" >> $@;
 
 gallery/raw/%: gallery/male/% gallery/female/% | gallery/raw
 	echo $@;
-	sed -i " \
-		/<meta/ { \
-			s|.*<meta|<?xml version='1.0' encoding='UTF-8'?><svg version='1.1' xmlns='http://www.w3.org/2000/svg'><meta|; \
-			p; h; d; \
-		}; \
-		x; \
-		/meta/ ! { x; d; }; \
-		x; \
-		/[^[:space:]]/ ! { d; }; \
-	" $^;
 	sed " \
 		s|[[:space:]]d=[\"'][^\"']*[\"']||; \
 		/<\w\+\/>/ { d; }; \
