@@ -21,6 +21,7 @@ function PickerFactory () {
 
 		var rect;
 		function touch(event) {
+			if (!rect) return;
 			event.preventDefault();
 			if ("touches" in event)
 				event = event.touches[0];
@@ -41,6 +42,8 @@ function PickerFactory () {
 		});
 		o.addEventListener("mousemove", touch);
 		o.addEventListener("touchmove", touch);
+		o.addEventListener("mouseup", function() {rect = null;});
+		o.addEventListener("touchend", function() {rect = null;});
 	}
 
 	function Color () {

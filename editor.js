@@ -736,6 +736,7 @@ function reset (skipBuild, skipPrompt) {
 	if (!conf) return;
 	variants = new VariantsVault(null);
 	colors = resetColorCache(false);
+	History = new HistoryTracker;
 	Decals.reset();
 	if (skipBuild)
 		return;

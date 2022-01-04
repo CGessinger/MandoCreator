@@ -30,43 +30,42 @@ function DecalsBrace (g, grid, compass) {
 		];
 	}
 
-	function setupDragAndDrop (node, before, after) {
-		var drag = false;
+	var drag = null;
+	var onup = function() {
+		if (!drag) return;
+		drag = null;
+		grid.style.visibility = "";
+		compass.style.visibility = "";
+		variants.setItem(target_id, {x: x, y: y, ax: ax, ay: ay, phi: phi}, "decal", target_category);
+	}
+	document.addEventListener("mouseup", onup);
+	document.addEventListener("mouseleave", onup);
+	document.addEventListener("touchend", onup);
+	function setupDragAndDrop (node, drag_id, before, after) {
 		var offset = [0, 0];
 		var ondown = function(event) {
 			ctm = main_svg.getScreenCTM();
 			offset = getLocalCoordinates(event);
 			offset = before(offset);
-			drag = true;
+			drag = drag_id;
 		}
 		var onmove = function (event) {
-			if (!drag) return;
+			if (drag != drag_id) return;
 			event.preventDefault();
 			var coord = getLocalCoordinates(event);
 			coord[0] -= offset[0];
 			coord[1] -= offset[1];
 			after(coord);
 		}
-		var onup = function () {
-			if (!drag) return;
-			drag = false;
-			grid.style.visibility = "";
-			compass.style.visibility = "";
-			variants.setItem(target_id, {x: x, y: y, ax: ax, ay: ay, phi: phi}, "decal", target_category);
-		}
 
 		node.addEventListener("mousedown", ondown);
-		node.addEventListener("mousemove", onmove, {passive: false});
-		node.addEventListener("mouseup", onup);
-		node.addEventListener("mouseleave", onup);
-
 		node.addEventListener("touchstart", ondown);
-		node.addEventListener("touchmove", onmove, {passive: false});
-		node.addEventListener("touchend", onup);
+		document.addEventListener("mousemove", onmove, {passive: false});
+		document.addEventListener("touchmove", onmove, {passive: false});
 	}
 
 	var ch = g.lastElementChild.children;
-	setupDragAndDrop(ch[0], function (offset) {
+	setupDragAndDrop(ch[0], 1, function (offset) {
 		if (snapping.checked)
 			grid.style.visibility = "visible";
 		return [offset[0] - x, offset[1] - y];
@@ -77,7 +76,7 @@ function DecalsBrace (g, grid, compass) {
 		target_translate.setTranslate(x, y);
 		this_translate.setTranslate(x, y);
 	});
-	setupDragAndDrop(ch[1], function (offset) {
+	setupDragAndDrop(ch[1], 2, function (offset) {
 		if (snapping.checked) {
 			var m = compass.transform.baseVal[0].matrix;
 			m.a = m.d = ay;
@@ -103,7 +102,7 @@ function DecalsBrace (g, grid, compass) {
 		c = Math.cos(phi);
 		s = Math.sin(phi);
 	});
-	setupDragAndDrop(ch[2], function (offset) {
+	setupDragAndDrop(ch[2], 3, function (offset) {
 		if (snapping.checked)
 			grid.style.visibility = "visible";
 		return [
