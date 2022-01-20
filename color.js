@@ -300,8 +300,12 @@ function PickerFactory () {
 		});
 		var def = getDefaultColor(button.id, SVGNode);
 		if (!def) def = def_val;
-		if (def != "#FFFFFF")
-			input(def);
+		if (def != "#FFFFFF") {
+			var c = parseColorString(def);
+			if (!c) c = [1,1,1];
+			color.hex = c;
+			input(color.hex);
+		}
 	}
 	this.build = function (target, parent, kwargs) {
 		var span = XML.DOMNode("span", {class: "color_wrapper"}, parent);

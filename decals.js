@@ -39,17 +39,16 @@ function DecalsBrace (g, grid, compass) {
 		variants.setItem(target_id, {x: x, y: y, ax: ax, ay: ay, phi: phi}, "decal", target_category);
 	}
 	document.addEventListener("mouseup", onup);
-	document.addEventListener("mouseleave", onup);
 	document.addEventListener("touchend", onup);
 	function setupDragAndDrop (node, drag_id, before, after) {
 		var offset = [0, 0];
-		var ondown = function(event) {
+		function ondown (event) {
 			ctm = main_svg.getScreenCTM();
 			offset = getLocalCoordinates(event);
 			offset = before(offset);
 			drag = drag_id;
 		}
-		var onmove = function (event) {
+		function onmove (event) {
 			if (drag != drag_id) return;
 			event.preventDefault();
 			var coord = getLocalCoordinates(event);

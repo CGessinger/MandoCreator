@@ -34,7 +34,7 @@ self.addEventListener('fetch', function(event) {
 	event.respondWith(
 		caches.match(er).then(r0 => {
 			return r0 || fetch(er).then(r => {
-				if (r.ok) {
+				if (r.ok && !r.url.includes("gallery")) {
 					var clone = r.clone();
 					caches.open(CACHE).then(c => c.put(er, clone));
 				}
