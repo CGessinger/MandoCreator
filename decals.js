@@ -223,9 +223,11 @@ function DecalFactory (Picker) {
 	}
 
 	function BuildControlButtons (div, use) {
-		var controls = XML.DOMNode("span", {class: "right no_collapse"}, div);
+		var close = XML.DOMNode("button", {class: "delete right icon-remove no_collapse", title: "Delete", id: use.id + "Delete"}, div);
 
-		var up = XML.DOMNode("button", {class: "reorder icon-keyboard_arrow_up"}, controls);
+		var controls = XML.DOMNode("div", {class: "decal_buttons no_collapse"}, div);
+
+		var up = XML.DOMNode("button", {class: "reorder icon-up"}, controls);
 		up.addEventListener("click", function () {
 			var prev = div.previousElementSibling;
 			if (!prev)
@@ -234,7 +236,7 @@ function DecalFactory (Picker) {
 			use.parentNode.insertBefore(next_svg, use);
 			div.parentNode.insertBefore(div, prev);
 		});
-		var down = XML.DOMNode("button", {class: "reorder icon-keyboard_arrow_down"}, controls);
+		var down = XML.DOMNode("button", {class: "reorder icon-down"}, controls);
 		down.addEventListener("click", function () {
 			var next = div.nextElementSibling;
 			if (!next)
@@ -244,9 +246,21 @@ function DecalFactory (Picker) {
 			div.parentNode.insertBefore(next, div);
 		});
 
-		var close = XML.DOMNode("button", {class: "remove", id: use.id + "Delete"}, controls);
-		close.innerText = "x";
-		return close;
+		var bd = XML.DOMNode("button", {
+			class: "recreate icon-copy",
+			title: "Duplicate",
+		}, controls);
+		bd.style.gridColumn = "5";
+		var bm = XML.DOMNode("button", {
+			class: "recreate icon-mirror",
+			title: "Mirror",
+		}, controls);
+		bm.style.gridColumn = "6";
+		return {
+			"close": close,
+			"duplicate": bd,
+			"mirror": bm
+		};
 	}
 
 	function AddDecal (name, id, data) {
@@ -284,15 +298,30 @@ function DecalFactory (Picker) {
 			disabled: name.endsWith("__cd")
 		});
 
-		var close = BuildControlButtons(div, use);
+		var buttons = BuildControlButtons(div, use);
 		var closed = false;
-		close.addEventListener("click", function () {
+		buttons["close"].addEventListener("click", function () {
 			closed = true;
 			use.remove();
 			div.remove();
 			delete colors[button.id];
 			variants.removeItem(id, "decal", category);
 			count[name]--;
+		});
+		buttons["duplicate"].addEventListener("click", function () {
+			var ndata = variants.getItem(use.id, category);
+			AddDecal(name, null, ndata);
+		});
+		buttons["mirror"].addEventListener("click", function () {
+			var odata = variants.getItem(use.id, category);
+			var ndata = {
+				x: 170 - odata.x,
+				y: odata.y,
+				ax: odata.ax,
+				ay: odata.ay,
+				phi: -odata.phi
+			}
+			AddDecal(name, null, ndata);
 		});
 
 		var handler = function () {

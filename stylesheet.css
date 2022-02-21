@@ -17,13 +17,12 @@ FONTS
 }
 
 @font-face {
-	font-display: swap;
 	font-family: 'Raleway';
 	src:	local("Raleway"),
 		url('fonts/Raleway.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
-	font-display: block;
+	font-display: swap;
 }
 
 [class*="icon-"]:before {
@@ -48,100 +47,132 @@ FONTS
 	line-height: 2em;
 }
 
-.reorder:before {
-	line-height: 1em;
+.icon-module:before {
+  content: "\e922";
 }
-
-.icon-accessories-icon:before {
-	content: "\e904";
-}
-.icon-helmet-icon:before {
-	content: "\e905";
-}
-.icon-lower-armor-icon:before {
-	content: "\e906";
-}
-.icon-suit-icon:before {
-	content: "\e907";
-}
-.icon-upper-armor-icon:before {
-	content: "\e908";
-}
-.icon-grid_view:before {
-	content: "\e920";
-}
-.icon-keyboard_arrow_down:before {
-	content: "\e90a";
-}
-.icon-keyboard_arrow_left:before {
-	content: "\e90b";
-}
-.icon-keyboard_arrow_right:before {
-	content: "\e90c";
-}
-.icon-keyboard_arrow_up:before {
-	content: "\e90d";
-}
-.icon-refresh:before {
-	content: "\f021";
-}
-.icon-image:before {
-	content: "\f03e";
-}
-.icon-cog:before {
-	content: "\e921";
-}
-.icon-undo:before {
-	content: "\e91f";
-}
-.icon-zoom-out:before {
-	content: "\e916";
-}
-.icon-zoom-in:before {
-	content: "\e917";
-}
-.icon-heart:before {
-	content: "\e914";
-}
-.icon-folder-upload:before {
-	content: "\e910";
-}
-.icon-info:before {
-	content: "\e90e";
-}
-.icon-download:before {
-	content: "\e903";
-}
-.icon-equalizer:before {
-	content: "\e900";
-}
-.icon-male:before {
-	content: "\e901";
-}
-.icon-female:before {
-	content: "\e902";
-}
-
-.icon-main-antenna:before {
-	content: "\e918";
-}
-.icon-range-finder:before {
-	content: "\e919";
-}
-.icon-sensor-stalk:before {
-	content: "\e91a";
-}
-.icon-sub-antenna:before {
-	content: "\e91b";
-}
-.icon-antenna:before {
-	content: "\e91c";
+.icon-heavy-antenna:before {
+  content: "\e91c";
 }
 .icon-lear-cap:before {
-	content: "\e91d";
+  content: "\e91d";
 }
-.icon-module:before {
-	content: "\e922";
+.icon-main-antenna:before {
+  content: "\e918";
+}
+.icon-range-finder:before {
+  content: "\e919";
+}
+.icon-sensor-stalk:before {
+  content: "\e91a";
+}
+.icon-sub-antenna:before {
+  content: "\e91b";
+}
+.icon-mirror:before {
+  content: "\e915";
+}
+.icon-discord:before {
+  content: "\e912";
+  color: #7289da;
+}
+.icon-accessories:before {
+  content: "\e904";
+}
+.icon-helmet:before {
+  content: "\e905";
+}
+.icon-lower-armor:before {
+  content: "\e906";
+}
+.icon-suit:before {
+  content: "\e907";
+}
+.icon-upper-armor:before {
+  content: "\e908";
+}
+.icon-grid_view:before {
+  content: "\e920";
+}
+.icon-keyboard_arrow_down:before {
+  content: "\e90a";
+}
+.icon-keyboard_arrow_left:before {
+  content: "\e90b";
+}
+.icon-keyboard_arrow_right:before {
+  content: "\e90c";
+}
+.icon-keyboard_arrow_up:before {
+  content: "\e90d";
+}
+.icon-twitter:before {
+  content: "\e913";
+}
+.icon-facebook-square:before {
+  content: "\e911";
+}
+.icon-refresh:before {
+  content: "\f021";
+}
+.icon-image:before {
+  content: "\f03e";
+}
+.icon-envelope:before {
+  content: "\f0e0";
+}
+.icon-down:before {
+  content: "\e924";
+}
+.icon-up:before {
+  content: "\e925";
+}
+.icon-remove:before {
+  content: "\e926";
+}
+.icon-copy:before {
+  content: "\e923";
+}
+.icon-cog:before {
+  content: "\e921";
+}
+.icon-undo:before {
+  content: "\e91f";
+}
+.icon-instagram:before {
+  content: "\e91e";
+}
+.icon-zoom-out:before {
+  content: "\e916";
+}
+.icon-zoom-in:before {
+  content: "\e917";
+}
+.icon-heart:before {
+  content: "\e914";
+}
+.icon-folder-upload:before {
+  content: "\e910";
+}
+.icon-brightness-contrast:before {
+  content: "\e90f";
+}
+.icon-info:before {
+  content: "\e90e";
+}
+.icon-link:before {
+  content: "\e909";
+}
+.icon-download:before {
+  content: "\e903";
+}
+.icon-equalizer:before {
+  content: "\e900";
+}
+.icon-male:before {
+  content: "\e901";
+}
+.icon-female:before {
+  content: "\e902";
 }
 
 /*
@@ -575,13 +606,18 @@ footer > * {
 }
 
 
-.reset {
-	padding: 0.5em 1em;
+.red_button {
 	margin: 1em;
+	padding: 0.25em 1em;
+	line-height: 2em;
 	border: none;
 	background: var(--accent);
 	border-radius: 0.5em;
 	color: white;
+}
+
+.red_button:focus {
+	background: #801717;
 }
 
 :checked + .label_sex {
@@ -785,10 +821,44 @@ footer > * {
 }
 
 .decal_control.selected {
+	padding-bottom: 0;
 	border-left-color: var(--accent);
 	background: var(--softColor);
 }
 
+.decal_buttons {
+	display: none;
+	padding: 0.75em;
+	padding-top: 1em;
+	height: 2em;
+}
+
+.decal_control.selected .decal_buttons {
+	display: grid;
+	grid-template-columns: repeat(6, 2em);
+	grid-template-rows: 2em;
+	column-gap: 2em;
+}
+
+.reorder {
+	background: none;
+	border: 1px solid var(--highlight);
+	border-radius: 0.25em;
+}
+
+.delete {
+	margin: 0.75em 1.25em 0 0;
+	border: none;
+	background: none;
+}
+
+.recreate {
+	border: none;
+	background: var(--accent);
+	border-radius: 0.5em;
+	font-size: smaller;
+}
+	
 .menu_collapsed .decal_control {
 	border: none;
 	background: none;
@@ -797,23 +867,6 @@ footer > * {
 
 .right {
 	float: right;
-}
-
-.reorder {
-	margin: 0 0.25em;
-	background: none;
-	border: 1px solid var(--highlight);
-	border-radius: 0.25em;
-}
-
-.remove {
-	margin: 1em;
-	width: 1.5em;
-	height: 1.5em;
-	background: var(--accent);
-	border-radius: 0.25em;
-	border: none;
-	vertical-align: super;
 }
 
 .color_wrapper {
@@ -1003,7 +1056,7 @@ footer > * {
 }
 
 .menu_collapsed .no_collapse {
-	display: none;
+	display: none !important;
 }
 
 .selected {

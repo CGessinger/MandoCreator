@@ -168,7 +168,7 @@ function BuildManager (Picker) {
 	}
 
 	function prettify (str) {
-		return str.split("_", 1)[0].replaceAll("-", " ");
+		return str.split("_", 1)[0].replace(/-/g, " ");
 	}
 
 	function BuildToggle (toggle, parent) {

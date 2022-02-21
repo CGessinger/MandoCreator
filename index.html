@@ -134,18 +134,18 @@
 		<nav>
 			<img id="title" src="images/Logo.svg" alt="MandoCreator Logo"/>
 			<ul id="left_nav" data-nosnippet="">
-				<li class="nav_icon icon-helmet-icon">
+				<li class="nav_icon icon-helmet">
 					<div id="parts_list" class="sub_nav">
 						<input type="radio" name="parts_list" id="HelmetRadio" value="Helmet (Buy'ce)" onchange="openFolder(find('HelmetOptions'))" checked hidden/>
-						<label for="HelmetRadio" class="sub_nav_label icon-helmet-icon">Helmet (Buy'ce)</label>
+						<label for="HelmetRadio" class="sub_nav_label icon-helmet">Helmet (Buy'ce)</label>
 						<input type="radio" name="parts_list" id="SoftPartsRadio" value="Flight Suit (Kute)" onchange="openFolder(find('SoftPartsOptions'))" hidden/>
-						<label for="SoftPartsRadio" class="sub_nav_label icon-suit-icon">Flight Suit (Kute)</label>
+						<label for="SoftPartsRadio" class="sub_nav_label icon-suit">Flight Suit (Kute)</label>
 						<input type="radio" name="parts_list" id="UpperArmorRadio" value="Upper Body" onchange="openFolder(find('UpperArmorOptions'))" hidden/>
-						<label for="UpperArmorRadio" class="sub_nav_label icon-upper-armor-icon">Upper Body</label>
+						<label for="UpperArmorRadio" class="sub_nav_label icon-upper-armor">Upper Body</label>
 						<input type="radio" name="parts_list" id="LowerArmorRadio" value="Lower Body" onchange="openFolder(find('LowerArmorOptions'))" hidden/>
-						<label for="LowerArmorRadio" class="sub_nav_label icon-lower-armor-icon">Lower Body</label>
+						<label for="LowerArmorRadio" class="sub_nav_label icon-lower-armor">Lower Body</label>
 						<input type="radio" name="parts_list" id="ExtrasRadio" value="Extras" onchange="openFolder(find('ExtrasOptions'))" hidden/>
-						<label for="ExtrasRadio" class="sub_nav_label icon-accessories-icon">Extras (Majyce)</label>
+						<label for="ExtrasRadio" class="sub_nav_label icon-accessories">Extras (Majyce)</label>
 					</div>
 				</li>
 				<li class="nav_icon icon-cog">
@@ -183,7 +183,7 @@
 		<footer>
 			<span>
 				<button class="icon-undo undo_redo" onclick="History.undo(0)"></button>
-				<button class="reset" onclick="reset()">Reset</button>
+				<button class="red_button" onclick="reset()">Reset</button>
 				<button class="icon-undo undo_redo" style="transform:scale(-1,1);" onclick="History.undo(1)"></button>
 			</span>
 			<div class="zoom_wrapper">
