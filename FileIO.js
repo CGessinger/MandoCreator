@@ -171,7 +171,7 @@ function Downloader (Decals) {
 
 	function SVGFromEditor (width, height) {
 		var svg = find("main").lastElementChild;
-		svg =  svg.cloneNode(true);
+		svg = svg.cloneNode(true);
 		var body = svg.lastElementChild;
 		prepareForExport(body);
 
@@ -214,6 +214,31 @@ function Downloader (Decals) {
 		img.src = href;
 	}
 
+	function convertToJpeg () {
+		var again = !("decoding" in XML.SVGNode("image"));
+		return new Promise(function(resolve) {
+			img.onload = async function () {
+				await this.decode();
+				if (again) {
+					this.src = this.src;
+					return again = false;
+				}
+				canvasCtx.drawImage(this, 0, 0);
+				canvas.toBlob(resolve, "image/jpeg");
+				prepareCanvas();
+			}
+			var s = SVGFromEditor(canvas.width, canvas.height);
+			img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+		})
+	}
+
+	function canShareFiles () {
+		if (!navigator.canShare)
+			return false;
+		var f = new File (["x"], "y", {type: "text/plain"});
+		return navigator.canShare({files: [f]});
+	}
+
 	return {
 		set Background (bck) {
 			bckImgURI = bck.data;
@@ -223,51 +248,49 @@ function Downloader (Decals) {
 			reset.style.display = bck.custom ? "" : "none";
 		},
 		attach: function (a, type) {
-			var blobURL;
-			var isSetUp = false;
-			a.addEventListener("click", function(event) {
-				if (!isSetUp) return;
-				setTimeout(function() {
-					prepareCanvas(bckImgURI);
-					URL.revokeObjectURL(blobURL)
-					isSetUp = false;
-					a.href = "";
-				}, 1000);
-			});
 			a.type = type;
 			if (type === "image/svg+xml") {
-				var self = this;
 				a.addEventListener("click", function () {
-					var str = SVGFromEditor(170, 300);
+					var str = SVGFromEditor(510, 900);
 					var document = "<?xml version='1.0' encoding='UTF-8'?>\n" + str;
 					var blob = new Blob([document], {type: "image/svg+xml;charset=utf-8"});
-					blobURL = URL.createObjectURL(blob);
-					this.href = blobURL;
+					this.href = URL.createObjectURL(blob);
+					setTimeout(function(){
+						URL.revokeObjectURL(a.href);
+						a.href = "";
+					});
+				});
+			} else if (type == "share") {
+				if (!canShareFiles())
+					return a.style.display = "none";
+
+				a.addEventListener("click", async function (event) {
+					var blob = await convertToJpeg();
+					var file = new File([blob], "MandoCreator.jpeg", {type: "image/jpeg"});
+					var data = {
+						title: "MandoCreator",
+						url: "https://www.mandocreator.com",
+						text: "My armor, made with MandoCreator",
+						files: [file],
+					};
+					if (!navigator.canShare(data))
+						alert("An unknown error occurred. Please try downloading the image instead.");
+					navigator.share(data);
 				});
 			} else {
-				function toURL (blob) {
-					blobURL = URL.createObjectURL(blob);
-					a.href = blobURL;
-					isSetUp = true;
-					a.click();
-				}
-				var supportsDecoding = ("decoding" in XML.SVGNode("image"));
-				a.addEventListener("click", function (event) {
+				var isSetUp = false;
+				a.addEventListener("click", async function (event) {
 					if (isSetUp)
 						return true;
 					event.preventDefault();
-					var first = !supportsDecoding;
-					img.onload = async function () {
-						await this.decode();
-						if (first) {
-							this.src = this.src;
-							return first = false;
-						}
-						canvasCtx.drawImage(this, 0, 0);
-						canvas.toBlob(toURL, "image/jpeg");
-					}
-					var s = SVGFromEditor(canvas.width, canvas.height);
-					img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+					var blob = await convertToJpeg();
+					a.href = URL.createObjectURL(blob);
+
+					isSetUp = true;
+					a.click();
+					isSetUp = false;
+					URL.revokeObjectURL(a.href)
+					a.href = "";
 				});
 			}
 		}

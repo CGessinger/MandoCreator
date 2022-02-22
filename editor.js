@@ -570,6 +570,7 @@ function MandoCreator () {
 	Download = new Downloader (Decals);
 	Download.attach(find("download_svg"), "image/svg+xml");
 	Download.attach(find("download_jpeg"), "image/jpeg");
+	Download.attach(find("share"), "share");
 
 	Uploader.attach(find("background_upload"), "background");
 	Uploader.attach(find("reupload"), "armor");
