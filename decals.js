@@ -431,7 +431,7 @@ function DecalFactory () {
 	function makeName (str, display) {
 		str = str.slice(0, 15).split(".", 1)[0];
 		if (display)
-			return str.replaceAll("-", " ").split("_", 1)[0];
+			return str.split("_", 1)[0].replaceAll("-", " ");
 		return btoa(str);
 	}
 

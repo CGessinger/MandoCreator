@@ -277,7 +277,7 @@ function PickerFactory () {
 			button.style.backgroundColor = hex;
 			SVGNode.setAttribute("fill", hex);
 			colorText.innerText = hex;
-			if (hex === kwargs["default"])
+			if (hex === kwargs.default)
 				delete colors[button.id];
 			else
 				colors[button.id] = hex;
@@ -299,11 +299,13 @@ function PickerFactory () {
 			else
 				DOM.parent = null;
 		});
-		SVGNode.addEventListener("click", function () {
-			button.click();
-		});
+		if ( !("noclick" in kwargs) ) {
+			SVGNode.addEventListener("click", function () {
+				button.click();
+			});
+		}
 		var def = getDefaultColor(button.id, SVGNode);
-		if (!def) def = kwargs["default"];
+		if (!def) def = kwargs.default;
 		if (def != "#FFFFFF") {
 			var c = parseColorString(def);
 			if (!c) c = [1,1,1];

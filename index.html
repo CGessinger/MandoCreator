@@ -56,7 +56,7 @@
 				}, {
 					"@type":"Person",
 					"name":"Cin Vhetin",
-					"url":"https://github.com/MGessinger"
+					"url":"https://github.com/CinVhetin"
 				}
 			],
 			"offers": [ {
@@ -126,9 +126,11 @@
 		</div>
 		<main id="main" class="image_column">
 			<img id="Mouse_Droid" src="images/Mouse-Droid.svg" alt="Mouse Droid" height="100" width="100"
-				onmouseenter="this.style.animationName='drive_off'"
-				ontouchstart="this.style.animationName='drive_off'"
-				onanimationend="this.style.animationName=''"/>
+				onload='new (function(o,s){
+					o.addEventListener("mouseenter",()=>s.animationName="drive_off");
+					o.addEventListener("touchstart",()=>s.animationName="drive_off",{passive:true});
+					o.addEventListener("animationend",()=>s.animationName="");
+				})(this,this.style)'>
 			<noscript>MandoCreator lets you design your custom set of mandalorian armor. For cosplay or RPG, choose from dozens of options, to bring your vision to life.</noscript>
 		</main>
 		<nav>
@@ -169,9 +171,10 @@
 						<a id="contact_opener" class="sub_nav_label" href="contact.html">Contact Us</a>
 					</div>
 				</li>
-				<li class="nav_icon icon-grid_view">
+				<li class="nav_icon icon-grid_view new">
 					<div class="sub_nav">
 						<a id="gallery" class="sub_nav_label" href="gallery.html">Armor Gallery</a>
+						<a id="gallery" class="sub_nav_label new" href="transcripticon.html" target="_blank">Transcripticon</a>
 					</div>
 				</li>
 				<li class="nav_icon icon-heart">
@@ -851,6 +854,7 @@
 						</button><button class="type_button" onclick="Decals.Add('Mando-a-2')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mando-a-2"/></svg>
 							Mando'a (2)
+						</button>
 					</details>
 					<details open>
 						<summary class="summary">Weathering</summary>
@@ -877,7 +881,7 @@
 							<input type="file" accept="image/*" hidden onchange="addCustomDecal(this.files[0])"/>
 							<svg class="preview_icon" viewBox="0 0 100 100"><path stroke="#fff" stroke-width="3" d="M20 50h60M50 20v60"/></svg>
 							Upload
-						</label></details>
+					</label></details>
 				</div>
 			</details>
 			<div class="no_collapse">

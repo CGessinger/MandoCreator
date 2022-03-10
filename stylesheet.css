@@ -275,11 +275,11 @@ li:hover > .sub_nav {
 
 .sub_nav_label {
 	display: block;
-	min-height: 3em;
+	height: 3em;
+	line-height: 3em;
+	padding-left: 0.5em;
 	position: relative;
 	background: var(--mainColor);
-	display: flex;
-	align-items: center;
 	cursor: pointer;
 }
 
@@ -710,14 +710,19 @@ footer > * {
 	opacity: 0;
 }
 
-.new:before {
+.new {
+	position: relative;
+}
+
+.new:after {
 	content: "New";
 	position: absolute;
 	background: var(--accent);
-	color: white;
 	right: 0;
+	top: 0;
 	transform: rotateZ(15deg);
 	padding: 0 0.25em 0.25em 0.25em;
+	line-height: initial;
 }
 
 .preview_icon {
@@ -882,7 +887,6 @@ footer > * {
 	width: 2em;
 	float: left;
 	margin: 0 0.5em;
-	border: 1px solid var(--softColor);
 	background-color: white;
 }
 
@@ -991,25 +995,21 @@ footer > * {
 }
 
 .select_wrapper {
-	display: block;
-	position: relative;
 	margin: 0.75em;
 	margin-bottom: 0;
+	border: 1px none var(--accent);
+	border-bottom-style: solid;
 }
 
 .select_wrapper::after {
 	content: "\E90A";
-	position: absolute;
-	right: 0;
-	pointer-events: none;
 }
 
 .component_select {
-	width: 100%;
+	width: 95%;
 	color: inherit;
+	border: none;
 	background: var(--mainColor);
-	border: 1px var(--accent);
-	border-style: none none solid none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
