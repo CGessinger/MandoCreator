@@ -252,7 +252,7 @@ function Downloader (Decals) {
 			a.type = type;
 			if (type === "image/svg+xml") {
 				a.addEventListener("click", function () {
-					var str = SVGFromEditor(510, 900);
+					var str = SVGFromEditor(510, 930);
 					var document = "<?xml version='1.0' encoding='UTF-8'?>\n" + str;
 					var blob = new Blob([document], {type: "image/svg+xml;charset=utf-8"});
 					this.href = URL.createObjectURL(blob);

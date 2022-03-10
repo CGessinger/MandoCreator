@@ -553,6 +553,7 @@ class Swappable extends ArmorControl {
 		var previews = this.parent.getElementsByTagName("details")[0];
 		for (var c of this.children) {
 			c.input = previews.querySelector("#" + c.id + "Radio");
+			if (!c.input) console.log(c.id);
 			c.input.onchange = this.EventHandler(c);
 		}
 		this.state = {v: variants.getItem(this.id)};

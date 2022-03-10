@@ -246,6 +246,7 @@ function DecalFactory () {
 			return;
 		else if (d.hasAttribute("serif:id"))
 			display_name = d.getAttribute("serif:id");
+		console.log(name, id, data);
 
 		if (name in count)
 			count[name]++;
