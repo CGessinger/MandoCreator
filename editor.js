@@ -9,19 +9,15 @@ function find (st) {
 
 var Vault = {
 	vault: {},
-	finishUp: function (svg, onload, replace) {
+	finishUp: function (svg, onload) {
 		svg = svg.cloneNode(true);
-		if (replace && (replace != svg)) {
-			var par = replace.parentNode;
-			par.replaceChild(svg, replace);
-		}
 		if (onload)
 			onload(svg);
 		return svg;
 	},
-	getItem: function (name, onload, replace) {
+	getItem: function (name, onload) {
 		if (name in this.vault)
-			return this.finishUp(this.vault[name], onload, replace);
+			return this.finishUp(this.vault[name], onload);
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", name);
@@ -34,160 +30,257 @@ var Vault = {
 				return;
 			var svg = xml.documentElement;
 			self.vault[name] = svg;
-			self.finishUp(svg, onload, replace);
+			self.finishUp(svg, onload);
 		};
 		xhr.send();
 	}
 }
 
-function BuildManager (Picker) {
-	var swapLists = [];
-	var icons = {
-		"Range Finder":	"icon-range-finder",
-		"Main Antenna":	"icon-main-antenna",
-		"Sub Antenna":	"icon-sub-antenna",
-		"Sensor Stalk":	"icon-sensor-stalk",
-		"Antenna":	"icon-antenna",
-		"Lear Cap":	"icon-lear-cap",
-		"Module":	"icon-module"
-	}
-	var categories = {
-		"Helmet":	["Helmet"],
-		"UpperArmor":	["Biceps", "Chest", "Chest-Attachments", "Collar", "Shoulders", "Gauntlets"],
-		"LowerArmor":	["Shins", "Foot", "Knees", "Thighs", "Groin", "Waist"],
-		"SoftParts":	["Boots", "Suit", "Sleeves", "Gloves", "Vest"],
-		"Extras":	["Extras_Front", "Extras_Back"],
-		"Helmet":	["Helmets"]
-	}
-	function findCategory (id) {
-		for (var i in categories)
-			if (categories[i].includes(id))
-				return i;
-		return "";
+class ArmorControl {
+	static Picker = new PickerFactory;
+	static DOMLists = [];
+
+	static init (am) {
+		this.Picker.finishUp();
+
+		var topLevelLists = am.getElementsByClassName("slide_content");
+		for (var i = 0; i < topLevelLists.length; i++)
+			this.DOMLists.push(topLevelLists[i]);
 	}
 
-	function BuildMirrorButton (headline, parent, thisSide) {
-		var b = XML.DOMNode("button", {class: "mirror_button right", title:"Mirror Settings"}, headline);
-		b.innerText = "\uE915";
-		var walker = document.createTreeWalker(parent, NodeFilter.SHOW_ELEMENT,
-			{ acceptNode: function (node) {
-				if (node.hasAttribute("class") && node.id !== "")
-					return NodeFilter.FILTER_ACCEPT;
-				return NodeFilter.FILTER_SKIP;
-			} }
-		);
-		var otherSide = (thisSide == "Left") ? "Right" : "Left";
-		var node;
-		b.addEventListener("click", function () {
-			var changes = [];
-			walker.currentNode = parent;
-			interactive = false;
-			while (node = walker.nextNode()) {
-				var c, newValue;
-				var mirrorImageName = node.id.replace(thisSide, otherSide);
-				var mirrorImage = find(mirrorImageName);
-				if (!mirrorImage)
-					continue;
-				switch (node.getAttribute("class")) {
-					case "color_picker":
-						newValue = colors[node.id] || "#FFFFFF";
-						c = History.format("color", colors[mirrorImageName] || "#FFFFFF", newValue, mirrorImageName)
-						colors[mirrorImageName] = newValue;
-						mirrorImage.click();
-						break;
-					case "component_select":
-						newValue = node.value.replace(thisSide, otherSide);
-						c = History.format("select", mirrorImage.value, newValue, mirrorImageName);
-						mirrorImage.value = newValue;
-						mirrorImage.dispatchEvent(new Event("change"));
-						break;
-					case "armor_toggle":
-						c = History.format("toggle", mirrorImage.checked, node.checked, mirrorImageName);
-						if (node.checked ^ mirrorImage.checked)
-							mirrorImage.click();
-						break;
-					default:
-						c = {}
-				}
-				if ("target" in c) changes.push(c);
-			}
-			interactive = true;
-			if (changes.length > 0)
-				History.push(changes);
-			Picker.cache();
-			variants.cache();
-		});
+	static cache () {
+		this.Picker.cache();
+		variants.cache();
 	}
 
-	function isSwapNode (p) {
-		if (p.getAttribute("class") == "swappable")
-			return true;
-		p = p.parentNode;
-		if (p && p.getAttribute("class") == "swappable")
-			return true;
-		p = p.parentNode;
-		if (p && p.getAttribute("class") == "swappable")
-			return true;
-		return false;
+	constructor (node) {
+		this.node = node;
+		this.children = [];
+		this.UI = null;
 	}
-	var possibleParents = find("armor_menu").getElementsByClassName("slide_content");
-	var l = possibleParents.length;
-	function DOMParent (node) {
-		/* Step 1: Find the parent in the DOM */
-		var id = node.id;
-		var san = id.split("_", 1)[0];
+
+	push (ch) {
+		this.children.push(ch);
+		ch.ambient = this;
+	}
+
+	get id () {return this.node.id}
+
+	get name () {
+		return this.id.split("_", 1)[0].replace(/-/g, " ");
+	}
+
+	get state () {
+		var s = {};
+		for (var c of this.children)
+			s[c.id] = c.state;
+		return s;
+	}
+
+	set state (s) {
+		for (var c of this.children)
+			c.state = s[c.id];
+	}
+
+	get parent () {
+		if ("p" in this)
+			return this.p;
+		var san = this.id.split("_", 1)[0];
 		if (san == "Vest")
-			id = san = "Suit";
+			san = "Suit";
 		san += "Colors";
-		var parent = null;
-		for (var i = 0; i < l; i++) {
-			if (possibleParents[i].id == san) {
-				parent = possibleParents[i];
-				break;
-			}
+		this.p = ArmorControl.DOMLists.find(L => L.id == san);
+		return this.p;
+	}
+
+	set parent (p) {
+		if (p) {
+			var q = this.parent;
+			p = q || p;
+			if (q && q.childElementCount <= 1 && q.tagName == "DETAILS")
+				q.style.display = "";
+			if (this.UI == null)
+				this.Build(p);
+			p.appendChild(this.UI);
+		} else {
+			if (this.UI != null)
+				this.UI.remove();
+			p = this.p;
+			if (p && p.childElementCount <= 1 && p.tagName == "DETAILS")
+				p.style.display = "none";
 		}
-		if (!parent) return;
-		/* Step 2: Check for swappable armor pieces */
-		if (isSwapNode(node.parentElement)) {
-			parent = XML.DOMNode("details", {class: "swapslide", open: true}, parent);
-			swapLists.push(parent);
-		}
-		/* Step 3: If the parent is empty, make a headline */
-		if (parent.childElementCount == 0) {
-			var par = XML.DOMNode("summary", {class: "headline no_collapse"}, parent);
-			par.innerText = prettify(id) + " Options:";
+	}
+
+	set visible (v) {
+		this.node.style.display = v ? "" : "none";
+	}
+
+	deconstruct () {
+		if (this.UI)
+			this.UI.remove();
+		for (var c of this.children)
+			c.deconstruct();
+		this.children = this.node = this.UI = null;
+	}
+
+	Build (p) {
+		if (p.childElementCount == 0 &&
+		    p.tagName == "DETAILS") {
+			var id = this.name;
+			var par = XML.DOMNode("summary", {class: "headline no_collapse"}, p);
+			par.innerText = id + " Options:";
 			var symmetric = id.match(/Left|Right/);
 			if (symmetric)
-				BuildMirrorButton(par, parent, symmetric[0]);
-			parent.addEventListener("click", function (event) {
+				Build.Mirror(par, this, symmetric[0]);
+			p.onclick = function (event) {
 				if (event.target == par) return;
 				this.open = true;
-			});
+			};
 		}
-		return parent;
+		this.UI = XML.DOMNode("div", {});
+	}
+}
+
+class GenericControl extends ArmorControl {
+	constructor (node) {
+		super(node);
+
+		var uie; /* child */
+		var options = [], toggles = [];
+		var ch = node.children;
+		for (var i = 0; i < ch.length; i++) {
+			var cls = ch[i].getAttribute("class");
+			if (cls == "option")
+				options.push(ch[i]);
+			else if (cls == "toggle")
+				toggles.push(ch[i]);
+			else {
+				uie = Build.Deserialize(ch[i]);
+				if (uie) this.push(uie);
+			}
+		}
+
+		/* Step 2.2: Build controls for .option and .toggle */
+		if (options.length) {
+			if (node.id.includes("Ear"))
+				uie = new IconCheckboxes(node, options);
+			else
+				uie = new ArmorSelect(node, options);
+			this.push(uie);
+		}
+		for (var o of toggles)
+			this.push(new Toggle(o));
 	}
 
-	function prettify (str) {
-		return str.split("_", 1)[0].replace(/-/g, " ");
+	get parent () {return super.parent}
+
+	set parent (p) {
+		super.parent = p;
+		if (p) {
+			for (var c of this.children)
+				c.parent = this.UI;
+		} else {
+			for (var c of this.children)
+				c.parent = null;
+		}
+	}
+}
+
+class ColorPicker extends ArmorControl {
+	get state () {
+		return colors[this.id + "Color"] || "#FFFFFF";
 	}
 
-	function BuildToggle (toggle, parent) {
+	set state (s) {
+		this.node.setAttribute("fill", s);
+		colors[this.id + "Color"] = s;
+
+		var button = this.UI.children[0];
+		button.style.backgroundColor = s;
+
+		var label = this.UI.children[1];
+		label.firstElementChild.innerText = s;
+	}
+
+	Build (parent) {
+		super.Build(parent);
+		var button = ArmorControl.Picker.build(this.node, parent, {
+			text: this.name,
+			default: "#FFFFFF",
+			disabled: this.id.includes("__cd"),
+			target: this
+		});
+		this.UI = button.parentElement;
+	}
+}
+
+class Toggleable extends ArmorControl {
+	constructor (node) {
+		super(node);
+		this.push(Build.Deserialize(node));
+		this.ch = this.children[0];
+	}
+
+	get state () {return this.ch.state;}
+	set state (s) {this.ch.state=s;}
+
+	EventHandler (parent, def) {
+		var id = this.id + "Toggle";
+		var ch = this.ch;
+		return function () {
+			ch.parent = this.checked ? parent.UI : null;
+			ch.visible = this.checked;
+
+			var old;
+			if (this.checked != def)
+				old = variants.setItem(id, this.checked);
+			else
+				old = variants.removeItem(id);
+			if (old === undefined) old = def;
+			History.push(parent, {v: this.checked}, {v: old});
+		}
+	}
+}
+
+class Toggle extends ArmorControl {
+	constructor (node) {
+		super(node);
+		this.push(new Toggleable(node));
+	}
+
+	get parent () {return;}
+	set parent (p) {super.parent=p}
+
+	get state () {
+		var s = {v: this.input.checked}
+		if (this.input.checked)
+			s.c = this.children[0].state
+		return s;
+	}
+
+	set state (s) {
+		if (this.input.checked ^ s.v)
+			this.input.click();
+		if (s.v && s.c)
+			this.children[0].state = s.c;
+	}
+
+	Build (parent) {
+		super.Build(parent);
 		/* Step 1: Build all DOM components */
-		parent = XML.DOMNode("div", {}, parent);
-		var label = XML.DOMNode("label", {class: "pseudo_checkbox no_collapse"}, parent);
+		var label = XML.DOMNode("label", {class: "pseudo_checkbox no_collapse"}, this.UI);
 
 		var span = XML.DOMNode("span", {class: "pseudo_label"}, label);
-		span.innerText = prettify(toggle.id);
+		span.innerText = this.name;
 
-		var id = toggle.id + "Toggle";
+		var id = this.id + "Toggle";
 		var input = XML.DOMNode("input", {type: "checkbox", id: id, class: "armor_toggle"}, label);
 		var sp = XML.DOMNode("span", {class: "slider right"}, label);
 
-		var subslide = XML.DOMNode("div", {class: "subslide"}, parent);
 		if (id.startsWith("Right"))
-			BuildMirrorButton(label, parent, "Right");
+			Build.Mirror(label, this, "Right");
 		else if (id.startsWith("Left"))
-			BuildMirrorButton(label, parent, "Left");
+			Build.Mirror(label, this, "Left");
 
 		/* Step 2: Find the default value and attach an event handler */
 		if (id.startsWith("Mask")) {
@@ -196,261 +289,355 @@ function BuildManager (Picker) {
 				showRoll('Neo');
 			}
 		} else {
-			var defaultOn = (toggle.style.display !== "none");
-			var handler = function () {
-				if (this.checked) {
-					subslide.style.display = "";
-					toggle.style.display = "";
-				} else {
-					subslide.style.display = "none";
-					toggle.style.display = "none";
-				}
-				if (this.checked != defaultOn)
-					variants.setItem(id, this.checked, "toggle");
-				else
-					variants.removeItem(id, "toggle");
-			}
-			input.addEventListener("change", handler);
+			var uie = this.children[0];
+			var defaultOn = (uie.node.style.display !== "none");
+			var handler = uie.EventHandler(this, defaultOn);
+
+			input.onchange = handler;
 			input.checked = defaultOn;
 			if (variants.hasItem(id))
 				input.checked = variants.getItem(id);
 			handler.bind(input)();
 		}
-		return Build(toggle, subslide);
-	}
-
-	function SelectHistoryHandler (pairs, id) {
-		return function (event) {
-			variants.setItem(id, this.value, "select");
-			for (var i in pairs) {
-				var p = pairs[i];
-				if (p[0].id == this.value) {
-					p[0].style.display = "inherit";
-					p[1].style.display = "";
-				} else {
-					p[0].style.display = "";
-					p[1].style.display = "none";
-				}
-			}
-		}
-	}
-
-	function BuildDropDown (options, name, parent) {
-		/* Step 1: Build a <select> */
-		var id = name + "Select";
-		var wrapper = XML.DOMNode("div", {class: "select_wrapper no_collapse"}, parent); /* For arrow placement */
-		var select = XML.DOMNode("select", {id: id, class: "component_select"}, wrapper);
-
-		/* Step 2: Iterate over the options, creating an <option> and Controls for each one */
-		var def = options[options.length-1].id;
-		if (variants.hasItem(id))
-			def = variants.getItem(id);
-		var pairs = [];
-		while (options.length) {
-			var o = options.pop();
-			var label = prettify(o.id);
-
-			/* Step 2.1: Build an <option> and attach it to the <select> */
-			var opt = new Option(label, o.id, false, (o.id == def));
-			select.add(opt);
-
-			/* Step 2.2: Build Controls */
-			var subParent = XML.DOMNode("div", {id: o.id + "SubColors"});
-			Build(o, subParent);
-			parent.appendChild(subParent);
-			pairs.push([o,subParent]);
-		}
-
-		/* Step 3: Simulate a change event, to trigger all the right handlers */
-		var handler = SelectHistoryHandler(pairs, id, def);
-		select.addEventListener("change", handler);
-		handler.bind(select)();
-	}
-
-	function CheckboxHistoryHandler (id, sublist, node) {
-		return function () {
-			if (this.checked) {
-				sublist.style.display = "";
-				node.style.display = "inherit";
-			} else {
-				sublist.style.display = "none";
-				node.style.display = "";
-			}
-			if (this.checked)
-				variants.setItem(id, true, "toggle");
-			else
-				variants.removeItem(id, "toggle");
-		}
-	}
-	function BuildCheckboxes (options, parent) {
-		var icons_wrapper = XML.DOMNode("div", {class: "checkbox_list no_collapse"}, parent);
-		while (options.length) {
-			var o = options.pop();
-			var title = prettify(o.id);
-			var id = o.id + "Toggle";
-
-			/* Step 2.1: Build a checkbox hidden behind an icon */
-			var input = XML.DOMNode("input", {type: "checkbox", class: "checkbox", id: id}, icons_wrapper);
-			var label = XML.DOMNode("label", {for: id, class: "checkbox_label " + icons[title], title: title}, icons_wrapper);
-
-			/* Step 2.2: Build a sublist for all the colors to go in */
-			var sublist = XML.DOMNode("div", {id: o.id+"SubColors"}, parent);
-			Build(o, sublist);
-
-			/* Step 2.3: Attach an event handler to the checkbox */
-			var handler = CheckboxHistoryHandler(id, sublist, o);
-			input.addEventListener("change", handler);
-			input.checked = variants.getItem(id);
-			handler.bind(input)();
-		}
-	}
-
-	function attachSwapRadio (node, parent) {
-		var radio = find(node.id + "Radio");
-		var s = swapLists;
-		var vault = find("item_vault");
-		radio.onchange = function () {
-			var ch = parent.firstElementChild;
-			vault.appendChild(ch);
-			parent.appendChild(node);
-			for (var i = 0; i < s.length; i++)
-				s[i].dataset.show = "true";
-			variants.setItem(parent.id, node.id, "variant");
-		}
-		swapLists = [];
-	}
-
-	function setupSwapHandler (node, category) {
-		var options = find(category + "Options");
-		var slides = options.getElementsByClassName("swapslide");
-		var typesList = options.getElementsByTagName("details")[0];
-		typesList.onchange = function () {
-			for (var i = 0; i < slides.length; i++) {
-				if ("show" in slides[i].dataset) {
-					slides[i].style.display = "block";
-					delete slides[i].dataset.show;
-				} else {
-					slides[i].style.display = "";
-				}
-			}
-		}
-	}
-
-	function Build (node, realParent) {
-		/* Step 0.1: Check if the node needs treatment */
-		var ch = node.children;
-		if (!ch.length && node.tagName == "g")
-			return;
-		/* Step 0.2: Look for an appropriate DOM parent */
-		var possibleParent = DOMParent(node);
-		if (possibleParent)
-			realParent = possibleParent;
-
-		/* Step 1: Check if node has a named child. If not, build ColorPicker for this node! */
-		var allNamed = (ch.length !== 0);
-		for (var i = 0; i < ch.length; i++)
-			allNamed &= (ch[i].id !== "");
-		if (!allNamed)
-			return Picker.build(node, realParent, {
-				text: prettify(node.id),
-				default: "#FFFFFF"
-			});
-
-		/* Step 2.1: Node has only named children
-		 * -> map `Build` over `ch`, but filter out .option and .toggle */
-		var parent = document.createDocumentFragment();
-		var options = [], toggles = [];
-		var isSwappable = (node.getAttribute("class") == "swappable");
-		for (var i = 0; i < ch.length; i++) {
-			var cls = ch[i].getAttribute("class");
-			if (cls == "option")
-				options.push(ch[i]);
-			else if (cls == "toggle")
-				toggles.push(ch[i]);
-			else
-				Build(ch[i], parent);
-			if (isSwappable)
-				attachSwapRadio(ch[i], node);
-		}
-
-		/* Step 2.2: Build controls for .option and .toggle */
-		if (options.length) {
-			if (node.id.includes("Ear"))
-				BuildCheckboxes(options, parent);
-			else
-				BuildDropDown(options, node.id, parent);
-		}
-		while (toggles.length)
-			BuildToggle(toggles.pop(), parent);
-
-		/* Step 3: Put all controls in the DOM */
-		if (realParent) {
-			if (possibleParent)
-				XML.DOMNode("hr", {}, parent);
-			realParent.appendChild(parent);
-		}
-	}
-
-	this.setup = function (nodes) {
-		var vault = find("item_vault");
-		vault.innerHTML = "";
-		interactive = false;
-		for (var i = nodes.length-1; i >= 0; i--) {
-			if (nodes[i].hasAttribute("mask")) {
-				if (!variants.hasItem(nodes[i].id))
-					continue;
-				var decals = variants.getItem(nodes[i].id);
-				Decals.Recreate(nodes[i], decals);
-				continue;
-			}
-			var category = findCategory(nodes[i].id);
-			if (!category)
-				continue;
-			Build(nodes[i]);
-			if (nodes[i].getAttribute("class") == "swappable") {
-				setupSwapHandler(nodes[i], category);
-
-				var ch = nodes[i].children;
-				while (ch.length > 1)
-					vault.appendChild(ch[1]);
-
-				var selected = variants.getItem(nodes[i].id);
-				var radio = find(selected + "Radio");
-				radio.checked = false;
-				radio.click();
-			}
-		}
-		interactive = true;
-		Picker.cache()
-		variants.cache();
+		this.input = input;
 	}
 }
 
-function SettingsManager (Picker) {
-	var slides = document.getElementsByClassName("slide_content");
+class IconCheckboxes extends ArmorControl {
+	static icons = {
+		"Range Finder":	"icon-range-finder",
+		"Main Antenna":	"icon-main-antenna",
+		"Sensor Stalk":	"icon-sensor-stalk",
+		"Sub Antenna":	"icon-sub-antenna",
+		"Lear Cap":	"icon-lear-cap",
+		"Antenna":	"icon-heavy-antenna",
+		"Module":	"icon-module"
+	}
+
+	constructor (node, options) {
+		super(node);
+		for (var i = 0; i < options.length; i++) {
+			var uie = new Toggleable(options[i]);
+			uie.visible = false;
+			this.push(uie);
+		}
+	}
+
+	get state () {
+		var s = {};
+		var ch = this.input.children;
+		for (var k = 0; k < this.children.length; k++) {
+			var i = ch[2 * k];
+			if (i.checked) {
+				var c = this.children[k];
+				s[c.id] = c.state;
+			}
+		}
+		return s;
+	}
+
+	set state (s) {
+		var ch = this.input.children;
+		for (var k = 0; k < this.children.length; k++) {
+			var c = this.children[k];
+			var i = ch[2 * k];
+			if (c.id in s) {
+				if (!i.checked)
+					i.click();
+				c.state = s[c.id];
+			} else {
+				if (i.checked)
+					i.click();
+			}
+		}
+	}
+
+	Build (parent) {
+		super.Build(parent);
+		var icons_wrapper = XML.DOMNode("div", {class: "checkbox_list no_collapse"}, this.UI);
+
+		for (var o of this.children) {
+			var title = o.name;
+			var id = o.id + "Toggle";
+
+			/* Step 1: Build a checkbox hidden behind an icon */
+			var input = XML.DOMNode("input", {type: "checkbox", class: "checkbox", id: id}, icons_wrapper);
+			var label = XML.DOMNode("label", {
+				for: id, title: title,
+				class: "checkbox_label " + IconCheckboxes.icons[title]
+			}, icons_wrapper);
+
+			/* Step 2: Attach an event handler to the checkbox */
+			var handler = o.EventHandler(this, false);
+			input.onchange = handler;
+			input.checked = variants.getItem(id);
+			handler.bind(input)();
+		}
+		this.input = icons_wrapper;
+	}
+}
+
+class ArmorSelect extends ArmorControl {
+	constructor (node, options) {
+		super(node);
+		for (var o of options)
+			this.push(Build.Deserialize(o));
+
+		var def = this.def;
+		for (var c of this.children)
+			c.visible = (c.id == def);
+	}
+
+	EventHandler () {
+		var self = this;
+		var id = self.id + "Select";
+		return function (event) {
+			var old = variants.setItem(id, this.value);
+			History.push(self, {v: this.value}, {v: old});
+			for (var c of self.children) {
+				if (c.id == this.value) {
+					c.visible = true;
+					c.parent = self.UI;
+				} else {
+					c.visible = false;
+					c.parent = null;
+				}
+			}
+		}
+	}
+
+	get state () {
+		var s;
+		for (var o of this.children)
+			if (o.id == this.input.value)
+				s = o;
+		return {
+			v: this.input.value,
+			c: s.state
+		}
+	}
+
+	set state (s) {
+		this.input.value = s.v;
+		for (var o of this.children) {
+			if (o.id == s.v) {
+				o.visible = true;
+				o.parent = this.UI;
+				if (s.c)
+					o.state = s.c;
+			} else {
+				o.visible = false;
+				o.parent = null;
+			}
+		}
+	}
+
+	get def () {
+		var l = this.children.length - 1;
+		var def = this.children[l].id;
+		var id = this.id + "Select";
+		if (variants.hasItem(id))
+			def = variants.getItem(id);
+		return def;
+	}
+
+	Build (parent) {
+		super.Build(parent);
+		/* Step 1: Build a <select> */
+		var wrapper = XML.DOMNode("div", {class: "select_wrapper no_collapse"}, this.UI); /* For arrow placement */
+		var select = XML.DOMNode("select", {id: this.id + "Select", class: "component_select"}, wrapper);
+
+		/* Step 2: Iterate over the options, creating an <option> and Controls for each one */
+		var def = this.def;
+		for (var c of this.children)
+			select.add(new Option(c.name, c.id, false, c.id == def));
+
+		/* Step 3: Attach event handlers */
+		var handler = this.EventHandler();
+		select.onchange = handler;
+		handler.bind(select)();
+		this.input = select;
+	}
+}
+
+class Previewable extends GenericControl {
+	static vault = find("item_vault");
+
+	constructor (node, SVGParent) {
+		super(node);
+		this.SVGParent = SVGParent;
+	}
+
+	deconstruct () {
+		this.node.remove();
+		super.deconstruct();
+	}
+
+	set visible (v) {
+		this.input.checked = v;
+		if (v) {
+			this.SVGParent.appendChild(this.node);
+			for (var c of this.children)
+				c.parent = c.parent || this.parent;
+		} else {
+			Previewable.vault.appendChild(this.node);
+			for (var c of this.children)
+				c.parent = null;
+		}
+	}
+}
+
+class Swappable extends ArmorControl {
+	constructor (node) {
+		super(node);
+
+		var ch = node.children;
+		for (var i = 0; i < ch.length; i++)
+			this.push(new Previewable(ch[i], node));
+	}
+
+	EventHandler (child) {
+		var self = this;
+		return function () {
+			self.state = {v: child.id};
+		}
+	}
+
+	get state () {
+		return {
+			v: this.selection.id,
+			c: this.selection.state
+		}
+	}
+
+	set state (s) {
+		for (var o of this.children) {
+			if (o.id == s.v) {
+				o.visible = true;
+				if (s.c) o.state = s.c;
+				this.selection = o;
+			} else {
+				o.visible = false;
+			}
+		}
+		var old = variants.setItem(this.id, s.v);
+		History.push(this, {v: s.v}, {v: old});
+	}
+
+	get parent () {
+		switch (this.id) {
+			case "Helmets":
+			case "Helmet":
+				return find("HelmetOptions");
+			case "Chest":
+				return find("UpperArmorOptions");
+		}
+	}
+
+	set parent (p) {
+		var previews = this.parent.getElementsByTagName("details")[0];
+		for (var c of this.children) {
+			c.input = previews.querySelector("#" + c.id + "Radio");
+			c.input.onchange = this.EventHandler(c);
+		}
+		this.state = {v: variants.getItem(this.id)};
+	}
+}
+
+class Build {
+	static MirrorImage (s, t, o) {
+		if (s === true || s === false)
+			return s;
+		if (s.replace)
+			return s.replace(t, o);
+		var n = {};
+		for (var a in s) {
+			n[a.replace(t, o)] = Build.MirrorImage(s[a], t, o);
+		}
+		return n;
+	}
+
+	static Mirror (headline, self, ts) {
+		var b = XML.DOMNode("button", {class: "mirror_button right", title:"Mirror Settings"}, headline);
+		b.innerText = "\uE915";
+
+		var os = (ts == "Left") ? "Right" : "Left";
+		var id = self.id.replace(ts, os);
+		b.onclick = function () {
+			var state = Build.MirrorImage(self.state, ts, os);
+
+			for (var c of self.ambient.children) {
+				if (c.id == id) {
+					History.push(c, state, c.state);
+					interactive = false;
+					c.state = state;
+					interactive = true;
+				}
+			}
+			ArmorControl.cache();
+		};
+	}
+
+	static Deserialize (node) {
+		/* Check for decals lists */
+		if (node.hasAttribute("mask"))
+			return Decals.Recreate(node);
+
+		if (node.tagName != "g")
+			return new ColorPicker(node);
+
+		if (node.getAttribute("class") == "swappable")
+			return new Swappable(node);
+
+		var ch = node.children;
+		for (var i = ch.length - 1; i >= 0; i--) {
+			if (ch[i].id == "")
+				return new ColorPicker(node);
+		}
+
+		return new GenericControl(node);
+	}
+}
+
+function SettingsManager () {
 	var main = find("main");
-	var Builder = new BuildManager(Picker);
+	var ToplevelControl;
 
-	this.Sex = function (female, upload) {
-		for (var i = 0; i < slides.length; i++)
-			slides[i].innerHTML = "";
+	return {
+		set Sex (female) {
+			if (ToplevelControl)
+				ToplevelControl.deconstruct();
 
-		var master_file = female ? "images/Female.svg" : "images/Male.svg";
-		Vault.getItem(master_file, function (svg) {
-			svg.style.visibility = "hidden";
-			Zoom.scale = 0;
-			Decals.SVG = svg;
-			var h = svg.getElementById("Helmets");
-			Vault.getItem("images/Helmets.svg", function (helmets) {
-				var ch = helmets.children;
-				while (ch.length)
-					h.appendChild(ch[0]);
-				Builder.setup(svg.lastElementChild.children, upload);
-				svg.style.visibility = "";
-				svg.scrollIntoView({inline: "center"});
+			var master_file = female ? "images/Female.svg" : "images/Male.svg";
+			Vault.getItem(master_file, function (svg) {
+				Decals.SVG = svg;
+				var body = svg.lastElementChild;
+				var i = 0;
+				var h, ch = body.children;
+				while (h = ch[i++])
+					if (h.id == "Helmets") break;
+
+				Vault.getItem("images/Helmets.svg", function (helmets) {
+					var ch = helmets.children;
+					while (ch.length)
+						h.appendChild(ch[0]);
+					interactive = false;
+
+					ToplevelControl = Build.Deserialize(body);
+					ToplevelControl.parent = XML.DOMNode("div", {});
+
+					var r = find("HelmetRadio")
+					r.checked = true;
+
+					interactive = true;
+					ArmorControl.cache()
+
+					svg.style.height = "100%";
+					main.replaceChild(svg, main.lastElementChild);
+				});
 			});
-		}, main.lastElementChild);
-		localStorage.setItem("female_sex", (!!female).toString());
+			localStorage.setItem("female_sex", (!!female).toString());
+		}
 	}
 }
 
@@ -462,71 +649,47 @@ function VariantsVault (asString) {
 	if (asString)
 		__vars = JSON.parse(asString);
 	this.cache = function () {
-		if (!interactive) return;
 		localStorage.setItem("variants", JSON.stringify(__vars));
 	}
 	this.cache();
 
-	this.hasItem = function (key, category) {
-		var v = __vars;
-		if (category) {
-			if ( !(category in __vars) )
-				return false;
-			v = __vars[category];
+	this.hasItem = function (key) {
+		return key in __vars;
+	}
+	this.getKeys = function* (key) {
+		for (var e in __vars) {
+			if (__vars[e].p == key)
+				yield e;
 		}
-		return key in v;
 	}
-	this.setItem = function (key, value, type, category) {
-		var v = __vars;
-		if (category)
-			v = __vars[category] || {};
-
-		if (value == v[key])
+	this.setItem = function (key, value, target) {
+		var o = __vars[key];
+		if (value == o)
 			return;
-		var c = History.format(type, v[key], value, key);
-		v[key] = value;
-
-		if (category)
-			__vars[category] = v;
-
-		History.push(c);
+		__vars[key] = value;
 		this.cache();
+		return o;
 	}
-	this.getItem = function (key, category) {
-		var v = __vars;
-		if (category)
-			v = __vars[category] || {};
-		return v[key];
+	this.getItem = function (key) {
+		return __vars[key];
 	}
-	this.removeItem = function (key, type, category) {
-		var v = __vars;
-		if (category) {
-			if ( !(category in __vars) )
-				return;
-			var v = __vars[category];
-		}
-		if ( !(key in v) )
+	this.removeItem = function (key) {
+		if ( !(key in __vars) )
 			return;
-
-		var o = v[key];
-		if (category) o.cat = category;
-		var c = History.format(type, o, undefined, key);
-		delete v[key];
-
-		History.push(c);
+		var o = __vars[key];
+		delete __vars[key];
 		this.cache();
+		return o;
 	}
 }
 
 function MandoCreator () {
 	var female = (localStorage.getItem("female_sex") == "true");
-	Vault.getItem("images/Helmets.svg"); /* Prefetch */
 	History = new HistoryTracker;
 
-	var Picker = new PickerFactory;
-	Decals = new DecalFactory(Picker);
+	Decals = new DecalFactory(ArmorControl.Picker);
 
-	Settings = new SettingsManager(Picker);
+	Settings = new SettingsManager();
 	variants = new VariantsVault(localStorage.getItem("variants"));
 	colors = resetColorCache(true);
 
@@ -558,26 +721,27 @@ function MandoCreator () {
 		Vault.getItem(opt.preset, function (svg) {
 			reset(true, true);
 			Uploader.parseMando(svg);
-			Settings.Sex(female, true);
+			Settings.Sex = female;
 		});
 	} else {
-		Settings.Sex(female, false);
+		Settings.Sex = female;
 	}
 	/* ---------- Post-Setup ---------- */
-	Picker.finishUp();
-	Decals.finishUp();
+	var am = find("armor_menu");
+	ArmorControl.init(am);
+	document.body.onload = function () {
+		Download = new Downloader (Decals);
+		Download.attach(find("download_svg"), "image/svg+xml");
+		Download.attach(find("download_jpeg"), "image/jpeg");
+		Download.attach(find("share"), "share");
 
-	Download = new Downloader (Decals);
-	Download.attach(find("download_svg"), "image/svg+xml");
-	Download.attach(find("download_jpeg"), "image/jpeg");
-	Download.attach(find("share"), "share");
+		Uploader.attach(find("background_upload"), "background");
+		Uploader.attach(find("reupload"), "armor");
 
-	Uploader.attach(find("background_upload"), "background");
-	Uploader.attach(find("reupload"), "armor");
+		setupControlMenu(am, find("decals_menu"));
 
-	setupControlMenu(find("armor_menu"), find("decals_menu"));
-
-	setDefaultBackground();
+		setDefaultBackground();
+	}
 }
 
 function openFolder (folder) {
@@ -612,28 +776,29 @@ function setupControlMenu (armor_menu, decals_menu) {
 		var slides = folders[i].getElementsByClassName("slide");
 		var radioName = folders[i].id.replace("Options", "Radio");
 		let radio = find(radioName);
-		folders[i].addEventListener("click", function(event) {
+		folders[i].onclick = function(event){
 			if (event.defaultPrevented) return;
 			radio.checked = true;
 			openFolder(this);
-		});
+		};
 		var opener = slide_opener(folders[i], slides);
 		var closer = slide_closer(folders[i]);
 		for (var j = 0; j < slides.length; j++) {
-			slides[j].addEventListener("click", opener);
+			slides[j].onclick = opener;
 			var b = slides[j].firstElementChild;
-			b.addEventListener("click", closer);
+			b.onclick = closer;
 		}
 	}
 
 	var decal_toggles = armor_menu.getElementsByClassName("decals_toggle");
 	var handler = function (event) {
 		event.preventDefault();
+		Decals.finishUp();
 		Decals.Category = this.dataset.category;
 		armor_menu.style.visibility = "hidden";
 	}
 	for (var i = 0; i < decal_toggles.length; i++)
-		decal_toggles[i].addEventListener("click", handler);
+		decal_toggles[i].onclick = handler;
 
 	armor_menu.addEventListener("click", function (event) {
 		if (event.defaultPrevented)
@@ -647,47 +812,42 @@ function setupControlMenu (armor_menu, decals_menu) {
 		decals_menu.classList.toggle("menu_collapsed");
 	});
 
-	if (window.innerWidth < 786) {
-		armor_menu.classList.add("menu_collapsed");
-		decals_menu.classList.add("menu_collapsed");
+	if (window.innerWidth > 786) {
+		armor_menu.classList.remove("menu_collapsed");
+		decals_menu.classList.remove("menu_collapsed");
 	}
 }
 
 function setSponsor (sponsor, href) {
 	var link = find(sponsor);
 	link.href = href;
-	link.style.display = "";
+	link.hidden = false;
 	link.dataset.show = "true";
 
 	var img = link.getElementsByTagName("img")[0];
 	if (!img.hasAttribute("src"))
 		img.src = "assets/" + sponsor + ".png";
 	var parent = link.parentNode;
-	var closer = parent.getElementsByClassName("close_sponsors")[0];
-	closer.style.display = "";
+	var closer = parent.firstElementChild;
+	closer.hidden = false;
 	closer.dataset.show = "true";
 }
 
 function UpdateSponsor (category) {
 	var parent = find(category + "Options");
-	var logos = parent.getElementsByClassName("sponsor_link");
-	for (var i = 0; i < logos.length; i++) {
-		if (logos[i].dataset.show == "true")
-			delete logos[i].dataset.show;
+	var sponsor_modal = parent.lastElementChild;
+	var items = sponsor_modal.children;
+	for (var i = 0; i < items.length; i++) {
+		if (items[i].dataset.show == "true")
+			delete items[i].dataset.show;
 		else
-			logos[i].style.display = "none";
+			items[i].hidden = true;
 	}
-	var closer = parent.getElementsByClassName("close_sponsors")[0];
-	if (closer.dataset.show == "true")
-		delete closer.dataset.show;
-	else
-		closer.style.display = "none";
 }
 
 function resetColorCache (cached) {
-	var cache = localStorage.getItem("colors");
-	if (cached && cache)
-		return JSON.parse(cache);
+	if (cached && "colors" in localStorage)
+		return JSON.parse(localStorage.colors);
 	return {
 		undefined: "#FFFFFF",
 		"Bucket_Budget-BucketColor":	"#F74416",
@@ -699,6 +859,7 @@ function resetColorCache (cached) {
 
 var Zoom = new (function () {
 	var z = find("zoom");
+	z.value = 100;
 	var main = find("main");
 	return {
 		set scale (value) {
@@ -741,8 +902,7 @@ function reset (skipBuild, skipPrompt) {
 	Decals.reset();
 	if (skipBuild)
 		return;
-	var female = find("female").checked;
-	Settings.Sex(female);
+	Settings.Sex = find("female").checked;
 }
 
 function setDefaultBackground () {

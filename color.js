@@ -2,7 +2,7 @@
 
 var interactive = true;
 function PickerFactory () {
-	var latestChange = {};
+	var diff = {};
 
 	function cache() {
 		if (!colors)
@@ -224,8 +224,8 @@ function PickerFactory () {
 					return;
 				_parent = p;
 				if (!p) {
-					History.push(latestChange);
-					latestChange = {};
+					History.push(diff.target, diff.n, diff.o);
+					diff = {};
 					cache();
 				}
 			},
@@ -260,7 +260,7 @@ function PickerFactory () {
 			color.hex = v;
 		}
 		DOM.update(fromEditor);
-		latestChange.newValue = color.hex;
+		diff.n = color.hex;
 		onChange(color.hex);
 	}
 
@@ -271,24 +271,28 @@ function PickerFactory () {
 			return SVGNode.getAttribute("fill");
 	}
 
-	var color, DOM, onChange;
-	this.attach = function (button, parent, colorText, SVGNode, def_val) {
+	var color, DOM = {}, onChange;
+	this.attach = function (button, parent, colorText, SVGNode, kwargs) {
 		function input (hex) {
 			button.style.backgroundColor = hex;
 			SVGNode.setAttribute("fill", hex);
 			colorText.innerText = hex;
-			if (hex === def_val)
+			if (hex === kwargs["default"])
 				delete colors[button.id];
 			else
 				colors[button.id] = hex;
 		}
 		button.addEventListener("click", function(event) {
 			onChange = input;
+			if ( !("parent" in DOM) )
+				DOM = new PickerDOM;
 
-			var oldValue = colors[this.id] || def_val;
-			latestChange = History.format("color", oldValue, "", this.id);
-			_setColor(oldValue);
-			latestChange.newValue = oldValue;
+			var old = colors[this.id] || kwargs.default;
+			if ("target" in kwargs)
+				diff = {target: kwargs.target, n: old, o: old}
+			else
+				diff = {};
+			_setColor(old);
 
 			if (interactive)
 				DOM.parent = parent;
@@ -299,7 +303,7 @@ function PickerFactory () {
 			button.click();
 		});
 		var def = getDefaultColor(button.id, SVGNode);
-		if (!def) def = def_val;
+		if (!def) def = kwargs["default"];
 		if (def != "#FFFFFF") {
 			var c = parseColorString(def);
 			if (!c) c = [1,1,1];
@@ -326,13 +330,12 @@ function PickerFactory () {
 				span.click();
 			});
 		} else {
-			this.attach(b, span, p, target, kwargs["default"]);
+			this.attach(b, span, p, target, kwargs);
 		}
 		return b;
 	}
 	this.finishUp = function () {
 		color = new Color();
-		DOM = new PickerDOM();
 	}
 	this.cache = cache;
 }
@@ -340,95 +343,47 @@ function PickerFactory () {
 function HistoryTracker () {
 	var changes = [];
 	var redos = [];
-	var self = this;
-
-	function undoSingleChange (type, targetID, value) {
-		if (type == "variant") /* Manual Override */
-			targetID = value + "Radio";
-		var target = find(targetID);
-		if (!target) {
-			if (type == "decal") {
-				Decals.Category = value.cat.replace("Decals", "");
-				var bare_name = targetID.match(/(.+)__\d+/)[1];
-				Decals.Add(bare_name, targetID, value);
-			}
-			return;
-		}
-		switch (type) {
-			case "color":
-				colors[targetID] = value;
-				break;
-			case "variant":
-				target.checked = false;
-				break;
-			case "decal":
-				if (!value) {
-					target = find(targetID + "Delete");
-					break;
-				} else {
-					Decals.Set(target, value);
-					return;
-				}
-			case "select":
-				target.value = value;
-				target.dispatchEvent(new Event("change"));
-				return;
-		}
-		target.click();
-	}
-
-	this.format = function (type, oldVal, newVal, target) {
-		if (oldVal == newVal)
-			return {};
-		return {
-			"type": type,
-			"oldValue": oldVal,
-			"newValue": newVal,
-			"target": target
-		}
-	}
 
 	this.undo = function (redo) {
-		var from, to, key;
 		if (redo) {
-			from = redos;
-			to = changes;
-			key = "newValue";
+			if (redos.length == 0) return;
+			interactive = false;
+			var change = redos.pop();
+			change["target"].state = change["new"];
+			changes.push(change);
 		} else {
-			from = changes;
-			to = redos;
-			key = "oldValue";
+			if (changes.length == 0) return;
+			interactive = false;
+			var change = changes.pop();
+			change["target"].state = change["old"];
+			redos.push(change);
 		}
-		if (from.length == 0)
-			return;
-		interactive = false;
-		var change = from.pop();
-		if ("target" in change) {
-			undoSingleChange(change["type"], change["target"], change[key]);
-		} else {
-			for (var c in change) {
-				var C = change[c];
-				undoSingleChange(C["type"], C["target"], C[key]);
-			}
-		}
-		to.push(change);
 		interactive = true;
+		ArmorControl.cache();
 	}
-	function isValid (c) {
-		return (!!c) && (!!c.target) && (c.oldValue != c.newValue);
-	}
-	this.push = function (C) {
-		if (!interactive || !C)
-			return;
-		if (isValid(C)) {
-			changes.push(C);
-			redos = [];
-		} else if ("filter" in C) {
-			var d = C.filter(isValid);
-			if (d.length > 0) {
-				changes.push(d);
-				redos = [];
-			}
+
+	function isEqual (o, n) {
+		var to = typeof(o), tn = typeof(n);
+		if (to != tn) return false;
+		if (to != "object")
+			return o == n;
+
+		for (var i in o) {
+			if (!isEqual(o[i], n[i]))
+				return false;
 		}
+		for (var j in n) {
+			if ( !(j in o) )
+				return false;
+		}
+		return true;
+	}
+
+	this.push = function (t, n, o, f) {
+		if (!interactive || !t || isEqual(o, n))
+			return;
+		if (f) n.force = o.force = true;
+		changes.push({"target": t, "new": n, "old": o});
+		redos = [];
 	}
 }

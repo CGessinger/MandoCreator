@@ -62,15 +62,13 @@ var Uploader = {
 				case "decal":
 					var l = node.transform.baseVal;
 					var tm  = l[0].matrix;
-					var phi = l[1].angle * Math.PI / 180;
+					var phi = l[1].angle;
 					var sm  = l[2].matrix;
 					variants.setItem(node.id, {
-						x: tm.e,
-						y: tm.f,
-						phi: phi,
-						ax: sm.a,
-						ay: sm.d
-					}, "decal", node.parentNode.id);
+						x: tm.e, ax: sm.a,
+						y: tm.f, ay: sm.d,
+						phi: phi
+					});
 			}
 		}
 	},
@@ -101,11 +99,11 @@ var Uploader = {
 		if (mando.id === "Female-Body") {
 			var sex_radio = find("female");
 			sex_radio.checked = true;
-			Settings.Sex(true, true);
+			Settings.Sex = true;
 		} else {
 			var sex_radio = find("male");
 			sex_radio.checked = true;
-			Settings.Sex(false, true);
+			Settings.Sex = false;
 		}
 	},
 	attach: function (target, type) {
@@ -157,7 +155,7 @@ function Downloader (Decals) {
 					node.remove();
 					break;
 				case "option":
-					if (display !== "inherit")
+					if (display == "none")
 						node.remove();
 					break;
 				case "toggle":
@@ -242,10 +240,13 @@ function Downloader (Decals) {
 	return {
 		set Background (bck) {
 			bckImgURI = bck.data;
-			prepareCanvas(bckImgURI);
 			document.body.style.backgroundImage = "url(\"" + bckImgURI + "\")";
 
 			reset.style.display = bck.custom ? "" : "none";
+
+			setTimeout(function() {
+				prepareCanvas(bckImgURI);
+			}, 500);
 		},
 		attach: function (a, type) {
 			a.type = type;

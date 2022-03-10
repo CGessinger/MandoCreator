@@ -3,21 +3,20 @@
 function DecalsBrace (g, grid, compass) {
 	var main_svg = XML.SVGNode("svg");
 	var x, y, ax, ay, phi, c, s;
-	var target_id, target_category;
+	var node;
 	var snapping = find("snapping");
 
 	/* Transforms */
-	var target_translate, target_scale, target_rotate;
-	var this_translate, this_scale, this_rotate;
+	var translate, scale, rotate;
 
-	this_translate = main_svg.createSVGTransform();
-	this_scale = main_svg.createSVGTransform();
-	this_rotate = main_svg.createSVGTransform();
+	translate = main_svg.createSVGTransform();
+	scale = main_svg.createSVGTransform();
+	rotate = main_svg.createSVGTransform();
 	var tl = g.transform.baseVal;
 
-	tl.initialize(this_translate);
-	tl.appendItem(this_rotate);
-	tl.appendItem(this_scale);
+	tl.initialize(translate);
+	tl.appendItem(rotate);
+	tl.appendItem(scale);
 
 	/* Local Coordinate System */
 	var ctm;
@@ -36,7 +35,9 @@ function DecalsBrace (g, grid, compass) {
 		drag = null;
 		grid.style.visibility = "";
 		compass.style.visibility = "";
-		variants.setItem(target_id, {x: x, y: y, ax: ax, ay: ay, phi: phi}, "decal", target_category);
+		var s = node.state;
+		var old = variants.setItem(node.id, s);
+		History.push(node, s, old, 1);
 	}
 	document.addEventListener("mouseup", onup);
 	document.addEventListener("touchend", onup);
@@ -72,8 +73,9 @@ function DecalsBrace (g, grid, compass) {
 		if (snapping.checked)
 			coord = coord.map(Math.round);
 		x = coord[0]; y = coord[1];
-		target_translate.setTranslate(x, y);
-		this_translate.setTranslate(x, y);
+
+		translate.setTranslate(x, y);
+		node.state = {v: {x:x, y:y, ax:ax, ay:ay, phi:phi}}
 	});
 	setupDragAndDrop(ch[1], 2, function (offset) {
 		if (snapping.checked) {
@@ -94,12 +96,13 @@ function DecalsBrace (g, grid, compass) {
 		phi = Math.atan2(coord[0], coord[1]) * 180 / Math.PI;
 		if (snapping.checked)
 			phi = Math.round(phi);
-		this_rotate.setRotate(phi, 0, 0);
-		target_rotate.setRotate(phi, 0, 0);
 
-		phi = phi * Math.PI / 180;
-		c = Math.cos(phi);
-		s = Math.sin(phi);
+		rotate.setRotate(phi, 0, 0);
+		node.state = {v: {x:x, y:y, ax:ax, ay:ay, phi:phi}}
+
+		var p = phi * Math.PI / 180;
+		c = Math.cos(p);
+		s = Math.sin(p);
 	});
 	setupDragAndDrop(ch[2], 3, function (offset) {
 		if (snapping.checked)
@@ -115,8 +118,8 @@ function DecalsBrace (g, grid, compass) {
 			ax = Math.round(ax * 100) / 100;
 			ay = Math.round(ay * 100) / 100;
 		}
-		target_scale.setScale(ax, ay);
-		this_scale.setScale(ax, ay);
+		node.state = {v: {x:x, y:y, ax:ax, ay:ay, phi:phi}};
+		scale.setScale(ax, ay);
 	});
 
 	return {
@@ -132,39 +135,35 @@ function DecalsBrace (g, grid, compass) {
 			main_body.appendChild(g);
 		},
 		set target (value) {
+			if (node == value)
+				return;
+			node = value;
 			if (value == null) {
 				g.style.visibility = "";
-				target_id = "";
 			} else {
-				target_id = value.id;
 				g.style.visibility = "visible";
-				var tl = value.transform.baseVal;
-				target_translate = tl[0];
-				target_rotate    = tl[1];
-				target_scale     = tl[2];
-
-				var mt = target_translate.matrix;
-				x = mt.e; y = mt.f;
-				var ms = target_scale.matrix;
-				ax = ms.a; ay = ms.d;
-				phi = target_rotate.angle * Math.PI / 180;
-				c = Math.cos(phi); s = Math.sin(phi);
-
-				this_translate.setTranslate(x, y);
-				this_rotate.setRotate(phi * 180 / Math.PI, 0, 0);
-				this_scale.setScale(ax, ay);
+				this.state = node.state.v;
 			}
 		},
-		set Category (value) {
-			target_category = value;
+		set state (v) {
+			x = v.x; ax = v.ax;
+			y = v.y; ay = v.ay;
+			phi = v.phi;
+
+			var p = phi * Math.PI / 180;
+			s = Math.sin(p); c = Math.cos(p);
+
+			translate.setTranslate(x, y);
+			rotate.setRotate(phi, 0, 0);
+			scale.setScale(ax, ay);
 		}
 	}
 }
 
-function DecalFactory (Picker) {
+function DecalFactory () {
 	var count = {}, nonce = 0;
 	var decals_list, decals_group;
-	var decals_brace = {};
+	var brace = {};
 	var customs_menu = find("custom_decals_menu");
 
 	var main_svg, target_div, vault;
@@ -194,7 +193,7 @@ function DecalFactory (Picker) {
 			armor_menu.style.visibility = "visible";
 		});
 		armor_menu.addEventListener("click", function (event) {
-			decals_brace.target = null;
+			brace.target = null;
 		});
 
 		var lists = decals_menu.lastElementChild;
@@ -204,29 +203,13 @@ function DecalFactory (Picker) {
 			for (var i = 0; i < divs.length; i++)
 				divs[i].classList.remove("selected");
 			if (!target_div)
-				return decals_brace.target = null;
+				return brace.target = null;
 			target_div.classList.add("selected");
 			target_div = null;
 		});
 	}
 
-	/* Construction Functions */
-	function BuildUse (name, id, ref, data) {
-		var use = XML.SVGNode("use", {
-			class: "decal",
-			href: "#" + name,
-			id: id
-		}, decals_group);
-		SetTransform (use, data);
-		decals_brace.target = use;
-		return use;
-	}
-
-	function BuildControlButtons (div, use) {
-		var close = XML.DOMNode("button", {class: "delete right icon-remove no_collapse", title: "Delete", id: use.id + "Delete"}, div);
-
-		var controls = XML.DOMNode("div", {class: "decal_buttons no_collapse"}, div);
-
+	function BuildControlButtons (controls, div, use) {
 		var up = XML.DOMNode("button", {class: "reorder icon-up"}, controls);
 		up.addEventListener("click", function () {
 			var prev = div.previousElementSibling;
@@ -246,18 +229,11 @@ function DecalFactory (Picker) {
 			div.parentNode.insertBefore(next, div);
 		});
 
-		var bd = XML.DOMNode("button", {
-			class: "recreate icon-copy",
-			title: "Duplicate",
-		}, controls);
+		var bd = XML.DOMNode("button", {class: "recreate icon-copy", title: "Duplicate",}, controls);
 		bd.style.gridColumn = "5";
-		var bm = XML.DOMNode("button", {
-			class: "recreate icon-mirror",
-			title: "Mirror",
-		}, controls);
+		var bm = XML.DOMNode("button", {class: "recreate icon-mirror", title: "Mirror",}, controls);
 		bm.style.gridColumn = "6";
 		return {
-			"close": close,
 			"duplicate": bd,
 			"mirror": bm
 		};
@@ -277,82 +253,158 @@ function DecalFactory (Picker) {
 			count[name] = 1;
 
 		if (!id) {
-			nonce++;
-			id = name + "__" + nonce;
+			id = name + "__" + (++nonce);
 		} else {
 			var dec = id.split("__");
 			nonce = Math.max(nonce, +dec[dec.length - 1]);
 		}
 
-		var category = decals_group.id;
-		var cat_short = category.replace("Decals", "");
-
-		var use = BuildUse(name, id, d, data);
-
-		var div = XML.DOMNode("div", {class: "decal_control selected"});
-		decals_list.insertBefore(div, decals_list.firstElementChild);
-
-		var button = Picker.build(use, div, {
-			text: display_name,
-			default: "#000000",
-			disabled: name.endsWith("__cd")
+		var use = XML.SVGNode("use", {
+			class: "decal",
+			href: "#" + name,
+			id: id
 		});
 
-		var buttons = BuildControlButtons(div, use);
-		var closed = false;
-		buttons["close"].addEventListener("click", function () {
-			closed = true;
-			use.remove();
-			div.remove();
-			delete colors[button.id];
-			variants.removeItem(id, "decal", category);
-			count[name]--;
-		});
-		buttons["duplicate"].addEventListener("click", function () {
-			var ndata = variants.getItem(use.id, category);
-			AddDecal(name, null, ndata);
-		});
-		buttons["mirror"].addEventListener("click", function () {
-			var odata = variants.getItem(use.id, category);
-			var ndata = {
-				x: 170 - odata.x,
-				y: odata.y,
-				ax: odata.ax,
-				ay: odata.ay,
-				phi: -odata.phi
-			}
-			AddDecal(name, null, ndata);
-		});
+		var D = new Decal(use, decals_group);
+		D.parent = decals_list;
+		D.visible = true;
+		if (!data) data = {c: "#000000", v: null};
+		else if ( !("c" in data) ) data.c = "#000000";
+		D.state = data;
 
-		var handler = function () {
-			if (closed)
-				return decals_brace.target = null;
-			Decals.Category = cat_short;
-			decals_brace.target = use;
-			target_div = div;
-		}
-		div.addEventListener("click", handler);
-		target_div = div;
-		decals_brace.target = use;
+		target_div = D.UI;
+		brace.target = D;
+
+		var s = D.state;
+		variants.setItem(D.id, s);
+		History.push(D, s, {}, 1);
 	}
 
-	function Recreate (node, decals) {
-		decals_group = node;
-		decals_list = find(node.id + "List");
-		for (var name in decals) {
-			var data = name.match(/(.+)__\d+/);
-			if (!data)
-				continue;
-			AddDecal(data[1], name, decals[name]);
+	class ControlButtons extends ArmorControl {
+		Build (p) {
+			super.Build(p);
+			var close = XML.DOMNode("button", {class: "delete right icon-remove no_collapse", title: "Delete"}, p);
+			this.UI.className = "decal_buttons no_collapse";
+
+			var buttons = BuildControlButtons(this.UI, p, this.node);
+			var a = this.ambient;
+			var name = this.id.split("__", 1)[0];
+			close.onclick = function () {
+				a.parent = null;
+				a.visible = null;
+				a.closed = true;
+				brace.target = null;
+			};
+			buttons["duplicate"].onclick = function () {
+				AddDecal(name, null, a.state);
+			};
+			buttons["mirror"].onclick = function () {
+				var S = a.state;
+				var v = S.v;
+				v.x = 170 - v.x;
+				v.phi = -v.phi;
+				v.ax = -v.ax;
+				AddDecal(name, null, S);
+			};
 		}
-		decals_brace.target = null;
+	}
+
+	class Decal extends GenericControl {
+		constructor (node, g) {
+			super(node);
+			this.SVGParent = g;
+
+			this.push(new ColorPicker(node));
+			this.push(new ControlButtons(node));
+		}
+
+		get state () {
+			var tl = this.node.transform.baseVal;
+			var mt = tl[0].matrix;
+			var phi = tl[1].angle;
+			var ms = tl[2].matrix;
+			return {
+				c: this.children[0].state,
+				v: {x: mt.e, y: mt.f, ax: ms.a, ay: ms.d, phi: phi},
+				p: this.p.id
+			}
+		}
+
+		set state (s) {
+			if (s.c)
+				this.children[0].state = s.c;
+			if ("v" in s) {
+				SetTransform(this.node, s.v);
+				if (s.force) brace.state = s.v;
+				if (this.closed) {
+					this.closed = false;
+					this.parent = this.parent;
+					this.visible = true;
+
+					var S = this.state;
+					variants.setItem(this.id, S);
+					History.push(this, S, {}, 1);
+				}
+			} else {
+				this.visible = false;
+				this.parent = null;
+				brace.target = null;
+			}
+		}
+
+		set visible (v) {
+			this.closed = !v;
+			if (v) {
+				this.SVGParent.appendChild(this.node);
+			} else {
+				this.node.remove();
+				var old = variants.removeItem(this.id);
+				History.push(this, {}, old, 1);
+			}
+		}
+
+		get parent () {return this.p}
+
+		set parent (p) {
+			if (p) this.p = p;
+			super.parent = p;
+		}
+
+		Build (p) {
+			super.Build(p);
+			this.UI.classList = "decal_control selected";
+
+			var category = this.p.id;
+			var cat_short = category.replace("DecalsList", "");
+
+			var self = this;
+			this.UI.onclick = function () {
+				if (self.closed)
+					return;
+				brace.target = self;
+				target_div = this;
+			}
+		}
+	}
+
+	function Recreate (node) {
+		Decals.finishUp();
+		decals_group = node;
+		var name = node.id + "List";
+		decals_list = find(name);
+		for (var id of variants.getKeys(name)) {
+			var data = id.match(/(.+)__\d+/);
+			var state = variants.getItem(id);
+			AddDecal(data[1], id, state);
+		}
+		brace.target = null;
 	}
 
 	function SetTransform (target, data) {
 		var tl = target.transform.baseVal;
 		if (!data) {
-			var coords = decals_brace.coordinates(window.innerWidth/2, window.innerHeight/2);
-			var scale = decals_brace.coordinates(window.innerWidth, window.innerHeight);
+			var coords = brace.coordinates(window.innerWidth/2, window.innerHeight/2);
+			var scale = brace.coordinates(window.innerWidth, window.innerHeight);
 			scale[0] = (scale[0] - coords[0]) / 150;
 			scale[1] = (scale[1] - coords[1]) / 150;
 			scale = Math.min(scale[0], scale[1]);
@@ -364,7 +416,7 @@ function DecalFactory (Picker) {
 		tl.initialize(translate);
 
 		var rotate = main_svg.createSVGTransform();
-		rotate.setRotate(data.phi * 180 / Math.PI, 0, 0);
+		rotate.setRotate(data.phi, 0, 0);
 		tl.appendItem(rotate);
 
 		var scale = main_svg.createSVGTransform();
@@ -374,9 +426,6 @@ function DecalFactory (Picker) {
 		var t2 = main_svg.createSVGTransform();
 		t2.setTranslate(-50, -50);
 		tl.appendItem(t2);
-
-		decals_brace.target = null;
-		variants.setItem(target.id, data, "decal", target.parentNode.id);
 	}
 
 	function makeName (str, display) {
@@ -386,17 +435,16 @@ function DecalFactory (Picker) {
 		return btoa(str);
 	}
 
+	var done;
 	return {
 		Add: AddDecal,
 		Recreate: Recreate,
 		Set: SetTransform,
 		set Category (cat) {
 			if (cat == null) {
-				decals_brace.Category = null;
 				decals_group = decals_list = null;
 			} else {
 				var name = cat + "Decals";
-				decals_brace.Category = name;
 				decals_group = find(name);
 				decals_list = find(name + "List");
 				decals_list.click();
@@ -414,7 +462,7 @@ function DecalFactory (Picker) {
 		},
 		set SVG (value) {
 			main_svg = value;
-			decals_brace.SVG = value;
+			brace.SVG = value;
 		},
 		custom: function (data, name, parent) {
 			var id = makeName(name, false) + "__cd";
@@ -436,9 +484,7 @@ function DecalFactory (Picker) {
 				"serif:id": display
 			}, vault);
 
-			button.addEventListener("click", function () {
-				AddDecal(id);
-			});
+			button.onclick = function () {AddDecal(id);}
 
 			var t = document.createTextNode(display);
 			button.appendChild(t);
@@ -446,12 +492,27 @@ function DecalFactory (Picker) {
 		reset: function () {
 			nonce = 0;
 			count = {};
+
+			var list = find("Decal_Lists");
+			var lists = list.children;
+			for (var i = 0; i < lists.length; i++)
+				lists[i].innerHTML = "";
+
+			brace.target = null;
 		},
 		finishUp: function () {
-			decals_brace = new DecalsBrace(find("brace"), find("grid"), find("compass"));
+			if (done) return;
+			done = true;
+			brace = new DecalsBrace(find("brace"), find("grid"), find("compass"));
+			brace.SVG = main_svg;
 			Vault.getItem("images/Decals.svg", function (decals) {
 				vault = decals;
-			}, find("decal_vault"));
+				find("decal_vault").replaceWith(decals);
+
+				var previews = find("Decal_Previews").getElementsByTagName("use");
+				for (var i = previews.length - 1; i >= 0; i--)
+					previews[i].href.baseVal = "images/Decals.svg" + previews[i].href.baseVal;
+			});
 			initializeEventHandlers();
 		}
 	};

@@ -220,7 +220,7 @@ body {
 	user-select: none;
 
 	--mainColor: #222;
-	--softColor: #555;
+	--softColor: #444;
 	--softLight: #AAA;
 	--highlight: #DDD;
 	--accent: #AB1F1F;
@@ -444,8 +444,8 @@ button:focus {
 
 #title {
 	display: block;
-	width: 25em;
 	max-width: 75vw;
+	height: initial;
 }
 
 #reset_wrapper {
@@ -523,14 +523,6 @@ legend {
 .controls {
 	visibility: hidden;
 	pointer-events: none;
-}
-
-.swapslide {
-	display: none;
-}
-
-.option {
-	display: none;
 }
 
 footer {
@@ -629,6 +621,7 @@ footer > * {
 
 .menu_column {
 	position: fixed;
+	contain: size layout;
 	height: 100%;
 	width: 24em;
 	max-width: 100%;
@@ -651,13 +644,20 @@ footer > * {
 .styles_preview {
 	padding-top: 0.5em;
 	overflow-y: auto;
-	border-bottom: 1px solid var(--softColor);
 	resize: vertical;
 	height: 19em;
+	border-bottom: 1px solid var(--softColor);
+}
+
+.details {
+	padding-bottom: 1em;
+}
+
+.details:empty {
+	display: none;
 }
 
 .summary {
-	color: var(--softLight);
 	padding: 0 0 0.5em 3%;
 }
 
@@ -723,7 +723,7 @@ footer > * {
 .preview_icon {
 	border: 1px currentColor solid;
 	max-height: 100%;
-	fill: currentColor;
+	fill: white;
 	fill-rule: evenodd;
 	stroke: black;
 	stroke-width: 0.3px;
@@ -831,14 +831,12 @@ footer > * {
 
 .decal_buttons {
 	display: none;
-	padding: 0.75em;
-	padding-top: 1em;
-	height: 2em;
+	padding: 1em 0.75em;
 }
 
 .decal_control.selected .decal_buttons {
 	display: grid;
-	grid-template-columns: repeat(6, 2em);
+	grid-template-columns: repeat(6, 1fr);
 	grid-template-rows: 2em;
 	column-gap: 2em;
 }
@@ -875,7 +873,7 @@ footer > * {
 .color_wrapper {
 	display: inline-block;
 	padding: 0.75em 0 0 0.25em;
-	min-width: 7.5em;
+	min-width: 7em;
 	line-height: 1em;
 }
 

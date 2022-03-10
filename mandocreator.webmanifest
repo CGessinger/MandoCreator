@@ -1,6 +1,8 @@
 {
 	"name": "MandoCreator",
 	"short_name": "MandoCreator",
+	"description": "Design your custom set of mandalorian armor. Choose from dozens of options, to bring your vision to life.",
+	"id": "/index.html",
 	"icons": [
 		{
 			"src": "assets/android-chrome-192x192.png",

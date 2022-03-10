@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="utf-8"/>
 		<!-- Google Tag Manager -->
-		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-WDVDR2H');</script>
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.defer=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-WDVDR2H');</script>
 		<!-- End Google Tag Manager -->
 		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-182105390-1"></script>
+		<script defer async src="https://www.googletagmanager.com/gtag/js?id=UA-182105390-1"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){if(window.location.hostname!=="mandocreator.com")return;dataLayer.push(arguments);}
@@ -73,7 +73,7 @@
 		}
 		</script>
 	</head>
-	<body style="background-image:url(images/Background.svg)">
+	<body style="background-image:#222">
 		<div class="picker_wrapper" id="picker" style="visibility: hidden;">
 			<div id="info"> to save a color</div>
 			<div id="picker_hue">
@@ -90,7 +90,7 @@
 			<button class="palette_icon"></button><button class="palette_icon"></button>
 			<span class="icon-keyboard_arrow_down" style="grid-column:1;grid-row:1;font-size:smaller"></span>
 		</div>
-		<div style="display:none">
+		<div hidden>
 			<canvas id="canvas" height="1080" width="1920"></canvas>
 			<audio id="kote" onloadstart="this.volume=0.15" autoplay></audio>
 			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" id="svg_vault">
@@ -132,7 +132,7 @@
 			<noscript>MandoCreator lets you design your custom set of mandalorian armor. For cosplay or RPG, choose from dozens of options, to bring your vision to life.</noscript>
 		</main>
 		<nav>
-			<img id="title" src="images/Logo.svg" alt="MandoCreator Logo"/>
+			<img height="70" width="420" id="title" src="images/Logo.svg" alt="MandoCreator Logo"/>
 			<ul id="left_nav" data-nosnippet="">
 				<li class="nav_icon icon-helmet">
 					<div id="parts_list" class="sub_nav">
@@ -150,9 +150,9 @@
 				</li>
 				<li class="nav_icon icon-cog">
 					<div class="sub_nav">
-						<input type="radio" name="sex" class="toggle_sex" id="male" checked onchange="Settings.Sex(false)"
+						<input type="radio" name="sex" class="toggle_sex" id="male" checked onchange="Settings.Sex=false"
 						/><label for="male" class="label_sex icon-male"></label
-						/><input type="radio" name="sex" class="toggle_sex" id="female" onchange="Settings.Sex(true)"
+						/><input type="radio" name="sex" class="toggle_sex" id="female" onchange="Settings.Sex=true"
 						/><label for="female" class="label_sex icon-female"></label>
 						<input id="background_upload" type="file" accept="image/*" hidden/>
 						<label for="background_upload" class="sub_nav_label icon-image">Upload Background</label>
@@ -183,9 +183,9 @@
 		</nav>
 		<footer>
 			<span>
-				<button class="icon-undo undo_redo" onclick="History.undo(0)"></button>
+				<button class="icon-undo undo_redo" title="Undo" onclick="History.undo(0)"></button>
 				<button class="red_button" onclick="reset()">Reset</button>
-				<button class="icon-undo undo_redo" style="transform:scale(-1,1);" onclick="History.undo(1)"></button>
+				<button class="icon-undo undo_redo" title="Redo" style="transform:scale(-1,1);" onclick="History.undo(1)"></button>
 			</span>
 			<div class="zoom_wrapper">
 				<span class="zoom_icon" onclick="Zoom.out()">&#xe916;</span
@@ -193,9 +193,9 @@
 				/><span class="zoom_icon" onclick="Zoom.in()">&#xe917;</span>
 			</div>
 		</footer>
-		<div id="armor_menu" class="menu_column">
+		<div id="armor_menu" class="menu_column menu_collapsed">
 			<button id="menu_toggle" class="menu_toggle" title="Toggle Controls Menu">&#xE900;</button>
-			<div id="HelmetOptions" class="folder">
+			<div id="HelmetOptions" class="folder selected">
 				<div class="no_collapse">
 					<h2 class="slide_title">Helmet (Buy'ce)</h2>
 					<details open>
@@ -380,7 +380,7 @@
 					</details>
 				</div>
 				<div class="folder_content">
-					<div id="HelmetColors" class="slide_content no_overview"></div>
+					<details open id="HelmetColors" class="slide_content no_overview details"></details>
 					<details open class="overview no_collapse no_overview">
 						<summary class="headline">Detailing</summary>
 						<button class="decals_toggle no_collapse" data-category='Helmets'>
@@ -439,14 +439,14 @@
 							<p class="soft_text">Upper Body</p>
 							<p class="larger">Neck (Ghet'bur)</p>
 						</button>
-						<details open id="CollarColors" class="slide_content no_overview"></details>
+						<details open id="CollarColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Collar'>
 								<p class="larger">Add decals</p>
 							</button>
 						</details>
-						<div id="Neck-ArmorColors" class="slide_content no_overview"></div>
+						<details open id="Neck-ArmorColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Chest'>
@@ -459,16 +459,16 @@
 							<p class="soft_text">Upper Body</p>
 							<p class="larger">Chest Attachments</p>
 						</button>
-						<details open id="Chest-AttachmentsColors" class="slide_content no_overview"></details>
+						<details open id="Chest-AttachmentsColors" class="slide_content no_overview details"></details>
 					</div>
 					<div class="slide">
 						<button class="slide_toggle no_collapse">
 							<p class="soft_text">Upper Body</p>
 							<p class="larger">Chest (Hal'cabur)</p>
 						</button>
-						<div id="Full-ChestColors" class="slide_content no_overview"></div>
-						<div id="Right-ChestColors" class="slide_content no_overview"></div>
-						<div id="Left-ChestColors" class="slide_content no_overview"></div>
+						<details open id="Full-ChestColors" class="slide_content no_overview details"></details>
+						<details open id="Right-ChestColors" class="slide_content no_overview details"></details>
+						<details open id="Left-ChestColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Chest'>
@@ -481,14 +481,14 @@
 							<p class="soft_text">Upper Body</p>
 							<p class="larger">Iron Heart (Kar'ta Beskar)</p>
 						</button>
-						<div id="Iron-HeartColors" class="slide_content no_overview"></div>
+						<details open id="Iron-HeartColors" class="slide_content no_overview details"></details>
 					</div>
 					<div class="slide">
 						<button class="slide_toggle no_collapse">
 							<p class="soft_text">Upper Body</p>
 							<p class="larger">Abdomen (Shar'tas)</p>
 						</button>
-						<div id="AbdomenColors" class="slide_content no_overview"></div>
+						<details open id="AbdomenColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Chest'>
@@ -501,8 +501,8 @@
 							<p class="soft_text">Upper Body</p>
 							<p class="larger">Shoulders (Bes'mabur)</p>
 						</button>
-						<details open id="Right-ShoulderColors" class="slide_content no_overview"></details>
-						<details open id="Left-ShoulderColors" class="slide_content no_overview"></details>
+						<details open id="Right-ShoulderColors" class="slide_content no_overview details"></details>
+						<details open id="Left-ShoulderColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Shoulders'>
@@ -515,8 +515,8 @@
 							<p class="soft_text">Upper Body</p>
 							<p class="larger">Biceps (Irud'cabur)</p>
 						</button>
-						<details open id="Right-BicepsColors" class="slide_content no_overview"></details>
-						<details open id="Left-BicepsColors" class="slide_content no_overview"></details>
+						<details open id="Right-BicepsColors" class="slide_content no_overview details"></details>
+						<details open id="Left-BicepsColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Biceps'>
@@ -529,8 +529,8 @@
 							<p class="soft_text">Upper Body</p>
 							<p class="larger">Gauntlets (Kom'rk)</p>
 						</button>
-						<details open id="Right-GauntletsColors" class="slide_content no_overview"></details>
-						<details open id="Left-GauntletsColors" class="slide_content no_overview"></details>
+						<details open id="Right-GauntletsColors" class="slide_content no_overview details"></details>
+						<details open id="Left-GauntletsColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Gauntlets'>
@@ -545,10 +545,10 @@
 					<h2 class="slide_title">Flight Suit (Kute)</h2>
 				</div>
 				<div class="folder_content">
-					<details open id="Right-GloveColors" class="slide_content no_overview"></details>
-					<details open id="Left-GloveColors" class="slide_content no_overview"></details>
-					<details open id="SuitColors" class="slide_content no_overview"></details>
-					<details open id="BootsColors" class="slide_content no_overview"></details>
+					<details open id="Right-GloveColors" class="slide_content no_overview details"></details>
+					<details open id="Left-GloveColors" class="slide_content no_overview details"></details>
+					<details open id="SuitColors" class="slide_content no_overview details"></details>
+					<details open id="BootsColors" class="slide_content no_overview details"></details>
 				</div>
 			</div>
 			<div id="LowerArmorOptions" class="folder overview">
@@ -562,9 +562,9 @@
 							<p class="soft_text">Lower Body</p>
 							<p class="larger">Waist</p>
 						</button>
-						<details open id="BeltColors" class="slide_content no_overview"></details>
-						<details open id="Under-BeltColors" class="slide_content no_overview"></details>
-						<details open id="AccessoriesColors" class="slide_content no_overview"></details>
+						<details open id="BeltColors" class="slide_content no_overview details"></details>
+						<details open id="Under-BeltColors" class="slide_content no_overview details"></details>
+						<details open id="AccessoriesColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Waist'>
@@ -577,7 +577,7 @@
 							<p class="soft_text">Lower Body</p>
 							<p class="larger">Groin (Ven'cabur)</p>
 						</button>
-						<details open id="GroinColors" class="slide_content no_overview"></details>
+						<details open id="GroinColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Groin'>
@@ -590,8 +590,8 @@
 							<p class="soft_text">Lower Body</p>
 							<p class="larger">Thighs (Motun'bur)</p>
 						</button>
-						<details open id="Right-ThighColors" class="slide_content no_overview"></details>
-						<details open id="Left-ThighColors" class="slide_content no_overview"></details>
+						<details open id="Right-ThighColors" class="slide_content no_overview details"></details>
+						<details open id="Left-ThighColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Thighs'>
@@ -604,8 +604,8 @@
 							<p class="soft_text">Lower Body</p>
 							<p class="larger">Knees (Bes'lovik)</p>
 						</button>
-						<details open id="Right-KneeColors" class="slide_content no_overview"></details>
-						<details open id="Left-KneeColors" class="slide_content no_overview"></details>
+						<details open id="Right-KneeColors" class="slide_content no_overview details"></details>
+						<details open id="Left-KneeColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Knees'>
@@ -618,8 +618,8 @@
 							<p class="soft_text">Lower Body</p>
 							<p class="larger">Shins (Tadun'bur)</p>
 						</button>
-						<details open id="Right-ShinColors" class="slide_content no_overview"></details>
-						<details open id="Left-ShinColors" class="slide_content no_overview"></details>
+						<details open id="Right-ShinColors" class="slide_content no_overview details"></details>
+						<details open id="Left-ShinColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Shins'>
@@ -632,10 +632,10 @@
 							<p class="soft_text">Lower Body</p>
 							<p class="larger">Foot (Cetar'bur)</p>
 						</button>
-						<details open id="Right-AnkleColors" class="slide_content no_overview"></details>
-						<details open id="Left-AnkleColors" class="slide_content no_overview"></details>
-						<details open id="Right-ToeColors" class="slide_content no_overview"></details>
-						<details open id="Left-ToeColors" class="slide_content no_overview"></details>
+						<details open id="Right-AnkleColors" class="slide_content no_overview details"></details>
+						<details open id="Left-AnkleColors" class="slide_content no_overview details"></details>
+						<details open id="Right-ToeColors" class="slide_content no_overview details"></details>
+						<details open id="Left-ToeColors" class="slide_content no_overview details"></details>
 						<details open class="overview no_collapse no_overview">
 							<summary class="headline">Detailing</summary>
 							<button class="decals_toggle" data-category='Foot'>
@@ -650,12 +650,12 @@
 					<h2 class="slide_title">Extras (Majyce)</h2>
 				</div>
 				<div class="folder_content">
-					<details open class="slide_content no_overview" id="BackColors"></details>
-					<details open class="slide_content no_overview" id="FrontColors"></details>
+					<details open class="slide_content no_overview details" id="BackColors"></details>
+					<details open class="slide_content no_overview details" id="FrontColors"></details>
 				</div>
 			</div>
 		</div>
-		<div id="decals_menu" class="menu_column folder" data-nosnippet="">
+		<div id="decals_menu" class="menu_column menu_collapsed folder" data-nosnippet="">
 			<button id="decals_toggle" class="menu_toggle" title="Toggle Decals Menu">&#xE900;</button>
 			<button class="slide_toggle no_collapse" onclick="Decals.Category=null">
 				<p class="soft_text">Detailing</p>
@@ -667,211 +667,211 @@
 					<details open>
 						<summary class="summary">Sigils and Emblems</summary>
 						<button class="type_button" onclick="Decals.Add('Mytho-Skull')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Mytho-Skull"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mytho-Skull"/></svg>
 							Mythosaur
 						</button><button class="type_button" onclick="Decals.Add('Beskar-ta')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Beskar-ta"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Beskar-ta"/></svg>
 							Beskar'ta
 						</button><button class="type_button" onclick="Decals.Add('Beskar-ta--Hollow-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Beskar-ta--Hollow-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Beskar-ta--Hollow-"/></svg>
 							Beskar'ta (2)
 						</button><button class="type_button" onclick="Decals.Add('Fett')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Fett"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Fett"/></svg>
 							Fett
 						</button><button class="type_button" onclick="Decals.Add('Mudhorn')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Mudhorn"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mudhorn"/></svg>
 							Mudhorn
 						</button><button class="type_button" onclick="Decals.Add('Starbird')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Starbird"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Starbird"/></svg>
 							Starbird
 						</button><button class="type_button" onclick="Decals.Add('True-Mandalorians')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#True-Mandalorians"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#True-Mandalorians"/></svg>
 							True Mando'ade
 						</button><button class="type_button" onclick="Decals.Add('Crusader')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Crusader"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Crusader"/></svg>
 							Crusaders
 						</button><button class="type_button" onclick="Decals.Add('Deathwatch')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Deathwatch"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Deathwatch"/></svg>
 							Deathwatch
 						</button><button class="type_button" onclick="Decals.Add('Jaig-Eyes')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Jaig-Eyes"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Jaig-Eyes"/></svg>
 							Jaig Eyes
 						</button><button class="type_button" onclick="Decals.Add('Rebels')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Rebels"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Rebels"/></svg>
 							Rebels
 						</button><button class="type_button" onclick="Decals.Add('Empire')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Empire"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Empire"/></svg>
 							Empire
 						</button><button class="type_button" onclick="Decals.Add('Black-Sun')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Black-Sun"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Black-Sun"/></svg>
 							Black Sun
 						</button><button class="type_button" onclick="Decals.Add('Jev-Eyes')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Jev-Eyes"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Jev-Eyes"/></svg>
 							Jev Eyes
 						</button><button class="type_button" onclick="Decals.Add('MandoCreator')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#MandoCreator"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#MandoCreator"/></svg>
 							MandoCreator
 						</button>
 					</details>
 					<details open>
 						<summary class="summary">Basic Shapes</summary>
 						<button class="type_button" onclick="Decals.Add('Stripe-1')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Stripe-1"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Stripe-1"/></svg>
 							Stripe (1)
 						</button><button class="type_button" onclick="Decals.Add('Stripe-2')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Stripe-2"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Stripe-2"/></svg>
 							Stripe (2)
 						</button><button class="type_button" onclick="Decals.Add('Stripe-3')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Stripe-3"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Stripe-3"/></svg>
 							Stripe (3)
 						</button><button class="type_button" onclick="Decals.Add('Circle')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Circle"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Circle"/></svg>
 							Circle
 						</button><button class="type_button" onclick="Decals.Add('Square')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Square"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Square"/></svg>
 							Square
 						</button><button class="type_button" onclick="Decals.Add('Triangle')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Triangle"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Triangle"/></svg>
 							Triangle
 						</button><button class="type_button" onclick="Decals.Add('Circle--Hollow-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Circle--Hollow-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Circle--Hollow-"/></svg>
 							Circle 2
 						</button><button class="type_button" onclick="Decals.Add('Square--Hollow-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Square--Hollow-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Square--Hollow-"/></svg>
 							Square 2
 						</button><button class="type_button" onclick="Decals.Add('Triangle--Hollow-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Triangle--Hollow-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Triangle--Hollow-"/></svg>
 							Triangle 2
 						</button><button class="type_button" onclick="Decals.Add('Star--3-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--3-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--3-"/></svg>
 							Star (3)
 						</button><button class="type_button" onclick="Decals.Add('Star--4-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--4-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--4-"/></svg>
 							Star (4)
 						</button><button class="type_button" onclick="Decals.Add('Star--5-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--5-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--5-"/></svg>
 							Star (5)
 						</button><button class="type_button" onclick="Decals.Add('Star--6-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--6-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--6-"/></svg>
 							Star (6)
 						</button><button class="type_button" onclick="Decals.Add('Star--7-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--7-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--7-"/></svg>
 							Star (7)
 						</button><button class="type_button" onclick="Decals.Add('Star--8-')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Star--8-"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Star--8-"/></svg>
 							Star (8)
 						</button>
 					</details>
 					<details open>
 						<summary class="summary">Text</summary>
 						<button class="type_button" onclick="Decals.Add('A')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#A"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#A"/></svg>
 							A
 						</button><button class="type_button" onclick="Decals.Add('B')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#B"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#B"/></svg>
 							B
 						</button><button class="type_button" onclick="Decals.Add('C')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#C"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#C"/></svg>
 							C
 						</button><button class="type_button" onclick="Decals.Add('D')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#D"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#D"/></svg>
 							D
 						</button><button class="type_button" onclick="Decals.Add('E')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#E"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#E"/></svg>
 							E
 						</button><button class="type_button" onclick="Decals.Add('F')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#F"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#F"/></svg>
 							F
 						</button><button class="type_button" onclick="Decals.Add('G')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#G"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#G"/></svg>
 							G
 						</button><button class="type_button" onclick="Decals.Add('H')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#H"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#H"/></svg>
 							H
 						</button><button class="type_button" onclick="Decals.Add('I')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#I"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#I"/></svg>
 							I
 						</button><button class="type_button" onclick="Decals.Add('J')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#J"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#J"/></svg>
 							J
 						</button><button class="type_button" onclick="Decals.Add('K')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#K"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#K"/></svg>
 							K
 						</button><button class="type_button" onclick="Decals.Add('L')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#L"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#L"/></svg>
 							L
 						</button><button class="type_button" onclick="Decals.Add('M')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#M"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#M"/></svg>
 							M
 						</button><button class="type_button" onclick="Decals.Add('N')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#N"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#N"/></svg>
 							N
 						</button><button class="type_button" onclick="Decals.Add('O')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#O"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#O"/></svg>
 							O
 						</button><button class="type_button" onclick="Decals.Add('P')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#P"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#P"/></svg>
 							P
 						</button><button class="type_button" onclick="Decals.Add('Q')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Q"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Q"/></svg>
 							Q
 						</button><button class="type_button" onclick="Decals.Add('R')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#R"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#R"/></svg>
 							R
 						</button><button class="type_button" onclick="Decals.Add('S')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#S"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#S"/></svg>
 							S
 						</button><button class="type_button" onclick="Decals.Add('T')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#T"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#T"/></svg>
 							T
 						</button><button class="type_button" onclick="Decals.Add('U')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#U"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#U"/></svg>
 							U
 						</button><button class="type_button" onclick="Decals.Add('V')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#V"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#V"/></svg>
 							V
 						</button><button class="type_button" onclick="Decals.Add('W')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#W"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#W"/></svg>
 							W
 						</button><button class="type_button" onclick="Decals.Add('X')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#X"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#X"/></svg>
 							X
 						</button><button class="type_button" onclick="Decals.Add('Y')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Y"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Y"/></svg>
 							Y
 						</button><button class="type_button" onclick="Decals.Add('Z')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Z"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Z"/></svg>
 							Z
 						</button><button class="type_button" onclick="Decals.Add('Beten')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Beten"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Beten"/></svg>
 							Beten
 						</button><button class="type_button" onclick="Decals.Add('Mando-a-1')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Mando-a-1"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mando-a-1"/></svg>
 							Mando'a (1)
 						</button><button class="type_button" onclick="Decals.Add('Mando-a-2')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Mando-a-2"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Mando-a-2"/></svg>
 							Mando'a (2)
 					</details>
 					<details open>
 						<summary class="summary">Weathering</summary>
 						<button class="type_button" onclick="Decals.Add('Claw-Marks')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Claw-Marks"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Claw-Marks"/></svg>
 							Claw-Marks
 						</button><button class="type_button" onclick="Decals.Add('Scratches')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Scratches"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Scratches"/></svg>
 							Scratches
 						</button><button class="type_button" onclick="Decals.Add('Medium-Weathering')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Medium-Weathering"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Medium-Weathering"/></svg>
 							Weathering (M)
 						</button><button class="type_button" onclick="Decals.Add('Heavy-Weathering')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Heavy-Weathering"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Heavy-Weathering"/></svg>
 							Weathering (H)
 						</button><button class="type_button" onclick="Decals.Add('Wampa-Paw')">
-							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="images/Decals.svg#Wampa-Paw"/></svg>
+							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#Wampa-Paw"/></svg>
 							Wampa Paw
 						</button>
 					</details>
-					<details id="custom_decals_menu" open>
+					<details open id="custom_decals_menu">
 						<summary class="summary">Custom</summary>
 						<label class="type_button">
 							<input type="file" accept="image/*" hidden onchange="addCustomDecal(this.files[0])"/>
@@ -924,9 +924,10 @@
 		var nsw = navigator.serviceWorker;
 		if (nsw) {
 			nsw.onmessage = function (event) {
-				var v = localStorage.getItem("version");
-				if (v == event.data)
+				if ( ("version" in localStorage) &&
+				     (localStorage.getItem("version") == event.data)) {
 					return;
+				}
 				localStorage.setItem("version", event.data);
 				var form = find("reload");
 				form.style.display = "";
@@ -936,7 +937,7 @@
 		if (document.readyState === "loading")
 			document.addEventListener("DOMContentLoaded", MandoCreator)
 		else
-			MandoCreator()
+			new MandoCreator()
 		</script>
 	</body>
 </html>
