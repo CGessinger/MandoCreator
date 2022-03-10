@@ -95,10 +95,9 @@ class ArmorControl {
 
 	set parent (p) {
 		if (p) {
-			var q = this.parent;
-			p = q || p;
-			if (q && q.childElementCount <= 1 && q.tagName == "DETAILS")
-				q.style.display = "";
+			p = this.parent || p;
+			if (p && p.tagName == "DETAILS")
+				p.style.display = "";
 			if (this.UI == null)
 				this.Build(p);
 			p.appendChild(this.UI);
@@ -489,16 +488,19 @@ class Previewable extends GenericControl {
 	}
 
 	set visible (v) {
+		if (this.v === v) return;
 		this.input.checked = v;
 		if (v) {
 			this.SVGParent.appendChild(this.node);
-			for (var c of this.children)
+			for (var c of this.children) {
 				c.parent = c.parent || this.parent;
+			}
 		} else {
 			Previewable.vault.appendChild(this.node);
 			for (var c of this.children)
 				c.parent = null;
 		}
+		this.v = v;
 	}
 }
 
@@ -553,7 +555,6 @@ class Swappable extends ArmorControl {
 		var previews = this.parent.getElementsByTagName("details")[0];
 		for (var c of this.children) {
 			c.input = previews.querySelector("#" + c.id + "Radio");
-			if (!c.input) console.log(c.id);
 			c.input.onchange = this.EventHandler(c);
 		}
 		this.state = {v: variants.getItem(this.id)};

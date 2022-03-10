@@ -246,7 +246,6 @@ function DecalFactory () {
 			return;
 		else if (d.hasAttribute("serif:id"))
 			display_name = d.getAttribute("serif:id");
-		console.log(name, id, data);
 
 		if (name in count)
 			count[name]++;
@@ -384,6 +383,8 @@ function DecalFactory () {
 					return;
 				brace.target = self;
 				target_div = this;
+				decals_group = self.SVGParent;
+				decals_list = self.p;
 			}
 		}
 	}
@@ -398,6 +399,7 @@ function DecalFactory () {
 			var state = variants.getItem(id);
 			AddDecal(data[1], id, state);
 		}
+		decals_group = decals_list = null;
 		brace.target = null;
 	}
 
