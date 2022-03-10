@@ -221,12 +221,25 @@ class Toggleable extends ArmorControl {
 		this.ch = this.children[0];
 	}
 
-	get state () {return this.ch.state;}
-	set state (s) {this.ch.state=s;}
+	get state () {
+		return {
+			v: this.input.checked,
+			c: this.ch.state
+		};
+	}
+
+	set state (s) {
+		this.ch.parent = s.v ? this.ambient.UI : null;
+		this.ch.visible = s.v;
+		this.input.checked = s.v;
+
+		if (s.c) this.ch.state = s.c;
+	}
 
 	EventHandler (parent, def) {
 		var id = this.id + "Toggle";
 		var ch = this.ch;
+		var self = this;
 		return function () {
 			ch.parent = this.checked ? parent.UI : null;
 			ch.visible = this.checked;
@@ -237,7 +250,7 @@ class Toggleable extends ArmorControl {
 			else
 				old = variants.removeItem(id);
 			if (old === undefined) old = def;
-			History.push(parent, {v: this.checked}, {v: old});
+			History.push(self, {v: this.checked}, {v: old});
 		}
 	}
 }
@@ -292,6 +305,7 @@ class Toggle extends ArmorControl {
 			var uie = this.children[0];
 			var defaultOn = (uie.node.style.display !== "none");
 			var handler = uie.EventHandler(this, defaultOn);
+			uie.input = input;
 
 			input.onchange = handler;
 			input.checked = defaultOn;
@@ -372,6 +386,7 @@ class IconCheckboxes extends ArmorControl {
 			input.onchange = handler;
 			input.checked = variants.getItem(id);
 			handler.bind(input)();
+			o.input = input;
 		}
 		this.input = icons_wrapper;
 	}
