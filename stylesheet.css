@@ -19,7 +19,7 @@ FONTS
 @font-face {
 	font-family: 'Raleway';
 	src:	local("Raleway"),
-		url('fonts/Raleway.ttf') format('truetype');
+		url('fonts/Raleway.otf') format('opentype');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
