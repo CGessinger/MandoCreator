@@ -1,5 +1,5 @@
 "use strict";
-const CACHE = "MCCacheV4.2-8";
+const CACHE = "MCCacheV4.2-9";
 
 self.addEventListener("install", function (event) {
 	event.waitUntil(

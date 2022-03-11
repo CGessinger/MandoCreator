@@ -67,7 +67,10 @@ class ArmorControl {
 	get id () {return this.node.id}
 
 	get name () {
-		return this.id.split("_", 1)[0].replace(/-/g, " ");
+		var id = this.id;
+		if (this.node.hasAttribute("serif:id"))
+			id = this.node.getAttribute("serif:id");
+		return id.split("_", 1)[0].replace(/-/g, " ");
 	}
 
 	get state () {
@@ -96,17 +99,16 @@ class ArmorControl {
 	set parent (p) {
 		if (p) {
 			p = this.parent || p;
-			if (p && p.tagName == "DETAILS")
-				p.style.display = "";
-			if (this.UI == null)
+			if (!this.UI)
 				this.Build(p);
+			if (this.par)
+				p.appendChild(this.par);
 			p.appendChild(this.UI);
 		} else {
-			if (this.UI != null)
+			if (this.UI)
 				this.UI.remove();
-			p = this.p;
-			if (p && p.childElementCount <= 1 && p.tagName == "DETAILS")
-				p.style.display = "none";
+			if (this.par)
+				this.par.remove();
 		}
 	}
 
@@ -115,17 +117,18 @@ class ArmorControl {
 	}
 
 	deconstruct () {
-		if (this.UI)
-			this.UI.remove();
+		this.parent = null;
 		for (var c of this.children)
 			c.deconstruct();
-		this.children = this.node = this.UI = null;
+		this.children = this.node = this.UI = this.par = null;
 	}
 
 	Build (p) {
-		if (p.childElementCount == 0 &&
-		    p.tagName == "DETAILS") {
+		if (p.tagName == "DETAILS" &&
+		    p.childElementCount == 0) {
 			var id = this.name;
+			if (p != this.p)
+				id = this.ambient.name;
 			var par = XML.DOMNode("summary", {class: "headline no_collapse"}, p);
 			par.innerText = id + " Options:";
 			var symmetric = id.match(/Left|Right/);
@@ -135,6 +138,7 @@ class ArmorControl {
 				if (event.target == par) return;
 				this.open = true;
 			};
+			this.par = par;
 		}
 		this.UI = XML.DOMNode("div", {});
 	}
@@ -147,7 +151,7 @@ class GenericControl extends ArmorControl {
 		var uie; /* child */
 		var options = [], toggles = [];
 		var ch = node.children;
-		for (var i = 0; i < ch.length; i++) {
+		for (var i = ch.length - 1; i >= 0; i--) {
 			var cls = ch[i].getAttribute("class");
 			if (cls == "option")
 				options.push(ch[i]);
@@ -187,12 +191,12 @@ class GenericControl extends ArmorControl {
 
 class ColorPicker extends ArmorControl {
 	get state () {
-		return colors[this.id + "Color"] || "#FFFFFF";
+		return colors[this.id + "__C"] || "#FFFFFF";
 	}
 
 	set state (s) {
 		this.node.setAttribute("fill", s);
-		colors[this.id + "Color"] = s;
+		colors[this.id + "__C"] = s;
 
 		var button = this.UI.children[0];
 		button.style.backgroundColor = s;
@@ -201,9 +205,9 @@ class ColorPicker extends ArmorControl {
 		label.firstElementChild.innerText = s;
 	}
 
-	Build (parent) {
-		super.Build(parent);
-		var button = ArmorControl.Picker.build(this.node, parent, {
+	Build (p) {
+		super.Build(p);
+		var button = ArmorControl.Picker.build(this.node, p, {
 			text: this.name,
 			default: "#FFFFFF",
 			disabled: this.id.includes("__cd"),
@@ -236,7 +240,7 @@ class Toggleable extends ArmorControl {
 	}
 
 	EventHandler (parent, def) {
-		var id = this.id + "Toggle";
+		var id = this.id + "__T";
 		var ch = this.ch;
 		var self = this;
 		return function () {
@@ -285,7 +289,7 @@ class Toggle extends ArmorControl {
 		var span = XML.DOMNode("span", {class: "pseudo_label"}, label);
 		span.innerText = this.name;
 
-		var id = this.id + "Toggle";
+		var id = this.id + "__T";
 		var input = XML.DOMNode("input", {type: "checkbox", id: id, class: "armor_toggle"}, label);
 		var sp = XML.DOMNode("span", {class: "slider right"}, label);
 
@@ -371,7 +375,7 @@ class IconCheckboxes extends ArmorControl {
 
 		for (var o of this.children) {
 			var title = o.name;
-			var id = o.id + "Toggle";
+			var id = o.id + "__T";
 
 			/* Step 1: Build a checkbox hidden behind an icon */
 			var input = XML.DOMNode("input", {type: "checkbox", class: "checkbox", id: id}, icons_wrapper);
@@ -404,7 +408,7 @@ class ArmorSelect extends ArmorControl {
 
 	EventHandler () {
 		var self = this;
-		var id = self.id + "Select";
+		var id = self.id + "__S";
 		return function (event) {
 			var old = variants.setItem(id, this.value);
 			History.push(self, {v: this.value}, {v: old});
@@ -447,9 +451,8 @@ class ArmorSelect extends ArmorControl {
 	}
 
 	get def () {
-		var l = this.children.length - 1;
-		var def = this.children[l].id;
-		var id = this.id + "Select";
+		var def = this.children[0].id;
+		var id = this.id + "__S";
 		if (variants.hasItem(id))
 			def = variants.getItem(id);
 		return def;
@@ -459,7 +462,7 @@ class ArmorSelect extends ArmorControl {
 		super.Build(parent);
 		/* Step 1: Build a <select> */
 		var wrapper = XML.DOMNode("div", {class: "select_wrapper no_collapse"}, this.UI); /* For arrow placement */
-		var select = XML.DOMNode("select", {id: this.id + "Select", class: "component_select"}, wrapper);
+		var select = XML.DOMNode("select", {id: this.id + "__S", class: "component_select"}, wrapper);
 
 		/* Step 2: Iterate over the options, creating an <option> and Controls for each one */
 		var def = this.def;

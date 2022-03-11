@@ -38,7 +38,7 @@ var Uploader = {
 
 		var node;
 		while (node = iter.nextNode()) {
-			var bn = node.id + "Color";
+			var bn = node.id + "__C";
 			if (node.hasAttribute("fill")) {
 				colors[bn] = node.getAttribute("fill");
 			} else if (node.style.fill) {
@@ -46,14 +46,14 @@ var Uploader = {
 			}
 			switch (node.getAttribute("class")) {
 				case "toggle":
-					variants.setItem(node.id + "Toggle", node.style.display !== "none");
+					variants.setItem(node.id + "__T", node.style.display !== "none");
 					break;
 				case "option":
 					var parent = node.parentNode;
 					if (parent.id.includes("Ear"))
-						variants.setItem(node.id + "Toggle", true);
+						variants.setItem(node.id + "__T", true);
 					else
-						variants.setItem(parent.id + "Select", node.id);
+						variants.setItem(parent.id + "__S", node.id);
 					break;
 				case "swappable":
 					var ch = node.firstElementChild;

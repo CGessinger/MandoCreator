@@ -240,6 +240,7 @@ function DecalFactory () {
 	}
 
 	function AddDecal (name, id, data) {
+		Decals.finishUp();
 		var display_name = name
 		var d = find(name);
 		if (!d)
@@ -262,7 +263,8 @@ function DecalFactory () {
 		var use = XML.SVGNode("use", {
 			class: "decal",
 			href: "#" + name,
-			id: id
+			id: id,
+			"serif:id": d.getAttribute("serif:id")
 		});
 
 		var D = new Decal(use, decals_group);
@@ -391,7 +393,6 @@ function DecalFactory () {
 	}
 
 	function Recreate (node) {
-		Decals.finishUp();
 		decals_group = node;
 		var name = node.id + "List";
 		decals_list = find(name);

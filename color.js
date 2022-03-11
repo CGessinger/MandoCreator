@@ -316,7 +316,7 @@ function PickerFactory () {
 	this.build = function (target, parent, kwargs) {
 		var span = XML.DOMNode("span", {class: "color_wrapper"}, parent);
 
-		var buttonID = target.id + "Color";
+		var buttonID = target.id + "__C";
 		var b = XML.DOMNode("button", {class: "color_picker", id: buttonID}, span);
 
 		var label = XML.DOMNode("label", {class: "soft_text no_collapse", for: buttonID}, span);
