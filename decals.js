@@ -377,9 +377,7 @@ function DecalFactory () {
 		Build (p) {
 			super.Build(p);
 			this.UI.classList = "decal_control selected";
-
-			var category = this.p.id;
-			var cat_short = category.replace("DecalsList", "");
+			p.insertBefore(this.UI, p.firstElementChild);
 
 			var self = this;
 			this.UI.onclick = function () {
@@ -506,6 +504,9 @@ function DecalFactory () {
 
 			brace.target = null;
 			decals_group = decals_list = 0;
+
+			find("decals_menu").classList.remove("selected");
+			find("armor_menu").classList.add("selected");
 		},
 		finishUp: function () {
 			if (done) return;
