@@ -264,8 +264,9 @@ function DecalFactory () {
 			class: "decal",
 			href: "#" + name,
 			id: id,
-			"serif:id": d.getAttribute("serif:id")
 		});
+		if (d.hasAttribute("serif:id"))
+			use.setAttribute("serif:id", d.getAttribute("serif:id"));
 
 		var D = new Decal(use, decals_group);
 		D.parent = decals_list;
