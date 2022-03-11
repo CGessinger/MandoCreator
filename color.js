@@ -224,7 +224,7 @@ function PickerFactory () {
 					return;
 				_parent = p;
 				if (!p) {
-					History.push(diff.target, diff.n, diff.o);
+					History.push(diff.target, {v:diff.n}, {v:diff.o});
 					diff = {};
 					cache();
 				}
@@ -384,8 +384,12 @@ function HistoryTracker () {
 	this.push = function (t, n, o, f) {
 		if (!interactive || !t || isEqual(o, n))
 			return;
-		if (f) n.force = o.force = true;
+		n.force = o.force = true;
 		changes.push({"target": t, "new": n, "old": o});
 		redos = [];
+	}
+
+	this.reset = function () {
+		changes = redos = [];
 	}
 }

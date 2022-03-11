@@ -1615,9 +1615,7 @@
 </g>
 <path id="Face_Neo" d="M40 34.47c7.21 0 13.77 8.24 13.55 12.47C52.8 61.47 40 71.88 40 71.88S27.2 61.47 26.45 46.94c-.22-4.23 6.34-12.47 13.55-12.47z"/>
 <path fill="#000000" id="Visor_Neo" d="m39.18 65.84-1.96-17.59-8.66-1.65-.25-1.07c3.66-1.86 7.8-2.31 11.7-2.31s8.07.47 11.7 2.31l-.26 1.07-8.66 1.65-1.96 17.59h-1.65z"/>
-<g id="Mask-Of-Mandalor">
-<g id="Mask" class="toggle" style="display:none"></g>
-</g>
+<g id="Mask-Of-Mandalor" class="toggle" style="display:none"/>
 </g>
 </g>
 <g id="Helmet_Grunt">

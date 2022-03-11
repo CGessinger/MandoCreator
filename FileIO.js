@@ -27,7 +27,6 @@ var Uploader = {
 			{ acceptNode: function (node) {
 				if (!node.id)
 					return NodeFilter.FILTER_REJECT;
-				node.id = node.id.replace(/_(M|F|Toggle(Off)?|Option)($|_)/g,"$3");
 				if ( !(node.hasAttribute("fill")
 					|| node.hasAttribute("class")
 					|| node.style.fill) )

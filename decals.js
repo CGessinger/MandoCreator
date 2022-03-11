@@ -37,7 +37,7 @@ function DecalsBrace (g, grid, compass) {
 		compass.style.visibility = "";
 		var s = node.state;
 		var old = variants.setItem(node.id, s);
-		History.push(node, s, old, 1);
+		History.push(node, s, old);
 	}
 	document.addEventListener("mouseup", onup);
 	document.addEventListener("touchend", onup);
@@ -314,7 +314,6 @@ function DecalFactory () {
 
 	class Decal extends GenericControl {
 		constructor (node, g) {
-			if (!g) console.trace();
 			super(node);
 			this.SVGParent = g;
 

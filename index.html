@@ -38,40 +38,6 @@
 		<meta name="msapplication-TileColor" content="#b91d47"/>
 		<meta name="theme-color" content="#ffffff"/>
 		<title>MandoCreator - Design your Mandalorian</title>
-		<script type="application/ld+json">
-		{
-			"@context":"https://schema.org",
-			"@type":"SoftwareApplication",
-			"name":"MandoCreator",
-			"url":"https://www.mandocreator.com/",
-			"description":"Design your custom set of mandalorian armor. Choose from dozens of options, to bring your vision to life.",
-			"applicationCategory": "DesignApplication",
-			"operatingSystem": "Any",
-			"softwareVersion": "4.1",
-			"author": [
-				{
-					"@type":"Person",
-					"name":"Jev Va'sal",
-					"url":"https://twitter.com/Foilrose_Studio"
-				}, {
-					"@type":"Person",
-					"name":"Cin Vhetin",
-					"url":"https://github.com/CinVhetin"
-				}
-			],
-			"offers": [ {
-				"@type":"Offer",
-				"price":"0",
-				"priceCurrency":"USD",
-				"availability":"https://schema.org/InStock"
-			} ],
-			"aggregateRating": {
-				"@type": "AggregateRating",
-				"ratingValue": "4.5",
-				"ratingCount": "208"
-			}
-		}
-		</script>
 	</head>
 	<body style="background-image:#222">
 		<div class="picker_wrapper" id="picker" style="visibility: hidden;">
@@ -133,6 +99,36 @@
 				})(this,this.style)'>
 			<noscript>MandoCreator lets you design your custom set of mandalorian armor. For cosplay or RPG, choose from dozens of options, to bring your vision to life.</noscript>
 		</main>
+		<form id="reload" style="display:none">
+			<legend>A new version is available</legend>
+			<div class="version_info">
+				<p>Ke'sush! Ulu evaar'la kebise. Ke'tsikado gotal'ur tug'yc!</p>
+				<p class="detail">(Attention! New things detected. Prepare to reload.)</p>
+			</div>
+			<div class="version_info">
+				<p>Please click the button below to reload the page and get all the latest changes.</p>
+				<p>See the <a href="contact.html#changelog" class="changelog_link">Changelog</a> for info on what's new.</p>
+			</div>
+			<button class="red_button">RELOAD</button>
+		</form>
+		<script>
+		function find (s) {
+			if (s) return document.getElementById(s);
+		}
+		var nsw = navigator.serviceWorker;
+		if (nsw) {
+			nsw.onmessage = function (event) {
+				if ( !("version" in localStorage) ||
+				     (localStorage.getItem("version") == event.data)) {
+					return;
+				}
+				localStorage.setItem("version", event.data);
+				var form = find("reload");
+				form.style.display = "";
+			};
+			nsw.register("sw.js");
+		}
+		</script>
 		<nav>
 			<img height="70" width="420" id="title" src="images/Logo.svg" alt="MandoCreator Logo"/>
 			<ul id="left_nav" data-nosnippet="">
@@ -905,64 +901,64 @@
 					</details>
 					<details open>
 						<summary class="summary">Numbers</summary>
-						<button class="type_button" onclick="Decals.Add('0')">
+						<button class="type_button" onclick="Decals.Add('_0')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_0"/></svg>
 							0
-						</button><button class="type_button" onclick="Decals.Add('1')">
+						</button><button class="type_button" onclick="Decals.Add('_1')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_1"/></svg>
 							1
-						</button><button class="type_button" onclick="Decals.Add('2')">
+						</button><button class="type_button" onclick="Decals.Add('_2')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_2"/></svg>
 							2
-						</button><button class="type_button" onclick="Decals.Add('3')">
+						</button><button class="type_button" onclick="Decals.Add('_3')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_3"/></svg>
 							3
-						</button><button class="type_button" onclick="Decals.Add('4')">
+						</button><button class="type_button" onclick="Decals.Add('_4')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_4"/></svg>
 							4
-						</button><button class="type_button" onclick="Decals.Add('5')">
+						</button><button class="type_button" onclick="Decals.Add('_5')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_5"/></svg>
 							5
-						</button><button class="type_button" onclick="Decals.Add('6')">
+						</button><button class="type_button" onclick="Decals.Add('_6')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_6"/></svg>
 							6
-						</button><button class="type_button" onclick="Decals.Add('7')">
+						</button><button class="type_button" onclick="Decals.Add('_7')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_7"/></svg>
 							7
-						</button><button class="type_button" onclick="Decals.Add('8')">
+						</button><button class="type_button" onclick="Decals.Add('_8')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_8"/></svg>
 							8
-						</button><button class="type_button" onclick="Decals.Add('9')">
+						</button><button class="type_button" onclick="Decals.Add('_9')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_9"/></svg>
 							9
-						</button><button class="type_button" onclick="Decals.Add('0')">
+						</button><button class="type_button" onclick="Decals.Add('_0_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_0_Aurebesh"/></svg>
 							0 (Aurebesh)
-						</button><button class="type_button" onclick="Decals.Add('1')">
+						</button><button class="type_button" onclick="Decals.Add('_1_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_1_Aurebesh"/></svg>
 							1 (Aurebesh)
-						</button><button class="type_button" onclick="Decals.Add('2')">
+						</button><button class="type_button" onclick="Decals.Add('_2_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_2_Aurebesh"/></svg>
 							2 (Aurebesh)
-						</button><button class="type_button" onclick="Decals.Add('3')">
+						</button><button class="type_button" onclick="Decals.Add('_3_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_3_Aurebesh"/></svg>
 							3 (Aurebesh)
-						</button><button class="type_button" onclick="Decals.Add('4')">
+						</button><button class="type_button" onclick="Decals.Add('_4_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_4_Aurebesh"/></svg>
 							4 (Aurebesh)
-						</button><button class="type_button" onclick="Decals.Add('5')">
+						</button><button class="type_button" onclick="Decals.Add('_5_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_5_Aurebesh"/></svg>
 							5 (Aurebesh)
-						</button><button class="type_button" onclick="Decals.Add('6')">
+						</button><button class="type_button" onclick="Decals.Add('_6_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_6_Aurebesh"/></svg>
 							6 (Aurebesh)
-						</button><button class="type_button" onclick="Decals.Add('7')">
+						</button><button class="type_button" onclick="Decals.Add('_7_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_7_Aurebesh"/></svg>
 							7 (Aurebesh)
-						</button><button class="type_button" onclick="Decals.Add('8')">
+						</button><button class="type_button" onclick="Decals.Add('_8_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_8_Aurebesh"/></svg>
 							8 (Aurebesh)
-						</button><button class="type_button" onclick="Decals.Add('9')">
+						</button><button class="type_button" onclick="Decals.Add('_9_Aurebesh')">
 							<svg viewBox="-15 -15 130 130" class="preview_icon"><use href="#_9_Aurebesh"/></svg>
 							9 (Aurebesh)
 						</button>
@@ -1022,36 +1018,11 @@
 			</div>
 		</div>
 		<video id="rickroll" style="display:none" autoplay></video>
-		<form id="reload" style="display:none">
-			<legend>A new version is available</legend>
-			<div class="version_info">
-				<p>Ke'sush! Ulu evaar'la kebise. Ke'tsikado gotal'ur tug'yc!</p>
-				<p class="detail">(Attention! New things detected. Prepare to reload.)</p>
-			</div>
-			<div class="version_info">
-				<p>Please click the button below to reload the page and get all the latest changes.</p>
-				<p>See the <a href="contact.html#changelog" class="changelog_link">Changelog</a> for info on what's new.</p>
-			</div>
-			<button class="reload_button">RELOAD</button>
-		</form>
 		<script src="color.js"></script>
 		<script src="FileIO.js"></script>
 		<script src="decals.js"></script>
 		<script src="editor.js"></script>
 		<script>
-		var nsw = navigator.serviceWorker;
-		if (nsw) {
-			nsw.onmessage = function (event) {
-				if ( !("version" in localStorage) ||
-				     (localStorage.getItem("version") == event.data)) {
-					return;
-				}
-				localStorage.setItem("version", event.data);
-				var form = find("reload");
-				form.style.display = "";
-			};
-			nsw.register("sw.js");
-		}
 		if (document.readyState === "loading")
 			document.addEventListener("DOMContentLoaded", MandoCreator)
 		else

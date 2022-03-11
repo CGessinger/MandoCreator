@@ -3,10 +3,6 @@
 var Download, History, Settings, Decals;
 var colors, variants;
 
-function find (st) {
-	return document.getElementById(st);
-}
-
 var Vault = {
 	vault: {},
 	finishUp: function (svg, onload) {
@@ -191,18 +187,19 @@ class GenericControl extends ArmorControl {
 
 class ColorPicker extends ArmorControl {
 	get state () {
-		return colors[this.id + "__C"] || "#FFFFFF";
+		return {v: colors[this.id + "__C"] || "#FFFFFF"};
 	}
 
 	set state (s) {
-		this.node.setAttribute("fill", s);
-		colors[this.id + "__C"] = s;
+		this.node.setAttribute("fill", s.v);
+		colors[this.id + "__C"] = s.v;
+		if (!s.force) return;
 
 		var button = this.UI.children[0];
-		button.style.backgroundColor = s;
+		button.style.backgroundColor = s.v;
 
 		var label = this.UI.children[1];
-		label.firstElementChild.innerText = s;
+		label.firstElementChild.innerText = s.v;
 	}
 
 	Build (p) {
@@ -220,8 +217,9 @@ class ColorPicker extends ArmorControl {
 class Toggleable extends ArmorControl {
 	constructor (node) {
 		super(node);
-		this.push(Build.Deserialize(node));
-		this.ch = this.children[0];
+		this.def = (node.style.display !== "none");
+		this.ch = Build.Deserialize(node);
+		this.push(this.ch);
 	}
 
 	get state () {
@@ -234,26 +232,24 @@ class Toggleable extends ArmorControl {
 	set state (s) {
 		this.ch.parent = s.v ? this.ambient.UI : null;
 		this.ch.visible = s.v;
-		this.input.checked = s.v;
 
+		if (s.force) this.input.checked = s.v;
 		if (s.c) this.ch.state = s.c;
+
+		var id = this.id + "__T";
+		var old;
+		if (s.v != this.def)
+			old = variants.setItem(id, s.v);
+		else
+			old = variants.removeItem(id);
+		if (old === undefined) old = this.def;
+		History.push(this, s, {v: old});
 	}
 
-	EventHandler (parent, def) {
-		var id = this.id + "__T";
-		var ch = this.ch;
+	EventHandler (parent) {
 		var self = this;
 		return function () {
-			ch.parent = this.checked ? parent.UI : null;
-			ch.visible = this.checked;
-
-			var old;
-			if (this.checked != def)
-				old = variants.setItem(id, this.checked);
-			else
-				old = variants.removeItem(id);
-			if (old === undefined) old = def;
-			History.push(self, {v: this.checked}, {v: old});
+			self.state = {v: this.checked};
 		}
 	}
 }
@@ -306,12 +302,11 @@ class Toggle extends ArmorControl {
 			}
 		} else {
 			var uie = this.children[0];
-			var defaultOn = (uie.node.style.display !== "none");
-			var handler = uie.EventHandler(this, defaultOn);
+			var handler = uie.EventHandler(this);
 			uie.input = input;
 
 			input.onchange = handler;
-			input.checked = defaultOn;
+			input.checked = uie.def;
 			if (variants.hasItem(id))
 				input.checked = variants.getItem(id);
 			handler.bind(input)();
@@ -385,11 +380,11 @@ class IconCheckboxes extends ArmorControl {
 			}, icons_wrapper);
 
 			/* Step 2: Attach an event handler to the checkbox */
-			var handler = o.EventHandler(this, false);
-			input.onchange = handler;
-			input.checked = variants.getItem(id);
-			handler.bind(input)();
+			o.def = false;
 			o.input = input;
+			input.onchange = o.EventHandler(this);
+			input.checked = variants.getItem(id);
+			input.onchange();
 		}
 		this.input = icons_wrapper;
 	}
@@ -408,35 +403,22 @@ class ArmorSelect extends ArmorControl {
 
 	EventHandler () {
 		var self = this;
-		var id = self.id + "__S";
 		return function (event) {
-			var old = variants.setItem(id, this.value);
-			History.push(self, {v: this.value}, {v: old});
-			for (var c of self.children) {
-				if (c.id == this.value) {
-					c.visible = true;
-					c.parent = self.UI;
-				} else {
-					c.visible = false;
-					c.parent = null;
-				}
-			}
+			self.state = {v: this.value};
 		}
 	}
 
 	get state () {
-		var s;
+		var s = {v: this.input.value};
 		for (var o of this.children)
-			if (o.id == this.input.value)
-				s = o;
-		return {
-			v: this.input.value,
-			c: s.state
-		}
+			if (o.id == s.v) {
+				s.c = o.state;
+				break;
+			}
+		return s;
 	}
 
 	set state (s) {
-		this.input.value = s.v;
 		for (var o of this.children) {
 			if (o.id == s.v) {
 				o.visible = true;
@@ -448,6 +430,10 @@ class ArmorSelect extends ArmorControl {
 				o.parent = null;
 			}
 		}
+		if (s.force)
+			this.input.value = s.v;
+		var old = variants.setItem(this.id + "__S", s.v);
+		History.push(this, s, {v: old});
 	}
 
 	get def () {
@@ -541,7 +527,7 @@ class Swappable extends ArmorControl {
 			}
 		}
 		var old = variants.setItem(this.id, s.v);
-		History.push(this, {v: s.v}, {v: old});
+		History.push(this, s, {v: old});
 	}
 
 	get parent () {
@@ -570,7 +556,7 @@ class Build {
 			return s;
 		if (s.replace)
 			return s.replace(t, o);
-		var n = {};
+		var n = {force: true};
 		for (var a in s) {
 			n[a.replace(t, o)] = Build.MirrorImage(s[a], t, o);
 		}
@@ -592,6 +578,7 @@ class Build {
 					interactive = false;
 					c.state = state;
 					interactive = true;
+					break;
 				}
 			}
 			ArmorControl.cache();
@@ -627,6 +614,7 @@ function SettingsManager () {
 		set Sex (female) {
 			if (ToplevelControl)
 				ToplevelControl.deconstruct();
+			History.reset();
 
 			var master_file = female ? "images/Female.svg" : "images/Male.svg";
 			Vault.getItem(master_file, function (svg) {
@@ -870,10 +858,10 @@ function resetColorCache (cached) {
 		return JSON.parse(localStorage.colors);
 	return {
 		undefined: "#FFFFFF",
-		"Bucket_Budget-BucketColor":	"#F74416",
-		"Visor_Budget-BucketColor":	"#000000",
-		"Rage_Gauntlet_RightColor":	"#08CB33",
-		"Rage_Gauntlet_LeftColor":	"#08CB33"
+		"Bucket_Budget-Bucket__C":	"#F74416",
+		"Visor_Budget-Bucket__C":	"#000000",
+		"Rage_Gauntlet_Right__C":	"#08CB33",
+		"Rage_Gauntlet_Left__C":	"#08CB33"
 	};
 }
 
@@ -918,7 +906,7 @@ function reset (skipBuild, skipPrompt) {
 	if (!conf) return;
 	variants = new VariantsVault(null);
 	colors = resetColorCache(false);
-	History = new HistoryTracker;
+	History.reset();
 	Decals.reset();
 	if (skipBuild)
 		return;

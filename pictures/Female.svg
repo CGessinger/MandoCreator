@@ -597,7 +597,6 @@
 			<path id="Trauma-Plating_Right-Chest_Legacy_ToggleOff" d="M60.45,24.59l-3.52,10.1L57.5,45.2l16.15,0.11
 				l2.17-2.97h7.68l-2.58-2.37l-0.2-10.21l2.6-2.42L60.45,24.59z"/>
 		</g>
-	
 		<g id="Iron-Heart_Legacy">
 			<path id="Heart_Legacy" d="M82.56,38.58V30.3l2.45-1.91l2.45,1.91v8.27l-2.45,2.45L82.56,38.58z"/>
 			<rect id="Center_Heart_Legacy_Option" x="84.16" y="31.58" width="1.7" height="5.66"/>
@@ -730,7 +729,6 @@
 			<path d="M71.04,48l-9.76-5.73l-2.43-10.25l2.15,11.03l8.65,7.92L71.04,48z"/>
 			<path d="M69.91,50.4l3.61,0.45l11.5-3.74V43.8L71.04,48L69.91,50.4z"/>
 		</g>
-	
 		<g id="Iron-Heart_Gunslinger">
 			<path id="Under-Heart_Gunslinger" d="M84.29,43.98l-3.45-3.42v-9.95l3.51-3.16v-2.7h1.33v2.7l3.51,3.16v9.95
 				l-3.45,3.42l-0.73-0.18L84.29,43.98z"/>
@@ -775,7 +773,6 @@
 				<path d="M82.59,52.08l1.05,0.71V40.9l-1.05,0.5V52.08z"/>
 			</g>
 		</g>
-	
 		<g id="Iron-Heart_Gunslinger-MK1">
 			<path id="Under-Heart_Gunslinger-MK1" d="M64.97,56.96l-0.79-1.34h16.53l2.86-2.84V40.9l-3.99-8.25l3.56-6.96
 				v-5.55h3.74v5.55l3.56,6.96l-3.99,8.25v11.89l2.86,2.84h16.53l-0.79,1.34H64.97z"/>
