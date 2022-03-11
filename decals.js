@@ -311,6 +311,7 @@ function DecalFactory () {
 
 	class Decal extends GenericControl {
 		constructor (node, g) {
+			if (!g) console.trace();
 			super(node);
 			this.SVGParent = g;
 
@@ -502,6 +503,7 @@ function DecalFactory () {
 				lists[i].innerHTML = "";
 
 			brace.target = null;
+			decals_group = decals_list = 0;
 		},
 		finishUp: function () {
 			if (done) return;

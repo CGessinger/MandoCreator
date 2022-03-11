@@ -173,8 +173,8 @@
 				</li>
 				<li class="nav_icon icon-grid_view new">
 					<div class="sub_nav">
-						<a id="gallery" class="sub_nav_label" href="gallery.html">Armor Gallery</a>
-						<a id="gallery" class="sub_nav_label new" href="transcripticon.html" target="_blank">Transcripticon</a>
+						<a class="sub_nav_label" href="gallery.html">Armor Gallery</a>
+						<a class="sub_nav_label new" href="transcripticon.html" target="_blank">Transcripticon</a>
 					</div>
 				</li>
 				<li class="nav_icon icon-heart">
@@ -1039,7 +1039,7 @@
 		var nsw = navigator.serviceWorker;
 		if (nsw) {
 			nsw.onmessage = function (event) {
-				if ( ("version" in localStorage) &&
+				if ( !("version" in localStorage) ||
 				     (localStorage.getItem("version") == event.data)) {
 					return;
 				}
