@@ -6,18 +6,6 @@ function DecalsBrace (g, grid, compass) {
 	var node;
 	var snapping = find("snapping");
 
-	/* Transforms */
-	var translate, scale, rotate;
-
-	translate = main_svg.createSVGTransform();
-	scale = main_svg.createSVGTransform();
-	rotate = main_svg.createSVGTransform();
-	var tl = g.transform.baseVal;
-
-	tl.initialize(translate);
-	tl.appendItem(rotate);
-	tl.appendItem(scale);
-
 	/* Local Coordinate System */
 	var ctm;
 	function getLocalCoordinates (event) {
@@ -74,8 +62,9 @@ function DecalsBrace (g, grid, compass) {
 			coord = coord.map(Math.round);
 		x = coord[0]; y = coord[1];
 
-		translate.setTranslate(x, y);
-		node.state = {v: {x:x, y:y, ax:ax, ay:ay, phi:phi}}
+		var v = {x:x, y:y, ax:ax, ay:ay, phi:phi};
+		node.state = {v: v};
+		self.state = v;
 	});
 	setupDragAndDrop(ch[1], 2, function (offset) {
 		if (snapping.checked) {
@@ -97,8 +86,9 @@ function DecalsBrace (g, grid, compass) {
 		if (snapping.checked)
 			phi = Math.round(phi);
 
-		rotate.setRotate(phi, 0, 0);
-		node.state = {v: {x:x, y:y, ax:ax, ay:ay, phi:phi}}
+		var v = {x:x, y:y, ax:ax, ay:ay, phi:phi};
+		node.state = {v: v};
+		self.state = v;
 
 		var p = phi * Math.PI / 180;
 		c = Math.cos(p);
@@ -118,11 +108,12 @@ function DecalsBrace (g, grid, compass) {
 			ax = Math.round(ax * 100) / 100;
 			ay = Math.round(ay * 100) / 100;
 		}
-		node.state = {v: {x:x, y:y, ax:ax, ay:ay, phi:phi}};
-		scale.setScale(ax, ay);
+		var v = {x:x, y:y, ax:ax, ay:ay, phi:phi};
+		node.state = {v: v};
+		self.state = v;
 	});
 
-	return {
+	var self = {
 		coordinates (x, y) {
 			ctm = main_svg.getScreenCTM();
 			return getLocalCoordinates({clientX: x, clientY: y});
@@ -153,11 +144,19 @@ function DecalsBrace (g, grid, compass) {
 			var p = phi * Math.PI / 180;
 			s = Math.sin(p); c = Math.cos(p);
 
-			translate.setTranslate(x, y);
-			rotate.setRotate(phi, 0, 0);
-			scale.setScale(ax, ay);
+			var tl = g.transform.baseVal;
+			if (tl.length < 3) {
+				tl.initialize(main_svg.createSVGTransform());
+				tl.appendItem(main_svg.createSVGTransform());
+				tl.appendItem(main_svg.createSVGTransform());
+			}
+
+			tl[0].setTranslate(x, y);
+			tl[1].setRotate(phi, 0, 0);
+			tl[2].setScale(ax, ay);
 		}
 	}
+	return self;
 }
 
 function DecalFactory () {
@@ -166,7 +165,7 @@ function DecalFactory () {
 	var brace = {};
 	var customs_menu = find("custom_decals_menu");
 
-	var main_svg, target_div, vault;
+	var main_svg, target_div, vault = {custom: find("custom_vault")};
 
 	/* Event Handlers */
 	function initializeEventHandlers () {
@@ -271,8 +270,9 @@ function DecalFactory () {
 		var D = new Decal(use, decals_group);
 		D.parent = decals_list;
 		D.visible = true;
-		if (!data) data = {c: "#000000", v: null};
-		else if ( !("c" in data) ) data.c = "#000000";
+		var def = colors[D.id + "__C"] || "#000000";
+		if (!data) data = {c: {v:def, force:true}, v: null};
+		else if ( !("c" in data) ) data.c = {v:def, force:true};
 		D.state = data;
 
 		target_div = D.UI;
@@ -371,12 +371,13 @@ function DecalFactory () {
 		set parent (p) {
 			if (p) this.p = p;
 			super.parent = p;
+			if (p)
+				p.insertBefore(this.UI, p.firstElementChild);
 		}
 
 		Build (p) {
 			super.Build(p);
 			this.UI.classList = "decal_control selected";
-			p.insertBefore(this.UI, p.firstElementChild);
 
 			var self = this;
 			this.UI.onclick = function () {
@@ -455,10 +456,12 @@ function DecalFactory () {
 		},
 		get SVG () {
 			var defs = XML.SVGNode("defs", {id: "Decals"});
+			var customs = vault.custom.children;
 			for (var n in count) {
 				if (count[n] < 1)
 					continue;
-				var d = vault.getElementById(n);
+				var d = vault.def.getElementById(n);
+				if (!d) d = vault.custom.getElementById(n);
 				defs.appendChild(d.cloneNode(true));
 			}
 			return defs;
@@ -467,17 +470,11 @@ function DecalFactory () {
 			main_svg = value;
 			brace.SVG = value;
 		},
-		custom: function (data, name, parent) {
+		custom: function (data, name) {
 			var id = makeName(name, false) + "__cd";
 			var display = makeName(name, true);
-			var ch = vault.children;
-			for (var i = 0; i < ch.length; i++)
-				if (ch[i].id == id)
-					return false;
-
-			var button = XML.DOMNode("button", {class: "type_button"}, customs_menu);
-			var svg = XML.SVGNode("svg", {viewBox: "-15 -15 130 130", class: "preview_icon"}, button);
-			XML.SVGNode("use", {href: "#" + id}, svg);
+			if (vault.custom.getElementById(id) != undefined)
+				return false;
 
 			XML.SVGNode("image", {
 				href: data,
@@ -485,7 +482,11 @@ function DecalFactory () {
 				height: 100,
 				id: id,
 				"serif:id": display
-			}, vault);
+			}, vault.custom);
+
+			var button = XML.DOMNode("button", {class: "type_button"}, customs_menu);
+			var svg = XML.SVGNode("svg", {viewBox: "-15 -15 130 130", class: "preview_icon"}, button);
+			XML.SVGNode("use", {href: "#" + id}, svg);
 
 			button.onclick = function () {AddDecal(id);}
 
@@ -513,7 +514,7 @@ function DecalFactory () {
 			brace = new DecalsBrace(find("brace"), find("grid"), find("compass"));
 			brace.SVG = main_svg;
 			Vault.getItem("images/Decals.svg", function (decals) {
-				vault = decals;
+				vault.def = decals;
 				find("decal_vault").replaceWith(decals);
 
 				var previews = find("Decal_Previews").getElementsByTagName("use");

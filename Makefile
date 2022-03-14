@@ -4,14 +4,13 @@ ifndef VERBOSE
 .SILENT:
 endif
 
-release: gallery pictures
+release: pictures
 
 serve: release
 	python -m http.server --bind 0.0.0.0
 
 clean:
 	rm -rf images;
-	rm gallery/wrapper_*.svg
 	rm -rf gallery/raw
 .PHONY: clean
 
@@ -41,22 +40,3 @@ images/%.svg: pictures/%.svg | images
 			s/ / class=\"swappable\" /; \
 		}; \
 	" $< > $@;
-
-#=========================GALLERY=========================
-
-MALE=$(wildcard gallery/male/*.svg)
-FEMALE=$(wildcard gallery/female/*.svg)
-RAW=$(patsubst gallery/male/%,gallery/raw/%,$(MALE))
-
-gallery: $(RAW)
-	touch $@;
-
-gallery/raw/%: gallery/male/% gallery/female/% | gallery/raw
-	echo $@;
-	sed " \
-		s|[[:space:]]d=[\"'][^\"']*[\"']||; \
-		/<\w\+\/>/ { d; }; \
-	" $< > $@;
-
-gallery/raw:
-	mkdir -p $@;

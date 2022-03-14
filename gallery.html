@@ -88,6 +88,7 @@
 				display: inline-block;
 			}
 			.armor {
+				width: unset;
 				height: 100%;
 				opacity: 30%;
 				scroll-snap-align: center;
@@ -150,26 +151,13 @@
 	}
 	function ArmorGallery () {
 		var gallery = find("gallery");
-		var isFemale = find("female").checked;
 		var imgs = gallery.children;
-		var input = find("preset");
+		var preset = find("preset");
+		var sex = find("sex");
 
 		var index = 0;
 		var width = imgs[0].clientWidth;
 		var GallerySkeleton = {
-			set sex (female) {
-				var needle, replace;
-				if (female) {
-					needle = "male";
-					replace = "female";
-				} else {
-					needle = "female";
-					replace = "male";
-				}
-				for (var i = 0; i < imgs.length; i++) {
-					imgs[i].src = imgs[i].src.replace(needle, replace);
-				}
-			},
 			get target () {
 				for (var i = 0; i < imgs.length; i++)
 					if (imgs[i].classList.contains("primary"))
@@ -183,7 +171,8 @@
 					t.classList.remove("primary");
 				}
 				value.classList.add("primary");
-				input.value = value.src.replace(/.*#/,"gallery/raw/");
+				preset.value = value.src;
+				sex.checked = value.hasAttribute("female");
 			},
 			get shift () {
 				return index;
@@ -203,7 +192,6 @@
 					});
 			}
 		};
-		GallerySkeleton.sex = isFemale;
 		GallerySkeleton.shift = 0;
 
 		var fromScroll = false;
@@ -225,60 +213,60 @@
 	</script>
 	<body onload="Gallery = new ArmorGallery()">
 		<nav>
-			<img width="100%" src="images/Logo.svg" alt="MandoCreator Logo"/>
+			<img width="420" src="images/Logo.svg" alt="MandoCreator Logo"/>
 			<button class="red_button" style="padding-left:0.5em">
 				<a class="return" href="index.html">&#xE90B; Go Back</a>
 			</button>
 		</nav>
 		<main id="gallery">
-			<img class="armor" alt="Ara" src="gallery/male/Ara.svg"
-			/><img class="armor" alt="Beskar_Akaan" src="gallery/male/Beskar_Akaan.svg"
-			/><img class="armor" alt="Boba" src="gallery/male/Boba.svg"
-			/><img class="armor" alt="BoldOne" src="gallery/male/BoldOne.svg"
-			/><img loading="lazy" class="armor" alt="Cardboardalorian" src="gallery/male/Cardboardalorian.svg"
-			/><img loading="lazy" class="armor" alt="Commando" src="gallery/male/Commando.svg"
-			/><img loading="lazy" class="armor" alt="Din" src="gallery/male/Din.svg"
-			/><img loading="lazy" class="armor" alt="Eao" src="gallery/male/Eao.svg"
-			/><img loading="lazy" class="armor" alt="Freyatos" src="gallery/male/Freyatos.svg"
-			/><img loading="lazy" class="armor" alt="Glorious" src="gallery/male/Glorious.svg"
-			/><img loading="lazy" class="armor" alt="Hunter" src="gallery/male/Hunter.svg"
-			/><img loading="lazy" class="armor" alt="Iluv-1" src="gallery/male/Iluv-1.svg"
-			/><img loading="lazy" class="armor" alt="Iluv-2" src="gallery/male/Iluv-2.svg"
-			/><img loading="lazy" class="armor" alt="Jango" src="gallery/male/Jango.svg"
-			/><img loading="lazy" class="armor" alt="Krix" src="gallery/male/Krix.svg"
-			/><img loading="lazy" class="armor" alt="Lear" src="gallery/male/Lear.svg"
-			/><img loading="lazy" class="armor" alt="Marine" src="gallery/male/Marine.svg"
-			/><img loading="lazy" class="armor" alt="Maritime" src="gallery/male/Maritime.svg"
-			/><img loading="lazy" class="armor" alt="McQ" src="gallery/male/McQ.svg"
-			/><img loading="lazy" class="armor" alt="Miit" src="gallery/male/Miit.svg"
-			/><img loading="lazy" class="armor" alt="Mirshko" src="gallery/male/Mirshko.svg"
-			/><img loading="lazy" class="armor" alt="Neo" src="gallery/male/Neo.svg"
-			/><img loading="lazy" class="armor" alt="Nih" src="gallery/male/Nih.svg"
-			/><img loading="lazy" class="armor" alt="Niner" src="gallery/male/Niner.svg"
-			/><img loading="lazy" class="armor" alt="Ornate" src="gallery/male/Ornate.svg"
-			/><img loading="lazy" class="armor" alt="Pilot-1" src="gallery/male/Pilot-1.svg"
-			/><img loading="lazy" class="armor" alt="Pilot-2" src="gallery/male/Pilot-2.svg"
-			/><img loading="lazy" class="armor" alt="Portal" src="gallery/male/Portal.svg"
-			/><img loading="lazy" class="armor" alt="Prudii" src="gallery/male/Prudii.svg"
-			/><img loading="lazy" class="armor" alt="Quarrie" src="gallery/male/Quarrie.svg"
-			/><img loading="lazy" class="armor" alt="Rae" src="gallery/male/Rae.svg"
-			/><img loading="lazy" class="armor" alt="Rav Bralor" src="gallery/male/Rav_Bralor.svg"
-			/><img loading="lazy" class="armor" alt="Razda_Ruur" src="gallery/male/Razda_Ruur.svg"
-			/><img loading="lazy" class="armor" alt="Sabine" src="gallery/male/Sabine.svg"
-			/><img loading="lazy" class="armor" alt="Shrek" src="gallery/male/Shrek.svg"
-			/><img loading="lazy" class="armor" alt="Sr2z" src="gallery/male/Sr2z.svg"
-			/><img loading="lazy" class="armor" alt="Teal" src="gallery/male/Teal.svg"
-			/><img loading="lazy" class="armor" alt="Xeno" src="gallery/male/Xeno.svg"/>
+			<img width="460" class="armor" alt="Ara" title="Ara" src="images/Ara.svg" female
+			/><img width="460" class="armor" alt="Beskar_Akaan" title="Beskar_Akaan" src="images/Beskar_Akaan.svg"
+			/><img width="460" class="armor" alt="Boba" title="Boba" src="images/Boba.svg"
+			/><img width="460" class="armor" alt="BoldOne" title="BoldOne" src="images/BoldOne.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Cardboardalorian" title="Cardboardalorian" src="images/Cardboardalorian.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Chiss" title="Chiss" src="images/Chiss.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Commando" title="Commando" src="images/Commando.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Deer" title="Deer" src="images/Deer.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="Din" title="Din" src="images/Din.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Dxun Hunter" title="Dxun Hunter" src="images/Dxun.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Eao" title="Eao" src="images/Eao.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Farrugia" title="Farrugia" src="images/Farrugia.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Freyatos" title="Freyatos" src="images/Freyatos.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="Glorious" title="Glorious" src="images/Glorious.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="Hunter" title="Hunter" src="images/Hunter.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Iluv-1" title="Iluv-1" src="images/Iluv-1.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="Iluv-2" title="Iluv-2" src="images/Iluv-2.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Jango" title="Jango" src="images/Jango.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Jinx" title="Jinx" src="images/Jinx.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="Krix" title="Krix" src="images/Krix.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Lear" title="Lear" src="images/Lear.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Marine" title="Marine" src="images/Marine.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Maritime" title="Maritime" src="images/Maritime.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="McQ" title="McQ" src="images/McQ.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="Mesa" title="Mesa" src="images/Mesa.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Miit" title="Miit" src="images/Miit.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="Mirshko" title="Mirshko" src="images/Mirshko.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Neo" title="Neo" src="images/Neo.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Nih" title="Nih" src="images/Nih.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Niner" title="Niner" src="images/Niner.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Ornate" title="Ornate" src="images/Ornate.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Pilot-1" title="Pilot-1" src="images/Pilot-1.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Pilot-2" title="Pilot-2" src="images/Pilot-2.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Pit" title="Pit" src="images/Pit.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Portal" title="Portal" src="images/Portal.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Prudii" title="Prudii" src="images/Prudii.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Rae" title="Rae" src="images/Rae.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="Rav Bralor" title="Rav Bralor" src="images/Rav_Bralor.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Razda Ruur" title="Razda Ruur" src="images/Razda_Ruur.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Sabine" title="Sabine" src="images/Sabine.svg" female
+			/><img width="460" loading="lazy" class="armor" alt="Sr2z" title="Sr2z" src="images/Sr2z.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Teal" title="Teal" src="images/Teal.svg"
+			/><img width="460" loading="lazy" class="armor" alt="Xeno" title="Xeno" src="images/Xeno.svg" female/>
 		</main>
 		<footer>
 			<form action="index.html" method="GET">
-				<input type="text" id="preset" name="preset" style="display:none" />
-				<div>
-					<input type="radio" id="male" class="toggle_sex" name="sex" value="0" checked onchange="Gallery.sex = false"
-					/><label for="male" class="label_sex">&#xe901;</label
-					><input type="radio" id="female" class="toggle_sex" name="sex" value="1" onchange="Gallery.sex = true"
-					/><label for="female" class="label_sex">&#xe902;</label>
-				</div>
+				<input type="text" id="preset" name="preset" hidden/>
+				<input type="checkbox" id="sex" name="sex" hidden/>
 				<button type="button" class="next_armor" onclick="Gallery.shift--">&#xe90b;</button
 				><button type="submit" class="red_button">Customize</button
 				><button type="button" class="next_armor" onclick="Gallery.shift++">&#xe90c;</button>

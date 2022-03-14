@@ -63,20 +63,26 @@ var Uploader = {
 					var tm  = l[0].matrix;
 					var phi = l[1].angle;
 					var sm  = l[2].matrix;
+					var parent = node.parentNode;
 					variants.setItem(node.id, {
-						x: tm.e, ax: sm.a,
-						y: tm.f, ay: sm.d,
-						phi: phi
+						c: {v: colors[bn]},
+						v: {
+							x: tm.e, ax: sm.a,
+							y: tm.f, ay: sm.d,
+							phi: phi
+						},
+						p: parent.id + "List"
 					});
 			}
 		}
 	},
-	dissectSVG: function (data) {
-		var svg = XML.SVGNode("svg");
-		svg.innerHTML = data;
-		svg = svg.firstElementChild;
-
-		reset(true);
+	dissectSVG: function (data, svg) {
+		if (!svg) {
+			svg = XML.SVGNode("svg");
+			svg.innerHTML = data;
+			svg = svg.firstElementChild;
+		}
+		reset(true, !data);
 
 		var ds = svg.children[2];
 		if (ds.id == "Decals") {

@@ -519,13 +519,13 @@ class Swappable extends ArmorControl {
 	set state (s) {
 		for (var o of this.children) {
 			if (o.id == s.v) {
-				o.visible = true;
-				if (s.c) o.state = s.c;
 				this.selection = o;
 			} else {
 				o.visible = false;
 			}
 		}
+		this.selection.visible = true;
+		if (s.c) this.selection.state = s.c;
 		var old = variants.setItem(this.id, s.v);
 		History.push(this, s, {v: old});
 	}
@@ -704,6 +704,8 @@ function MandoCreator () {
 	function readQueryString (st) {
 		if (!st) return {};
 		var options = {};
+		if (st)
+			options.sex = 0;
 		var regex = /(\w+)=([^&]*)&?/g;
 		var matches;
 		while (matches = regex.exec(st)) {
@@ -716,7 +718,7 @@ function MandoCreator () {
 	/* ---------- Pre-Setup ---------- */
 	var opt = readQueryString(window.location.search);
 	if ("sex" in opt)
-		female = (opt.sex == "1");
+		female = opt.sex;
 	if (female) {
 		var sex_radio = find("female");
 		sex_radio.checked = true;
@@ -727,8 +729,7 @@ function MandoCreator () {
 	/* ---------- Main Setup ---------- */
 	if ("preset" in opt) {
 		Vault.getItem(opt.preset, function (svg) {
-			reset(true, true);
-			Uploader.parseMando(svg);
+			Uploader.dissectSVG(null, svg);
 			Settings.Sex = female;
 		});
 	} else {
