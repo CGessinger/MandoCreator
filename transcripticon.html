@@ -28,10 +28,7 @@
 	<body>
 		<script>
 		"use strict";
-		var colors = {
-			"Font__C": "#DDD",
-			"Background__C": "#111"
-		};
+		var colors = {}
 		function find(s) {
 			if (s) return document.getElementById(s);
 		}
@@ -200,30 +197,49 @@
 				r.readAsArrayBuffer(f);
 			}
 		}
-		var History;
+		var History = {push: function() {}};
+		class ColorPicker {
+			static init () {
+				this.Picker = new PickerFactory;
+				this.Picker.finishUp();
+				this.eng = find("English");
+				this.man = find("Mandoa");
+				setupEventListeners(this.eng, this.man);
+			}
+			constructor (def, id, k) {
+				this.def = def;
+				this.name = this.id = id;
+				this.k = k;
+			}
+			get state () {
+				return {v: colors[this.id] || this.def}
+			}
+			set state (s) {
+				ColorPicker.eng.style[this.k] = s.v;
+				ColorPicker.man.style[this.k] = s.v;
+				colors[this.id + "__C"] = s.v;
+				if (!s.force) return;
+				this.button.style.backgroundColor = s.v;
+				this.label.innerText = s.v;
+			}
+			Build (p) {
+				this.UI = ColorPicker.Picker.build(this, p, {"noclick":true});
+				this.button = this.UI.children[0];
+				this.label = this.UI.children[1].lastElementChild;
+
+				var s = this.state;
+				s.force = 1;
+				this.state = s;
+			}
+		}
 		document.addEventListener("DOMContentLoaded", function () {
-			var eng = find("English");
-			var man = find("Mandoa");
-			setupEventListeners(eng, man);
+			ColorPicker.init();
 
 			var c = find("colors");
-			var P = new PickerFactory;
-			History = new HistoryTracker;
-			P.finishUp();
-			P.build({
-				id: "Font",
-				setAttribute: function (type, value) {
-					eng.style.color = value;
-					man.style.color = value;
-				}
-			}, c, {text: "Font", noclick: true});
-			P.build({
-				id: "Background",
-				setAttribute: function (type, value) {
-					eng.style.backgroundColor = value;
-					man.style.backgroundColor = value;
-				}
-			}, c, {text: "Background", noclick: true});
+			var font = new ColorPicker("#DDDDDD", "Font", "color");
+			var back = new ColorPicker("#111111", "Background", "backgroundColor");
+			font.Build(c);
+			back.Build(c);
 		});
 		</script>
 		<style>
@@ -268,11 +284,8 @@
 				width: 100%;
 				resize: vertical;
 				box-sizing: border-box;
-
-				background: #111;
 				border: solid 1px #AB1F1F;
 
-				color: #DDD;
 				font: inherit;
 				font-size: 28px;
 				line-height: 32px;

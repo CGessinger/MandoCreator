@@ -261,56 +261,31 @@ function PickerFactory () {
 		}
 		DOM.update(fromEditor);
 		diff.n = color.hex;
-		onChange(color.hex);
+		target.state = {v: color.hex, force: 1};
 	}
 
-	function getDefaultColor (id, SVGNode) {
-		if (id in colors)
-			return colors[id];
-		if (SVGNode.hasAttribute("fill"))
-			return SVGNode.getAttribute("fill");
-	}
-
-	var color, DOM = {}, onChange;
-	this.attach = function (button, parent, colorText, SVGNode, kwargs) {
-		function input (hex) {
-			button.style.backgroundColor = hex;
-			SVGNode.setAttribute("fill", hex);
-			colorText.innerText = hex;
-			if (hex === kwargs.default)
-				delete colors[button.id];
-			else
-				colors[button.id] = hex;
-		}
-		button.addEventListener("click", function(event) {
-			onChange = input;
+	var color, DOM = {}, target;
+	this.attach = function (button, T, kwargs) {
+		button.onclick = function() {
 			if ( !("parent" in DOM) )
 				DOM = new PickerDOM;
 
-			var old = colors[this.id] || kwargs.default;
-			if ("target" in kwargs)
-				diff = {target: kwargs.target, n: old, o: old}
-			else
-				diff = {};
+			target = T;
+			var old = T.state.v;
+			diff = {target: T, o: old}
 			_setColor(old);
 
-			if (interactive)
-				DOM.parent = parent;
-			else
-				DOM.parent = null;
-		});
-		if ( !("noclick" in kwargs) ) {
-			SVGNode.addEventListener("click", function () {
-				button.click();
-			});
+			DOM.parent = interactive ? T.UI : null;
 		}
-		var def = getDefaultColor(button.id, SVGNode);
-		if (!def) def = kwargs.default;
+		if ( !("noclick" in kwargs) ) {
+			T.node.onclick = function() {button.click()}
+		}
+		var def = T.state.v;
 		if (def != "#FFFFFF") {
 			var c = parseColorString(def);
 			if (!c) c = [1,1,1];
 			color.hex = c;
-			input(color.hex);
+			T.state = {v: color.hex};
 		}
 	}
 	this.build = function (target, parent, kwargs) {
@@ -320,21 +295,18 @@ function PickerFactory () {
 		var b = XML.DOMNode("button", {class: "color_picker", id: buttonID}, span);
 
 		var label = XML.DOMNode("label", {class: "soft_text no_collapse", for: buttonID}, span);
-		label.innerText = kwargs.text;
+		label.innerText = target.name;
 		var p = XML.DOMNode("p", {class: "detail no_collapse"}, label);
-		p.innerText = "#FFFFFF";
 
 		if (kwargs.disabled) {
 			b.disabled = true;
 			b.innerHTML = "<svg stroke='#ddd' viewBox='0 0 20 20'><path d='m3 3 14 14M3 17 17 3'/></svg>"
 			p.innerText = "No colors available";
-			target.addEventListener("click", function() {
-				span.click();
-			});
+			target.node.onclick = function() {span.click()}
 		} else {
-			this.attach(b, span, p, target, kwargs);
+			this.attach(b, target, kwargs);
 		}
-		return b;
+		return span;
 	}
 	this.finishUp = function () {
 		color = new Color();

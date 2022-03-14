@@ -63,10 +63,9 @@ class ArmorControl {
 	get id () {return this.node.id}
 
 	get name () {
-		var id = this.id;
 		if (this.node.hasAttribute("serif:id"))
-			id = this.node.getAttribute("serif:id");
-		return id.split("_", 1)[0].replace(/-/g, " ");
+			return this.node.getAttribute("serif:id");
+		return this.id.split("_", 1)[0].replace(/-/g, " ");
 	}
 
 	get state () {
@@ -186,31 +185,40 @@ class GenericControl extends ArmorControl {
 }
 
 class ColorPicker extends ArmorControl {
+	constructor (node) {
+		super(node);
+		this.def = "#FFFFFF";
+		if (node.hasAttribute("fill"))
+			this.def = node.getAttribute("fill");
+	}
+
 	get state () {
-		return {v: colors[this.id + "__C"] || "#FFFFFF"};
+		return {v: colors[this.id + "__C"] || this.def};
 	}
 
 	set state (s) {
 		this.node.setAttribute("fill", s.v);
-		colors[this.id + "__C"] = s.v;
+		if (s.v === this.def)
+			delete colors[this.id + "__C"];
+		else
+			colors[this.id + "__C"] = s.v;
 		if (!s.force) return;
 
-		var button = this.UI.children[0];
-		button.style.backgroundColor = s.v;
-
-		var label = this.UI.children[1];
-		label.firstElementChild.innerText = s.v;
+		this.input.style.backgroundColor = s.v;
+		this.label.innerText = s.v;
 	}
 
 	Build (p) {
 		super.Build(p);
-		var button = ArmorControl.Picker.build(this.node, p, {
-			text: this.name,
-			default: "#FFFFFF",
-			disabled: this.id.includes("__cd"),
-			target: this
+		this.UI = ArmorControl.Picker.build(this, p, {
+			disabled: this.id.includes("__cd")
 		});
-		this.UI = button.parentElement;
+		this.input = this.UI.children[0];
+		this.label = this.UI.children[1].lastElementChild;
+
+		var s = this.state;
+		s.force = 1;
+		this.state = s;
 	}
 }
 
@@ -704,8 +712,6 @@ function MandoCreator () {
 	function readQueryString (st) {
 		if (!st) return {};
 		var options = {};
-		if (st)
-			options.sex = 0;
 		var regex = /(\w+)=([^&]*)&?/g;
 		var matches;
 		while (matches = regex.exec(st)) {
@@ -717,20 +723,10 @@ function MandoCreator () {
 
 	/* ---------- Pre-Setup ---------- */
 	var opt = readQueryString(window.location.search);
-	if ("sex" in opt)
-		female = opt.sex;
-	if (female) {
-		var sex_radio = find("female");
-		sex_radio.checked = true;
-	} else {
-		var sex_radio = find("male");
-		sex_radio.checked = true;
-	}
 	/* ---------- Main Setup ---------- */
 	if ("preset" in opt) {
 		Vault.getItem(opt.preset, function (svg) {
 			Uploader.dissectSVG(null, svg);
-			Settings.Sex = female;
 		});
 	} else {
 		Settings.Sex = female;

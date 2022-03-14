@@ -101,7 +101,7 @@ var Uploader = {
 		this.parseMando(mando);
 		interactive = true;
 
-		if (mando.id === "Female-Body") {
+		if (svg.id === "Female-Body") {
 			var sex_radio = find("female");
 			sex_radio.checked = true;
 			Settings.Sex = true;
