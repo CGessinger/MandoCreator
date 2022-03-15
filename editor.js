@@ -33,11 +33,9 @@ var Vault = {
 }
 
 class ArmorControl {
-	static Picker = new PickerFactory;
-	static DOMLists = [];
-
 	static init (am) {
-		this.Picker.finishUp();
+		this.Picker = new PickerFactory;
+		this.DOMLists = [];
 
 		var topLevelLists = am.getElementsByClassName("slide_content");
 		for (var i = 0; i < topLevelLists.length; i++)
@@ -254,7 +252,7 @@ class Toggleable extends ArmorControl {
 		History.push(this, s, {v: old});
 	}
 
-	EventHandler (parent) {
+	EventHandler () {
 		var self = this;
 		return function () {
 			self.state = {v: this.checked};
@@ -310,7 +308,7 @@ class Toggle extends ArmorControl {
 			}
 		} else {
 			var uie = this.children[0];
-			var handler = uie.EventHandler(this);
+			var handler = uie.EventHandler();
 			uie.input = input;
 
 			input.onchange = handler;
@@ -390,7 +388,7 @@ class IconCheckboxes extends ArmorControl {
 			/* Step 2: Attach an event handler to the checkbox */
 			o.def = false;
 			o.input = input;
-			input.onchange = o.EventHandler(this);
+			input.onchange = o.EventHandler();
 			input.checked = variants.getItem(id);
 			input.onchange();
 		}
@@ -652,7 +650,7 @@ function SettingsManager () {
 					main.replaceChild(svg, main.lastElementChild);
 				});
 			});
-			localStorage.setItem("female_sex", (!!female).toString());
+			localStorage.female = (!!female).toString();
 		}
 	}
 }
@@ -700,7 +698,6 @@ function VariantsVault (asString) {
 }
 
 function MandoCreator () {
-	var female = (localStorage.getItem("female_sex") == "true");
 	History = new HistoryTracker;
 
 	Decals = new DecalFactory(ArmorControl.Picker);
@@ -721,15 +718,20 @@ function MandoCreator () {
 		return options;
 	}
 
-	/* ---------- Pre-Setup ---------- */
+	/* ---------- Setup ---------- */
 	var opt = readQueryString(window.location.search);
-	/* ---------- Main Setup ---------- */
 	if ("preset" in opt) {
 		Vault.getItem(opt.preset, function (svg) {
 			Uploader.dissectSVG(null, svg);
 		});
 	} else {
-		Settings.Sex = female;
+		var f = (localStorage.female == "true");
+		if (f) {
+			find("female").checked = true;
+		} else {
+			find("male").checked = true;
+		}
+		Settings.Sex = f;
 	}
 	/* ---------- Post-Setup ---------- */
 	var am = find("armor_menu");

@@ -167,8 +167,8 @@ function PickerFactory () {
 		var colorSelector = spectrum.firstElementChild;
 
 		var editor = ch[3];
-		editor.addEventListener("input", function() { _setColor(this.value, true); });
-		ch[4].addEventListener("click", function() { DOM.parent = null; update_display(); }); // "Okay"
+		editor.oninput = function() { _setColor(this.value, true); }
+		ch[4].onclick = function() { DOM.parent = null; update_display(); }
 
 		setupDragAndClick(hue, function(hue) { var c = color.hsv; c[0] = hue; return _setColor(c); });
 		setupDragAndClick(spectrum, function(s, v) { var c = color.hsv; c[1] = s; c[2] = 1-v; return _setColor(c)});
@@ -179,7 +179,7 @@ function PickerFactory () {
 		var _parent = null;
 		function update_display () {
 			if (_parent == null) {
-				document.body.appendChild(wrapper); /* Move it somewhere else! */
+				wrapper.remove();
 				wrapper.style = "display:none";
 				return;
 			} else if (_parent !== wrapper.parentNode) {
@@ -264,7 +264,8 @@ function PickerFactory () {
 		target.state = {v: color.hex, force: 1};
 	}
 
-	var color, DOM = {}, target;
+	var color = new Color;
+	var DOM = {}, target;
 	this.attach = function (button, T, kwargs) {
 		button.onclick = function() {
 			if ( !("parent" in DOM) )
@@ -308,9 +309,6 @@ function PickerFactory () {
 		}
 		return span;
 	}
-	this.finishUp = function () {
-		color = new Color();
-	}
 	this.cache = cache;
 }
 
@@ -353,7 +351,7 @@ function HistoryTracker () {
 		return true;
 	}
 
-	this.push = function (t, n, o, f) {
+	this.push = function (t, n, o) {
 		if (!interactive || !t || isEqual(o, n))
 			return;
 		n.force = o.force = true;
